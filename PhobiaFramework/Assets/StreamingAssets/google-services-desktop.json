@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:573727860431:android:d887291ef7fe2fdf6b39ba",
+        "mobilesdk_app_id": "1:573727860431:android:2439819a3315c11d6b39ba",
         "android_client_info": {
-          "package_name": "com.HVL.VRExposureFramework"
+          "package_name": "com.hvl.vrexposureframework"
         }
       },
       "oauth_client": [],
