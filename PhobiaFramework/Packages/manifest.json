@@ -8,6 +8,7 @@
     "com.unity.visualscripting": "1.8.0",
     "com.unity.xr.interaction.toolkit": "2.4.3",
     "com.unity.xr.management": "4.4.0",
+    "org.khronos.unitygltf": "https://github.com/prefrontalcortex/UnityGLTF.git?path=/UnityGLTF/Assets/UnityGLTF",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

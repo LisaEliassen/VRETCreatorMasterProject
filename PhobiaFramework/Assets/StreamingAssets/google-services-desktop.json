@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "573727860431",
+    "firebase_url": "https://vr-framework-95ccc-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "vr-framework-95ccc",
+    "storage_bucket": "vr-framework-95ccc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573727860431:android:d887291ef7fe2fdf6b39ba",
+        "android_client_info": {
+          "package_name": "com.HVL.VRExposureFramework"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYTwb6rv7YJHgooMqm-p9Aooxr8ohhpQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
