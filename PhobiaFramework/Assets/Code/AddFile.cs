@@ -13,6 +13,11 @@ public class AddFile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+
+    public void addFile() 
+    {
         // Get a reference to the storage service, using the default Firebase App
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
 
@@ -93,7 +98,6 @@ public class AddFile : MonoBehaviour
                     Debug.Log("md5 hash = " + md5Hash);
                 }
             });
-
     }
 
     // Update is called once per frame
