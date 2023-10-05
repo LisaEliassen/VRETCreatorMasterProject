@@ -16,8 +16,6 @@ public class SpawnObject : MonoBehaviour
     {
         var gameObject = new GameObject(name);
 
-
-
         loadGltf(gameObject, filepath, name);
         gameObject.transform.position = position;
         gameObject.SetActive(true);

@@ -16,14 +16,15 @@ public class LoadGltfFromDatabase : MonoBehaviour
     FirebaseStorage storage;
     StorageReference gltfReference;
     GameObject loadedModel;
+    public Vector3 position;
+    public string name;
 
     // Start is called before the first frame update
     void Start()
     {
         
     }
-
-    public void spawnObject(Vector3 position, string name)
+    public void spawnObject()
     {
         loadedModel = new GameObject(name);
         var gltf = loadedModel.AddComponent<GLTFast.GltfAsset>();
@@ -71,7 +72,7 @@ public class LoadGltfFromDatabase : MonoBehaviour
 
             string downloadUrl = task.Result.ToString();
             Debug.Log(downloadUrl);
-            var success = await gltf.Load("", settings);
+            var success = await gltf.Load("https://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.gltf", settings);
 
             if (success)
             {
