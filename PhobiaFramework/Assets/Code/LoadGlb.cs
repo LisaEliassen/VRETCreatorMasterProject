@@ -1,20 +1,15 @@
-using Firebase.Storage;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GLTFast;
 using GLTFast.Schema;
-using Firebase.Extensions;
 using UnityEngine.Networking;
 using System;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
-public class LoadGltfWeb : MonoBehaviour
+public class LoadGlb : MonoBehaviour
 {
-
-    FirebaseStorage storage;
-    StorageReference gltfReference;
     GameObject loadedModel;
     DatabaseService dbService;
     public Vector3 position;
@@ -23,26 +18,48 @@ public class LoadGltfWeb : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Find the GameObject with the DatabaseService script
+        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
 
+        // Check if the GameObject was found
+        if (databaseServiceObject != null)
+        {
+            // Get the DatabaseService component from the found GameObject
+            dbService = databaseServiceObject.GetComponent<DatabaseService>();
+        }
+        else
+        {
+            Debug.LogError("GameObject with DatabaseService not found.");
+        }
     }
 
-    public void spawnObject()
+    public void SpawnObject()
     {
         loadedModel = new GameObject(name);
         //var gltf = loadedModel.AddComponent<GLTFast.GltfAsset>();
         //gltf.Url = "https://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.glb?alt=media&token=fa864308-df4e-4da7-96ee-db6d0846b36d";
 
-        loadGlb(loadedModel);
+        LoadGlbFile(loadedModel);
     }
 
-    public void loadGlb(GameObject loadedModel)
+    public async void LoadGlbFile(GameObject loadedModel)
     {
         var gltFastImport = new GLTFast.GltfImport();
+        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/blueJay.glb");
+        
+        if (!string.IsNullOrEmpty(downloadUrl))
+        {
+            StartCoroutine(DownloadGltfFile(downloadUrl, loadedModel));
+        }
+        else
+        {
+            Debug.Log("Failed to retrieve download URL!");
+        }
 
-        storage = FirebaseStorage.DefaultInstance;
+        /*storage = FirebaseStorage.DefaultInstance;
 
         gltfReference =
-            storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com/models/blueJay.glb");
+            storage.GetReferenceFromUrl();
 
         // Fetch the download URL
         gltfReference.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
@@ -55,7 +72,7 @@ public class LoadGltfWeb : MonoBehaviour
                 // Download the file via UnityWebRequest
                 StartCoroutine(DownloadGltfFile(downloadUrl, loadedModel));
             }
-        });
+        });*/
 
     }
 
@@ -67,7 +84,7 @@ public class LoadGltfWeb : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                byte[] gltfData = www.downloadHandler.data;
+                byte[] gltfBinaryData = www.downloadHandler.data;
 
                 // Create a new GLTFast loader
                 var gltfImport = new GLTFast.GltfImport();
@@ -80,7 +97,7 @@ public class LoadGltfWeb : MonoBehaviour
                 };
 
                 // Load the GLTF model from the byte array
-                Task<bool> loadTask = LoadGltfBinaryFromMemory(gltfData, loadedModel, downloadUrl, gltfImport);
+                Task<bool> loadTask = LoadGltfBinaryFromMemory(gltfBinaryData, loadedModel, downloadUrl, gltfImport);
                 yield return new WaitUntil(() => loadTask.IsCompleted);
 
                 bool success = loadTask.Result;
@@ -104,8 +121,9 @@ public class LoadGltfWeb : MonoBehaviour
 
     async Task<bool> LoadGltfBinaryFromMemory(byte[] data, GameObject gameObject, string downloadUrl, GltfImport gltfImport)
     {
-        var filePath = "file://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.glb?alt=media&token=fa864308-df4e-4da7-96ee-db6d0846b36d"; // Not sure what to put here
-        //var gltf = new GltfImport();
+        //var filePath = "file://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.glb?alt=media&token=fa864308-df4e-4da7-96ee-db6d0846b36d"; // Not sure what to put here
+        var filePath = GetFilepath(downloadUrl);
+        
         Debug.Log(BitConverter.ToString(data));
         bool success = await gltfImport.LoadGltfBinary(
             data,
@@ -120,9 +138,14 @@ public class LoadGltfWeb : MonoBehaviour
         return success;
     }
 
+    public string GetFilepath(string downloadURL)
+    {
+        return downloadURL.Replace("https", "file");
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
