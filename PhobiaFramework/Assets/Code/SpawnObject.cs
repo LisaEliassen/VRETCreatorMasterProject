@@ -15,10 +15,9 @@ public class SpawnObject : MonoBehaviour
     public void spawnObject(Vector3 position, string filepath, string name)
     {
         var gameObject = new GameObject(name);
+        gameObject.transform.position = position;
 
         loadGltf(gameObject, filepath, name);
-        gameObject.transform.position = position;
-        gameObject.SetActive(true);
     }
 
     async public void loadGltf(GameObject gameObject, string filepath, string name)
@@ -38,7 +37,6 @@ public class SpawnObject : MonoBehaviour
         if (success)
         {
             await gltf.InstantiateMainSceneAsync(gameObject.transform);
-            gameObject.SetActive(false);
         }
         else
         {

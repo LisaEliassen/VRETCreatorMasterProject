@@ -28,7 +28,7 @@ public class LoadGltfWeb : MonoBehaviour
     {
         loadedModel = new GameObject(name);
         var gltf = loadedModel.AddComponent<GLTFast.GltfAsset>();
-        gltf.Url = "https://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.gltf?alt=media&token=86d0ca42-dabd-4bfa-ba76-847e80573dfa";
+        gltf.Url = "https://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.glb?alt=media&token=fa864308-df4e-4da7-96ee-db6d0846b36d";
 
         loadGltf(loadedModel);
     }
@@ -40,7 +40,7 @@ public class LoadGltfWeb : MonoBehaviour
         storage = FirebaseStorage.DefaultInstance;
 
         gltfReference =
-            storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com/models/blueJay.gltf");
+            storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com/models/blueJay.glb");
 
         // Fetch the download URL
         gltfReference.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
@@ -67,7 +67,7 @@ public class LoadGltfWeb : MonoBehaviour
                 byte[] gltfData = www.downloadHandler.data;
 
                 // Create a new GLTFast loader
-                var gltfLoader = new GLTFast.GltfImport();
+                var gltfImport = new GLTFast.GltfImport();
 
                 var settings = new ImportSettings
                 {
@@ -77,7 +77,7 @@ public class LoadGltfWeb : MonoBehaviour
                 };
 
                 // Load the GLTF model from the byte array
-                Task<bool> loadTask = LoadGltfBinaryFromMemory(gltfData, loadedModel, downloadUrl);
+                Task<bool> loadTask = LoadGltfBinaryFromMemory(gltfData, loadedModel, downloadUrl, gltfImport);
                 yield return new WaitUntil(() => loadTask.IsCompleted);
 
                 bool success = loadTask.Result;
@@ -99,18 +99,19 @@ public class LoadGltfWeb : MonoBehaviour
         }
     }
 
-    async Task<bool> LoadGltfBinaryFromMemory(byte[] data, GameObject gameObject, string downloadUrl)
+    async Task<bool> LoadGltfBinaryFromMemory(byte[] data, GameObject gameObject, string downloadUrl, GltfImport gltfImport)
     {
-        var filePath = "https://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.gltf?alt=media&token=86d0ca42-dabd-4bfa-ba76-847e80573dfa"; // Not sure what to put here
-        var gltf = new GltfImport();
-        bool success = await gltf.LoadGltfBinary(
+        var filePath = "file://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.glb?alt=media&token=fa864308-df4e-4da7-96ee-db6d0846b36d"; // Not sure what to put here
+        //var gltf = new GltfImport();
+        Debug.Log(BitConverter.ToString(data));
+        bool success = await gltfImport.LoadGltfBinary(
             data,
             // The URI of the original data is important for resolving relative URIs within the glTF
             new Uri(filePath)
             );
         if (success)
         {
-            await gltf.InstantiateMainSceneAsync(gameObject.transform);
+            await gltfImport.InstantiateMainSceneAsync(gameObject.transform);
             gameObject.SetActive(false);
         }
         return success;
