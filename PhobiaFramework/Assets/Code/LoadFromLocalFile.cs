@@ -19,8 +19,8 @@ public class LoadFromLocalFile : MonoBehaviour
 
     public void loadLocalFile ()
     {
-        SpawnObject spawn = new SpawnObject();
-        spawn.spawnObject(new Vector3(0, 0, 0), "file:///Assets/Assets/blueJay.gltf", "BlueJay"); 
+        //SpawnObject spawn = new SpawnObject();
+        //spawn.spawnObject(new Vector3(0, 0, 0), "file:///Assets/Assets/blueJay.gltf", "BlueJay"); 
     }
 
     // Update is called once per frame

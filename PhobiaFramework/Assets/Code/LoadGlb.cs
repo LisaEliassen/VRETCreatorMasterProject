@@ -12,8 +12,8 @@ public class LoadGlb : MonoBehaviour
 {
     GameObject loadedModel;
     DatabaseService dbService;
-    public Vector3 position;
-    public string name;
+    Vector3 position;
+    string name;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +31,9 @@ public class LoadGlb : MonoBehaviour
         {
             Debug.LogError("GameObject with DatabaseService not found.");
         }
+
+        position = GameObject.Find("Position2").transform.position;
+        name = "Trigger";
     }
 
     public void SpawnObject()

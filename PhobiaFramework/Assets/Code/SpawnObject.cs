@@ -7,24 +7,24 @@ public class SpawnObject : MonoBehaviour
 {
     // file:///Assets/Assets/blueJay.gltf
     public UnityEngine.UI.Slider sizeSlider;
-    public GameObject gameObject;
-
+    public GameObject trigger;
 
     void Start()
     {
         // Add an event listener to the slider's value changed event
         sizeSlider.onValueChanged.AddListener(ChangeObjectSize);
-    }
 
+    }
+    /*
     public void spawnObject(Vector3 position, string filepath, string name)
     {
-        gameObject = new GameObject(name);
-        gameObject.transform.position = position;
+        trigger = new GameObject(name);
+        trigger.transform.position = position;
 
         loadGltf(gameObject, filepath, name);
     }
 
-    async public void loadGltf(GameObject gameObject, string filepath, string name)
+    async public void loadGltf(GameObject trigger, string filepath, string name)
     {
         var gltf = new GLTFast.GltfImport();
 
@@ -46,14 +46,14 @@ public class SpawnObject : MonoBehaviour
         {
             Debug.LogError("Loading glTF failed!");
         }
-    }
+    }*/
 
     // Callback method to adjust object size based on the slider's value
     private void ChangeObjectSize(float scaleValue)
     {
         // Assuming you want to change the scale of the loaded object
         // You can adjust this to your specific use case
-        GameObject loadedObject = GameObject.Find("BlueJay"); // Replace with the actual object name
+        GameObject loadedObject = GameObject.Find("Trigger"); // Replace with the actual object name
         if (loadedObject != null)
         {
             /// Map the slider value (0-100) to the desired scale range (minScale-maxScale)

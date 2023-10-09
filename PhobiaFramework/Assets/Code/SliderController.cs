@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class SliderController : MonoBehaviour
@@ -10,14 +11,13 @@ public class SliderController : MonoBehaviour
 
     public void SliderChange(float value) 
     {
-        float localValue = value; // * maxSliderValue;
-        sliderText.text = localValue.ToString("0");
+        sliderText.text = value.ToString("0");
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
