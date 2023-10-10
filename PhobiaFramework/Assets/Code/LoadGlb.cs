@@ -39,9 +39,6 @@ public class LoadGlb : MonoBehaviour
     public void SpawnObject()
     {
         loadedModel = new GameObject(name);
-        //var gltf = loadedModel.AddComponent<GLTFast.GltfAsset>();
-        //gltf.Url = "https://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.glb?alt=media&token=fa864308-df4e-4da7-96ee-db6d0846b36d";
-
         LoadGlbFile(loadedModel);
     }
 
@@ -58,24 +55,6 @@ public class LoadGlb : MonoBehaviour
         {
             Debug.Log("Failed to retrieve download URL!");
         }
-
-        /*storage = FirebaseStorage.DefaultInstance;
-
-        gltfReference =
-            storage.GetReferenceFromUrl();
-
-        // Fetch the download URL
-        gltfReference.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
-        {
-            if (!task.IsFaulted && !task.IsCanceled)
-            {
-                string downloadUrl = task.Result.ToString();
-                Debug.Log("Download URL: " + downloadUrl);
-
-                // Download the file via UnityWebRequest
-                StartCoroutine(DownloadGltfFile(downloadUrl, loadedModel));
-            }
-        });*/
 
     }
 
@@ -124,7 +103,6 @@ public class LoadGlb : MonoBehaviour
 
     async Task<bool> LoadGltfBinaryFromMemory(byte[] data, GameObject gameObject, string downloadUrl, GltfImport gltfImport)
     {
-        //var filePath = "file://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.glb?alt=media&token=fa864308-df4e-4da7-96ee-db6d0846b36d"; // Not sure what to put here
         var filePath = GetFilepath(downloadUrl);
         
         Debug.Log(BitConverter.ToString(data));
