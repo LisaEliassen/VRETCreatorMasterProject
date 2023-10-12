@@ -22,7 +22,7 @@ public class ScaleObject : MonoBehaviour
         // You can adjust this to your specific use case
         if (trigger == null)
         {
-            GameObject trigger = GameObject.Find("Trigger");
+            trigger = GameObject.Find("Trigger");
         }
         /// Map the slider value (0-100) to the desired scale range (minScale-maxScale)
         float scaledValue = scaleValue;
