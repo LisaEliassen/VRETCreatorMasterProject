@@ -13,6 +13,7 @@ using static System.Net.WebRequestMethods;
 public class DatabaseService : MonoBehaviour
 {
     FirebaseStorage storage;
+    StorageReference storageRef;
     StorageReference gltfReference;
     public string databaseName;
 
@@ -25,6 +26,7 @@ public class DatabaseService : MonoBehaviour
         else if (databaseName == "Firebase")
         {
             storage = FirebaseStorage.DefaultInstance;
+            storageRef = storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com");
         }
         else if (databaseName == "Azure")
         {
@@ -36,8 +38,8 @@ public class DatabaseService : MonoBehaviour
     public async Task<string> GetDownloadURL(string fileUrl)
     {
         string downloadUrl = "";
-        gltfReference =
-            storage.GetReferenceFromUrl(fileUrl);
+        gltfReference = storage.GetReferenceFromUrl(fileUrl);
+
         await gltfReference.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
         {
             if (!task.IsFaulted && !task.IsCanceled)
@@ -51,5 +53,11 @@ public class DatabaseService : MonoBehaviour
             }
         });
         return downloadUrl;
+    }
+
+    public void addFileData(string fileName)
+    {
+        StorageReference Ref = storageRef.Child("models_info/"+fileName);
+
     }
 }
