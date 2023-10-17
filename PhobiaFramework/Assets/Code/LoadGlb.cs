@@ -47,7 +47,8 @@ public class LoadGlb : MonoBehaviour
     {
         var gltFastImport = new GLTFast.GltfImport();
         string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/blueJay.glb");
-        
+        //dbService.addFileData("0", "blueJay", downloadUrl, "glb");
+
         if (!string.IsNullOrEmpty(downloadUrl))
         {
             StartCoroutine(DownloadGltfFile(downloadUrl, loadedModel));
@@ -78,6 +79,7 @@ public class LoadGlb : MonoBehaviour
                     AnisotropicFilterLevel = 3,
                     NodeNameMethod = NameImportMethod.OriginalUnique
                 };
+
 
                 // Load the GLTF model from the byte array
                 Task<bool> loadTask = LoadGltfBinaryFromMemory(gltfBinaryData, loadedModel, downloadUrl, gltfImport);

@@ -1,10 +1,12 @@
+using Firebase;
+using Firebase.Extensions;
+using Firebase.Database;
 using Firebase.Storage;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GLTFast;
 using GLTFast.Schema;
-using Firebase.Extensions;
 using UnityEngine.Networking;
 using System;
 using System.Threading.Tasks;
@@ -15,6 +17,7 @@ public class DatabaseService : MonoBehaviour
     FirebaseStorage storage;
     StorageReference storageRef;
     StorageReference gltfReference;
+    DatabaseReference dbreference;
     public string databaseName;
 
     void Start()
@@ -27,6 +30,8 @@ public class DatabaseService : MonoBehaviour
         {
             storage = FirebaseStorage.DefaultInstance;
             storageRef = storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com");
+
+            dbreference = FirebaseDatabase.DefaultInstance.RootReference;
         }
         else if (databaseName == "Azure")
         {
@@ -55,9 +60,11 @@ public class DatabaseService : MonoBehaviour
         return downloadUrl;
     }
 
-    public void addFileData(string fileName)
+    public void addFileData(string fileId, string fileName, string path, string filetype)
     {
-        StorageReference Ref = storageRef.Child("models_info/"+fileName);
+        FileInfo fileinfo = new FileInfo(fileName, path, filetype);
+        string json = JsonUtility.ToJson(fileinfo);
 
+        dbreference.Child(filetype).Child(fileId).SetRawJsonValueAsync(json);
     }
 }
