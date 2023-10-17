@@ -10,14 +10,30 @@ using System;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
-public class DatabaseService : MonoBehaviour
+public class DatabaseService
 {
     FirebaseStorage storage;
     StorageReference gltfReference;
 
+    public DatabaseService(string databaseName)
+    {
+        if (databaseName == null)
+        {
+
+        }
+        else if (databaseName == "Firebase")
+        {
+            storage = FirebaseStorage.DefaultInstance;
+        }
+        else if (databaseName == "Azure")
+        {
+
+        }
+    }
+
     void Start()
     {
-        storage = FirebaseStorage.DefaultInstance;
+
     }
 
     // Returns the download URL of given Database file URL

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class LoadFromLocalFile : MonoBehaviour
 {
-    FirebaseStorage storage;
+    /*FirebaseStorage storage;
     StorageReference gltfReference;
     GameObject loadedModel;
     public Vector3 position;
-    public string name;
+    public string name;*/
 
     // Start is called before the first frame update
     void Start()

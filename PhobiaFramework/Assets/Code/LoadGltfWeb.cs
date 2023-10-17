@@ -18,7 +18,7 @@ public class LoadGltfWeb : MonoBehaviour
     GameObject loadedModel;
     DatabaseService dbService;
     public Vector3 position;
-    public string name;
+    public string triggerName;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class LoadGltfWeb : MonoBehaviour
 
     public void spawnObject()
     {
-        loadedModel = new GameObject(name);
+        loadedModel = new GameObject(triggerName);
         //var gltf = loadedModel.AddComponent<GLTFast.GltfAsset>();
         //gltf.Url = "https://firebasestorage.googleapis.com/v0/b/vr-framework-95ccc.appspot.com/o/models%2FblueJay.glb?alt=media&token=fa864308-df4e-4da7-96ee-db6d0846b36d";
 

@@ -13,16 +13,17 @@ public class LoadGlb : MonoBehaviour
     GameObject loadedModel;
     DatabaseService dbService;
     Vector3 position;
-    string name;
+    string triggerName;
 
     // Start is called before the first frame update
     void Start()
     {
         // Find the GameObject with the DatabaseService script
-        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
+        //GameObject databaseServiceObject = GameObject.Find("DatabaseService");
+        dbService = new DatabaseService("Firebase");
 
         // Check if the GameObject was found
-        if (databaseServiceObject != null)
+        /*if (databaseServiceObject != null)
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
@@ -30,15 +31,15 @@ public class LoadGlb : MonoBehaviour
         else
         {
             Debug.LogError("GameObject with DatabaseService not found.");
-        }
+        }*/
 
         position = GameObject.Find("Position2").transform.position;
-        name = "Trigger";
+        triggerName = "Trigger";
     }
 
     public void SpawnObject()
     {
-        loadedModel = new GameObject(name);
+        loadedModel = new GameObject(triggerName);
         LoadGlbFile(loadedModel);
     }
 
@@ -105,7 +106,7 @@ public class LoadGlb : MonoBehaviour
     {
         var filePath = GetFilepath(downloadUrl);
         
-        Debug.Log(BitConverter.ToString(data));
+        //Debug.Log(BitConverter.ToString(data));
         bool success = await gltfImport.LoadGltfBinary(
             data,
             // The URI of the original data is important for resolving relative URIs within the glTF

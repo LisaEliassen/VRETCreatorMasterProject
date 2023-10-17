@@ -25,7 +25,7 @@ public class GetFile : MonoBehaviour
             storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com/models/blueJay.bin");
 
         // Create local filesystem URL
-        string localUrl = "file:///local/images/island.jpg";
+        //string localUrl = "file:///local/images/island.jpg";
 
         /*
         // Download to the local filesystem

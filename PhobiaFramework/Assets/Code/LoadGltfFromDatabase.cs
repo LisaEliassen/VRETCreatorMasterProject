@@ -17,7 +17,7 @@ public class LoadGltfFromDatabase : MonoBehaviour
     StorageReference gltfReference;
     GameObject loadedModel;
     public Vector3 position;
-    public string name;
+    public string triggerName;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class LoadGltfFromDatabase : MonoBehaviour
     }
     public void spawnObject()
     {
-        loadedModel = new GameObject(name);
+        loadedModel = new GameObject(triggerName);
         var gltf = loadedModel.AddComponent<GLTFast.GltfAsset>();
 
         loadGltf();

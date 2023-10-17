@@ -137,7 +137,7 @@ public class lb_Bird : MonoBehaviour {
 		anim.SetBool(landingBoolHash, false);
 
 		//Wait to apply velocity until the bird is entering the flying animation
-		while(anim.GetCurrentAnimatorStateInfo(0).nameHash != flyAnimationHash){
+		while(anim.GetCurrentAnimatorStateInfo(0).fullPathHash != flyAnimationHash){
 			yield return 0;
 		}
 
@@ -356,7 +356,7 @@ public class lb_Bird : MonoBehaviour {
 	}
 	
 	void OnGroundBehaviors(){
-		idle = anim.GetCurrentAnimatorStateInfo(0).nameHash == idleAnimationHash;
+		idle = anim.GetCurrentAnimatorStateInfo(0).fullPathHash == idleAnimationHash;
 		if(!GetComponent<Rigidbody>().isKinematic){
 			GetComponent<Rigidbody>().isKinematic = true;
 		}
