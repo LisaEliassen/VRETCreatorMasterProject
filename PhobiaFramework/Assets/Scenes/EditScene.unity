@@ -170,7 +170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9951802
 Transform:
   m_ObjectHideFlags: 0
@@ -2702,7 +2702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
-  name: BlueJay
+  triggerName: 
 --- !u!114 &842424288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2727,8 +2727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5abd731787c1e34a8c2db1892164ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  name: BlueJay
 --- !u!1 &846055952
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,6 +2771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f80d23e52ebd074ab198ae7a8cdc783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  databaseName: Firebase
 --- !u!1 &901693077
 GameObject:
   m_ObjectHideFlags: 0
@@ -4676,7 +4675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1095095386
 Transform:
   m_ObjectHideFlags: 0

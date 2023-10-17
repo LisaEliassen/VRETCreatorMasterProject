@@ -19,11 +19,11 @@ public class LoadGlb : MonoBehaviour
     void Start()
     {
         // Find the GameObject with the DatabaseService script
-        //GameObject databaseServiceObject = GameObject.Find("DatabaseService");
-        dbService = new DatabaseService("Firebase");
+        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
+        //dbService = new DatabaseService("Firebase");
 
         // Check if the GameObject was found
-        /*if (databaseServiceObject != null)
+        if (databaseServiceObject != null)
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
@@ -31,7 +31,7 @@ public class LoadGlb : MonoBehaviour
         else
         {
             Debug.LogError("GameObject with DatabaseService not found.");
-        }*/
+        }
 
         position = GameObject.Find("Position2").transform.position;
         triggerName = "Trigger";

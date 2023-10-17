@@ -10,12 +10,13 @@ using System;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
-public class DatabaseService
+public class DatabaseService : MonoBehaviour
 {
     FirebaseStorage storage;
     StorageReference gltfReference;
+    public string databaseName;
 
-    public DatabaseService(string databaseName)
+    void Start()
     {
         if (databaseName == null)
         {
@@ -31,11 +32,6 @@ public class DatabaseService
         }
     }
 
-    void Start()
-    {
-
-    }
-
     // Returns the download URL of given Database file URL
     public async Task<string> GetDownloadURL(string fileUrl)
     {
@@ -47,9 +43,7 @@ public class DatabaseService
             if (!task.IsFaulted && !task.IsCanceled)
             {
                 downloadUrl = task.Result.ToString();
-                Debug.Log("Download URL: " + downloadUrl);
-
-                // Download the file via UnityWebRequest
+                //Debug.Log("Download URL: " + downloadUrl);
             }
             else
             {
