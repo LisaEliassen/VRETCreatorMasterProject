@@ -32,6 +32,8 @@ public class DatabaseService : MonoBehaviour
             storageRef = storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com");
 
             dbreference = FirebaseDatabase.DefaultInstance.RootReference;
+
+            addDataForAllModels();
         }
         else if (databaseName == "Azure")
         {
@@ -66,5 +68,10 @@ public class DatabaseService : MonoBehaviour
         string json = JsonUtility.ToJson(fileinfo);
 
         dbreference.Child(filetype).Child(fileId).SetRawJsonValueAsync(json);
+    }
+
+    public void addDataForAllModels()
+    {
+
     }
 }
