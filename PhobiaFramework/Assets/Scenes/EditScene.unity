@@ -200,7 +200,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 1095095386}
-  m_AimTargetObject: {fileID: 0}
   m_UseLocalSpace: 1
   m_AngleStabilization: 20
   m_PositionStabilization: 0.25
@@ -678,7 +677,6 @@ MonoBehaviour:
   m_SampleFrequency: 60
   m_HitDetectionType: 0
   m_SphereCastRadius: 0.1
-  m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
     m_Bits: 2147483681
@@ -705,7 +703,6 @@ MonoBehaviour:
   m_EnableARRaycasting: 0
   m_OccludeARHitsWith3DObjects: 0
   m_OccludeARHitsWith2DObjects: 0
-  m_ScaleMode: 0
 --- !u!1 &142229368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,7 +1933,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 1066383017}
-  m_AimTargetObject: {fileID: 0}
   m_UseLocalSpace: 1
   m_AngleStabilization: 20
   m_PositionStabilization: 0.25
@@ -2615,8 +2611,8 @@ GameObject:
   - component: {fileID: 762048118}
   - component: {fileID: 762048117}
   - component: {fileID: 762048116}
-  - component: {fileID: 762048120}
   - component: {fileID: 762048121}
+  - component: {fileID: 762048122}
   m_Layer: 0
   m_Name: 360MediaDisplayer
   m_TagString: Untagged
@@ -2702,24 +2698,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &762048120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 762048115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 803fce75deb19a34395ea40c1c0ff2c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skyboxMaterial: {fileID: 2100000, guid: dfad930265bfe554ea1ce4e18c186af7, type: 2}
-  importImageButton: {fileID: 554604669}
-  importVideoButton: {fileID: 142229370}
-  skyboxObject: {fileID: 762048115}
-  videoPlayer: {fileID: 762048121}
-  renderTexture: {fileID: 8400000, guid: 1351e19e6380629458f0cc2938f26dce, type: 2}
 --- !u!328 &762048121
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -2755,6 +2733,25 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &762048122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762048115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c1de9c4c16447a4c92df15e31d1ee63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skyboxMaterial: {fileID: 2100000, guid: dfad930265bfe554ea1ce4e18c186af7, type: 2}
+  importImageButton: {fileID: 554604669}
+  importVideoButton: {fileID: 142229370}
+  photoSphere: {fileID: 762048115}
+  videoSphere: {fileID: 762048115}
+  videoPlayer: {fileID: 762048121}
+  renderTexture: {fileID: 8400000, guid: 1351e19e6380629458f0cc2938f26dce, type: 2}
 --- !u!1 &764961766
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,7 +3605,6 @@ MonoBehaviour:
   m_SampleFrequency: 60
   m_HitDetectionType: 0
   m_SphereCastRadius: 0.1
-  m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
     m_Bits: 2147483681
@@ -3635,7 +3631,6 @@ MonoBehaviour:
   m_EnableARRaycasting: 0
   m_OccludeARHitsWith3DObjects: 0
   m_OccludeARHitsWith2DObjects: 0
-  m_ScaleMode: 0
 --- !u!1 &906489449
 GameObject:
   m_ObjectHideFlags: 0
@@ -3923,30 +3918,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 7779212132400271959, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_ScaleToggleAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Toggle
-      m_Type: 1
-      m_ExpectedControlType: 
-      m_Id: 7e5cdf3f-c133-40c9-8165-d0ba021a44cd
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_ScaleDeltaAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Delta
-      m_Type: 0
-      m_ExpectedControlType: Vector2
-      m_Id: 3e7f139a-9842-4ded-95f4-cc77ca36cfc1
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
 --- !u!210 &919699403
 SortingGroup:
@@ -4311,7 +4282,6 @@ MonoBehaviour:
   m_SampleFrequency: 50
   m_HitDetectionType: 0
   m_SphereCastRadius: 0.1
-  m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
     m_Bits: 2147483681
@@ -4338,7 +4308,6 @@ MonoBehaviour:
   m_EnableARRaycasting: 0
   m_OccludeARHitsWith3DObjects: 0
   m_OccludeARHitsWith2DObjects: 0
-  m_ScaleMode: 0
 --- !u!1 &927890619
 GameObject:
   m_ObjectHideFlags: 0
@@ -5097,30 +5066,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 875253871413052681, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_ScaleToggleAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Toggle
-      m_Type: 1
-      m_ExpectedControlType: 
-      m_Id: 1310a1a8-f6f0-4edb-b115-e5445363ab04
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_ScaleDeltaAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Delta
-      m_Type: 0
-      m_ExpectedControlType: Vector2
-      m_Id: 0d859f7f-d91c-4b20-a294-94d1c8f9db2c
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
 --- !u!114 &1066383020
 MonoBehaviour:
@@ -5395,30 +5340,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  m_ScaleToggleAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Toggle
-      m_Type: 1
-      m_ExpectedControlType: 
-      m_Id: 75f0287c-6585-4274-9fcf-f0dc3a3b754d
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_ScaleDeltaAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Delta
-      m_Type: 0
-      m_ExpectedControlType: Vector2
-      m_Id: fab698c7-44a9-445b-975d-82bb7fe1af81
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
 --- !u!114 &1095095389
 MonoBehaviour:
@@ -5521,7 +5442,6 @@ MonoBehaviour:
   m_SampleFrequency: 20
   m_HitDetectionType: 0
   m_SphereCastRadius: 0.1
-  m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -5548,7 +5468,6 @@ MonoBehaviour:
   m_EnableARRaycasting: 0
   m_OccludeARHitsWith3DObjects: 0
   m_OccludeARHitsWith2DObjects: 0
-  m_ScaleMode: 0
   m_GazeAssistanceCalculation: 1
   m_GazeAssistanceColliderFixedSize: 1
   m_GazeAssistanceColliderScale: 1
@@ -7078,7 +6997,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 2081068623}
-  m_AimTargetObject: {fileID: 0}
   m_UseLocalSpace: 1
   m_AngleStabilization: 20
   m_PositionStabilization: 0.25
@@ -8384,30 +8302,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 7779212132400271959, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_ScaleToggleAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Toggle
-      m_Type: 1
-      m_ExpectedControlType: 
-      m_Id: b2f55273-db86-4dfa-a73f-e861f2e2f84b
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_ScaleDeltaAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Delta
-      m_Type: 0
-      m_ExpectedControlType: Vector2
-      m_Id: 3381f6df-2574-4d40-be95-6a225aa31105
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
 --- !u!114 &2081068626
 MonoBehaviour:
@@ -8671,30 +8565,6 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 875253871413052681, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  m_ScaleToggleAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Toggle
-      m_Type: 1
-      m_ExpectedControlType: 
-      m_Id: 929cfc43-653c-44b1-9263-f930a846fb16
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_ScaleDeltaAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scale Delta
-      m_Type: 0
-      m_ExpectedControlType: Vector2
-      m_Id: 1cd95788-ff67-477a-9d77-5c98ba45e51a
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
 --- !u!210 &2110824617
 SortingGroup:
@@ -9059,7 +8929,6 @@ MonoBehaviour:
   m_SampleFrequency: 50
   m_HitDetectionType: 0
   m_SphereCastRadius: 0.1
-  m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
     m_Bits: 2147483681
@@ -9086,7 +8955,6 @@ MonoBehaviour:
   m_EnableARRaycasting: 0
   m_OccludeARHitsWith3DObjects: 0
   m_OccludeARHitsWith2DObjects: 0
-  m_ScaleMode: 0
 --- !u!1 &2125494562
 GameObject:
   m_ObjectHideFlags: 0

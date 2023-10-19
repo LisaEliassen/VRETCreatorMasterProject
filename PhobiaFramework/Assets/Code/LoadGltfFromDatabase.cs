@@ -1,7 +1,6 @@
 using Firebase.Storage;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityGLTF;
 using System.Threading.Tasks;
