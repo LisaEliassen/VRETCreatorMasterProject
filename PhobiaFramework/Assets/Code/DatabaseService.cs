@@ -14,10 +14,7 @@ using static System.Net.WebRequestMethods;
 
 public class DatabaseService : MonoBehaviour
 {
-    FirebaseStorage storage;
-    StorageReference storageRef;
-    StorageReference gltfReference;
-    DatabaseReference dbreference;
+    Database database;
     public string databaseName;
 
     void Start()
@@ -28,12 +25,8 @@ public class DatabaseService : MonoBehaviour
         }
         else if (databaseName == "Firebase")
         {
-            storage = FirebaseStorage.DefaultInstance;
-            storageRef = storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com");
-
-            dbreference = FirebaseDatabase.DefaultInstance.RootReference;
-
-            addDataForAllModels();
+            database = new FirebaseService();
+            database.initialize();
         }
         else if (databaseName == "Azure")
         {
@@ -44,34 +37,16 @@ public class DatabaseService : MonoBehaviour
     // Returns the download URL of given Database file URL
     public async Task<string> GetDownloadURL(string fileUrl)
     {
-        string downloadUrl = "";
-        gltfReference = storage.GetReferenceFromUrl(fileUrl);
+        return await database.GetDownloadURL(fileUrl);
+    }
 
-        await gltfReference.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
-        {
-            if (!task.IsFaulted && !task.IsCanceled)
-            {
-                downloadUrl = task.Result.ToString();
-                //Debug.Log("Download URL: " + downloadUrl);
-            }
-            else
-            {
-                Debug.Log("Failed to get download URL from reference!");
-            }
-        });
-        return downloadUrl;
+    public void addFile(string filePath, string fileName, string fileType)
+    {
+        database.addFile(filePath, fileName, fileType);
     }
 
     public void addFileData(string fileId, string fileName, string path, string filetype)
     {
-        FileInfo fileinfo = new FileInfo(fileName, path, filetype);
-        string json = JsonUtility.ToJson(fileinfo);
-
-        dbreference.Child(filetype).Child(fileId).SetRawJsonValueAsync(json);
-    }
-
-    public void addDataForAllModels()
-    {
-
+        database.addFileData(fileId, fileName, path, filetype);
     }
 }
