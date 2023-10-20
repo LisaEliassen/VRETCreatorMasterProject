@@ -30,8 +30,9 @@ public class UploadFiles : MonoBehaviour
             Debug.LogError("GameObject with DatabaseService not found.");
         }
 
-        FileBrowser.SetFilters(true, new FileBrowser.Filter("Images", ".jpg", ".png"), new FileBrowser.Filter("Videos", ".mp4", ".mov"));
-        FileBrowser.SetDefaultFilter(".jpg");
+        FileBrowser.SetFilters(true, new FileBrowser.Filter("Models", ".glb"), new FileBrowser.Filter("Animations", ".anim"),
+            new FileBrowser.Filter("Images", ".jpg", ".png"), new FileBrowser.Filter("Videos", ".mp4", ".mov"));
+        FileBrowser.SetDefaultFilter(".glb");
 
         choosefileButton.onClick.AddListener(chooseFile);
     }
@@ -60,14 +61,9 @@ public class UploadFiles : MonoBehaviour
             if(File.Exists(path))
             {
                 string extension = Path.GetExtension(path);
-
-
-
-                //dbService.addFile
-
+                dbService.addFileData(Path.GetFileNameWithoutExtension(path), extension);
+                dbService.addFile(path, Path.GetFileNameWithoutExtension(path), extension);
             }
-
-
         }
     }
 

@@ -18,12 +18,14 @@ public class FirebaseService : Database
     StorageReference storageRef;
     StorageReference gltfReference;
     DatabaseReference dbreference;
+    string databaseURL;
     public string databaseName;
 
     public void initialize()
     {
+        databaseURL = "gs://vr-framework-95ccc.appspot.com";
         storage = FirebaseStorage.DefaultInstance;
-        storageRef = storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com");
+        storageRef = storage.GetReferenceFromUrl(databaseURL);
 
         dbreference = FirebaseDatabase.DefaultInstance.RootReference;
     }
@@ -53,19 +55,22 @@ public class FirebaseService : Database
     {
         StorageReference fileRef = null;
 
-        if (fileType == "glb")
+        if (fileType == ".glb")
         {
-            fileRef = storageRef.Child("models" + "/" + fileName + "." + fileType);
+            fileRef = storageRef.Child("models" + "/" + fileName + fileType);
         }
-        else if (fileType == "jpeg" || fileType == "png" || fileType == "jpg")
+        else if (fileType == ".jpeg" || fileType == ".png" || fileType == ".jpg")
         {
-            fileRef = storageRef.Child("photos" + "/" + fileName + "." + fileType);
+            fileRef = storageRef.Child("photos" + "/" + fileName + fileType);
         }
-        else if (fileType == "mp4")
+        else if (fileType == ".mp4" || fileType == ".mov")
         {
-            fileRef = storageRef.Child("videos" + "/" + fileName + "." + fileType);
+            fileRef = storageRef.Child("videos" + "/" + fileName + fileType);
         }
-        //else if (fileType == "") // For animations
+        else if (fileType == ".anim") 
+        {
+            fileRef = storageRef.Child("animations" + "/" + fileName + fileType);
+        }
 
         if (fileRef != null)
         {
@@ -86,14 +91,52 @@ public class FirebaseService : Database
                         Debug.Log("md5 hash = " + md5Hash);
                     }
             });
-        }       
+        }
+        else
+        {
+            Debug.Log("Failed to set StorageReference for file!");
+        }
     }
 
-    public void addFileData(string fileId, string fileName, string path, string filetype)
+    public void addFileData(string fileName, string fileType)
     {
-        FileInfo fileinfo = new FileInfo(fileName, path, filetype);
-        string json = JsonUtility.ToJson(fileinfo);
+        string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
+        string path = null;
+        string pathToIcon = null;
 
-        dbreference.Child(filetype).Child(fileId).SetRawJsonValueAsync(json);
+        if (fileType == ".glb")
+        {
+            path = databaseURL + "/" + "models" + "/" + fileName + fileType;
+            pathToIcon = databaseURL + "/" + "models" + "/" + "icons" + "/" + fileName + ".png";
+        }
+        else if (fileType == ".jpeg" || fileType == ".png" || fileType == ".jpg")
+        {
+            path = databaseURL + "/" + "photos" + "/" + fileName + fileType;
+            pathToIcon = databaseURL + "/" + "photos" + "/" + "icons" + "/" + fileName + ".png";
+        }
+        else if (fileType == ".mp4" || fileType == ".mov")
+        {
+            path = databaseURL + "/" + "videos" + "/" + fileName + fileType;
+            pathToIcon = databaseURL + "/" + "videos" + "/" + "icons" + "/" + fileName + ".png";
+        }
+        else if (fileType == ".anim")
+        {
+            path = databaseURL + "/" + "animations" + "/" + fileName + fileType;
+            pathToIcon = databaseURL + "/" + "animations" + "/" + "icons" + "/" + fileName + ".png";
+        }
+
+        if (path != null && pathToIcon != null)
+        {
+            FileMetaData fileMetaData = new FileMetaData(fileName, fileType.Replace(".", ""), path, pathToIcon);
+            string json = JsonUtility.ToJson(fileMetaData);
+
+            dbreference.Child(fileType.Replace(".", "")).Child(uniqueID).SetRawJsonValueAsync(json);
+
+            Debug.Log("After uploading file data");
+        }
+        else
+        {
+            Debug.Log("This filetype cannot be uploaded to database!");
+        }
     }
 }

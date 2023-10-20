@@ -37,16 +37,26 @@ public class DatabaseService : MonoBehaviour
     // Returns the download URL of given Database file URL
     public async Task<string> GetDownloadURL(string fileUrl)
     {
-        return await database.GetDownloadURL(fileUrl);
+        if (database != null)
+        {
+            return await database.GetDownloadURL(fileUrl);
+        }
+        else { return null; }
     }
 
     public void addFile(string filePath, string fileName, string fileType)
     {
-        database.addFile(filePath, fileName, fileType);
+        if (database != null)
+        {
+            database.addFile(filePath, fileName, fileType);
+        }
     }
 
-    public void addFileData(string fileId, string fileName, string path, string filetype)
+    public void addFileData(string fileName, string filetype)
     {
-        database.addFileData(fileId, fileName, path, filetype);
+        if (database != null)
+        {
+            database.addFileData(fileName, filetype);
+        }
     }
 }

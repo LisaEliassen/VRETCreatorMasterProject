@@ -20,7 +20,5 @@ public interface Database
 
     void addFile(string filePath, string fileName, string fileType);
 
-    void addFileData(string fileId, string fileName, string path, string filetype);
-
-
+    void addFileData(string fileName, string filetype);
 }

@@ -71,8 +71,6 @@ public class SignInManager : MonoBehaviour
     IEnumerator LoadNextScene()
     {        
         yield return new WaitForSeconds(0.1f); // Adjust the delay time if necessary
-        Debug.Log("Before loading");
         SceneManager.LoadScene(1);
-        Debug.Log("After loading");
     }
 }

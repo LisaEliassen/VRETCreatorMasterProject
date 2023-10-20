@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 using static SimpleFileBrowser.FileBrowser;
 using UnityEngine.Video;
+using UnityEngine.Networking;
 
 public class MediaManager : MonoBehaviour
 {
@@ -17,70 +18,115 @@ public class MediaManager : MonoBehaviour
     public VideoPlayer videoPlayer;
     public RenderTexture renderTexture;
 
+    DatabaseService dbService;
 
     void Start()
     {
-        FileBrowser.SetFilters(true, new FileBrowser.Filter("Images", ".jpg", ".png"), new FileBrowser.Filter("Videos", ".mp4", ".mov"));
-        FileBrowser.SetDefaultFilter(".jpg");
-
         importImageButton.onClick.AddListener(ImportImage);
         importVideoButton.onClick.AddListener(ImportVideo);
-    }
 
-    private void ImportImage()
-    {
-        StartCoroutine(ShowLoadDialogCoroutine(PickMode.Files, HandleImageSelected));
-    }
+        // Find the GameObject with the DatabaseService script
+        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
+        //dbService = new DatabaseService("Firebase");
 
-    private void ImportVideo()
-    {
-        StartCoroutine(ShowLoadDialogCoroutine(PickMode.Files, HandleVideoSelected));
-    }
-
-    IEnumerator ShowLoadDialogCoroutine(PickMode pickMode, Action<string[]> callback)
-    {
-        yield return FileBrowser.WaitForLoadDialog(pickMode, true, null, null, "Load Files", "Load");
-
-        if (FileBrowser.Success)
+        // Check if the GameObject was found
+        if (databaseServiceObject != null)
         {
-            callback(FileBrowser.Result);
+            // Get the DatabaseService component from the found GameObject
+            dbService = databaseServiceObject.GetComponent<DatabaseService>();
+        }
+        else
+        {
+            Debug.LogError("GameObject with DatabaseService not found.");
         }
     }
 
-    private void HandleImageSelected(string[] paths)
+    private async void ImportImage()
     {
-        if (paths.Length > 0)
+        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/photos/ESO_Paranal_360_Marcio_Cabral_Chile_07-CC.jpg");
+        if (!string.IsNullOrEmpty(downloadUrl))
         {
-            string path = paths[0];
-            byte[] fileData = File.ReadAllBytes(path);
-            Texture2D equirectangularImage = new Texture2D(2, 2);
-            equirectangularImage.LoadImage(fileData);
-
-            // Set the loaded texture as the Skybox texture
-            skyboxMaterial.SetTexture("_MainTex", equirectangularImage);
-
-            // Deactivate the VideoPlayer if it's active
-            videoPlayer.Stop();
-            videoPlayer.targetTexture = null;
+            StartCoroutine(HandleImageSelected(downloadUrl));
+        }
+        else
+        {
+            Debug.Log("Failed to retrieve download URL!");
         }
     }
 
-    private void HandleVideoSelected(string[] paths)
+    private async void ImportVideo()
     {
-        if (paths.Length > 0)
+        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/videos/360_vr_london_on_tower_bridge.mp4");
+        if (!string.IsNullOrEmpty(downloadUrl))
         {
-            string path = paths[0];
-            // Set the video source and render texture
-            videoPlayer.source = VideoSource.Url;
-            videoPlayer.url = path;
-            videoPlayer.targetTexture = renderTexture;
+            StartCoroutine(HandleVideoSelected(downloadUrl));
+        }
+        else
+        {
+            Debug.Log("Failed to retrieve download URL!");
+        }
+    }
 
-            // Set the Render Texture as the Skybox material
-            skyboxMaterial.SetTexture("_MainTex", renderTexture);
+    IEnumerator HandleImageSelected(string downloadUrl)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(downloadUrl))
+        {
+            yield return www.SendWebRequest();
 
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                byte[] binaryData = www.downloadHandler.data;
 
-            // Play the video
-            videoPlayer.Play();
+                Texture2D equirectangularImage = new Texture2D(2, 2);
+                equirectangularImage.LoadImage(binaryData);
+
+                // Set the loaded texture as the Skybox texture
+                skyboxMaterial.SetTexture("_MainTex", equirectangularImage);
+
+                // Deactivate the VideoPlayer if it's active
+                videoPlayer.Stop();
+                videoPlayer.targetTexture = null;
+            }
+            else
+            {
+                Debug.LogError("Error downloading image file: " + www.error);
+            }
+        }
+    }
+
+    IEnumerator HandleVideoSelected(string downloadUrl)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(downloadUrl))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                byte[] binaryData = www.downloadHandler.data;
+
+                
+                // Set the video source and clip for the VideoPlayer
+                videoPlayer.source = VideoSource.VideoClip;
+
+                // Create a temporary file with the byte array data
+                string tempPath = Application.persistentDataPath + "/tempVideo.mp4";
+                File.WriteAllBytes(tempPath, binaryData);
+
+                videoPlayer.url = tempPath;
+
+                videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+                videoPlayer.targetTexture = renderTexture;
+
+                // Set the Render Texture as the Skybox material
+                skyboxMaterial.SetTexture("_MainTex", renderTexture);
+
+                // Play the video
+                videoPlayer.Play();
+            }
+            else
+            {
+                Debug.LogError("Error downloading video file: " + www.error);
+            }
         }
     }
 }
