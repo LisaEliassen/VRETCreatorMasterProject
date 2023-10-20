@@ -1,13 +1,13 @@
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.IO;
 
 public class AnimationClipExporter : MonoBehaviour
 {
-    [MenuItem("Custom/Export Animation Clip")]
+    //[MenuItem("Custom/Export Animation Clip")]
     private static void ExportAnimationClip()
     {
-        AnimationClip clip = null;// Get your animation clip here
+        /* AnimationClip clip = null;// Get your animation clip here
 
         string path = "Assets/Animations/"; // Set your desired export path here
         string clipName = "exportedAnimationClip.anim"; // Set the desired file name here
@@ -22,6 +22,6 @@ public class AnimationClipExporter : MonoBehaviour
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log("Animation clip exported to: " + fullPath);
+        Debug.Log("Animation clip exported to: " + fullPath);*/
     }
 }
