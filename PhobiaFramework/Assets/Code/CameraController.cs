@@ -5,17 +5,16 @@ public class CameraController : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
     public float rotationSpeed = 2.0f;
+    public float scrollSpeed = 5.0f;
+    public float minZoomDistance = 2.0f;
+    public float maxZoomDistance = 20.0f;
 
     private Vector2 movementInput;
     private Vector2 rotationInput;
     private bool isRightMouseButtonDown = false;
     private Vector2 mouseStartPosition;
 
-    private float rotationX = 0.0f; // Store the camera's X rotation separately.
-
-    // Define the minimum and maximum vertical rotation angles
-    private float minVerticalRotation = -90.0f;
-    private float maxVerticalRotation = 90.0f;
+    private float rotationX = 0.0f;
 
     private void Update()
     {
@@ -37,6 +36,12 @@ public class CameraController : MonoBehaviour
         {
             rotationInput = Vector2.zero;
         }
+
+        // Read scroll wheel input for moving the camera up and down
+        float scrollInput = Mouse.current.scroll.y.ReadValue();
+
+        // Update the camera's position based on the scroll input
+        MoveCameraVertically(scrollInput);
     }
 
     private void FixedUpdate()
@@ -54,13 +59,28 @@ public class CameraController : MonoBehaviour
             rotationX -= rotationInput.y * rotationSpeed;
 
             // Clamp vertical rotation to prevent flipping
-            rotationX = Mathf.Clamp(rotationX, minVerticalRotation, maxVerticalRotation);
+            rotationX = Mathf.Clamp(rotationX, -90, 90);
 
             // Apply the rotation
             transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
         }
     }
+
+    private void MoveCameraVertically(float scrollInput)
+    {
+        // Update the camera's vertical position based on the scroll input
+        Vector3 newPosition = transform.position + Vector3.up * scrollInput * scrollSpeed * Time.deltaTime;
+
+        // Ensure the new position is within the specified bounds
+        newPosition.y = Mathf.Clamp(newPosition.y, minZoomDistance, maxZoomDistance);
+
+        transform.position = newPosition;
+    }
 }
+
+
+
+
 
 
 
