@@ -18,7 +18,11 @@ public interface Database
 
     Task<string> GetDownloadURL(string fileUrl);
 
+    void addIcon(string filePath, string iconFileName, string fileType);
+
     void addFile(string filePath, string fileName, string fileType);
 
-    void addFileData(string fileName, string filetype);
+    void addFileData(string fileName, string fileType, string iconFileType);
+
+    void getAllModelFileData();
 }

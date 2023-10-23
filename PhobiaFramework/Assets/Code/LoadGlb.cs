@@ -41,6 +41,8 @@ public class LoadGlb : MonoBehaviour
     {
         loadedModel = new GameObject(triggerName);
         LoadGlbFile(loadedModel);
+
+        dbService.getAllModelFileData();
     }
 
     public async void LoadGlbFile(GameObject loadedModel)

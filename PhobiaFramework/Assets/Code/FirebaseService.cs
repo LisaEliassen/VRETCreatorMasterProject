@@ -51,25 +51,60 @@ public class FirebaseService : Database
         return downloadUrl;
     }
 
+    public void addIcon(string filePath, string iconFileName, string fileType)
+    {
+        StorageReference fileRef = null;
+
+        if (fileType == ".jpeg" || fileType == ".png" || fileType == ".jpg")
+        {
+            fileRef = storageRef.Child("models/icons/" + iconFileName + fileType);
+        }
+
+        if (fileRef != null)
+        {
+            // Upload the file to the path "images/rivers.jpg"
+            fileRef.PutFileAsync(filePath)
+                .ContinueWith((Task<StorageMetadata> task) => {
+                    if (task.IsFaulted || task.IsCanceled)
+                    {
+                        Debug.Log(task.Exception.ToString());
+                        // Uh-oh, an error occurred!
+                    }
+                    else
+                    {
+                        // Metadata contains file metadata such as size, content-type, and download URL.
+                        StorageMetadata metadata = task.Result;
+                        string md5Hash = metadata.Md5Hash;
+                        Debug.Log("Finished uploading...");
+                        Debug.Log("md5 hash = " + md5Hash);
+                    }
+                });
+        }
+        else
+        {
+            Debug.Log("Failed to set StorageReference for file!");
+        }
+    }
+
     public void addFile(string filePath, string fileName, string fileType)
     {
         StorageReference fileRef = null;
 
         if (fileType == ".glb")
         {
-            fileRef = storageRef.Child("models" + "/" + fileName + fileType);
+            fileRef = storageRef.Child("models/" + fileName + fileType);
         }
         else if (fileType == ".jpeg" || fileType == ".png" || fileType == ".jpg")
         {
-            fileRef = storageRef.Child("photos" + "/" + fileName + fileType);
+            fileRef = storageRef.Child("photos/" + fileName + fileType);
         }
         else if (fileType == ".mp4" || fileType == ".mov")
         {
-            fileRef = storageRef.Child("videos" + "/" + fileName + fileType);
+            fileRef = storageRef.Child("videos/" + fileName + fileType);
         }
         else if (fileType == ".anim") 
         {
-            fileRef = storageRef.Child("animations" + "/" + fileName + fileType);
+            fileRef = storageRef.Child("animations/" + fileName + fileType);
         }
 
         if (fileRef != null)
@@ -98,7 +133,7 @@ public class FirebaseService : Database
         }
     }
 
-    public void addFileData(string fileName, string fileType)
+    public void addFileData(string fileName, string fileType, string iconFileType)
     {
         string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
         string path = null;
@@ -106,23 +141,23 @@ public class FirebaseService : Database
 
         if (fileType == ".glb")
         {
-            path = databaseURL + "/" + "models" + "/" + fileName + fileType;
-            pathToIcon = databaseURL + "/" + "models" + "/" + "icons" + "/" + fileName + ".png";
+            path = databaseURL + "/models/" + fileName + fileType;
+            pathToIcon = databaseURL + "/models/icons/" + fileName + "_icon" + iconFileType;
         }
         else if (fileType == ".jpeg" || fileType == ".png" || fileType == ".jpg")
         {
-            path = databaseURL + "/" + "photos" + "/" + fileName + fileType;
-            pathToIcon = databaseURL + "/" + "photos" + "/" + "icons" + "/" + fileName + ".png";
+            path = databaseURL + "/photos/" + fileName + fileType;
+            pathToIcon = databaseURL + "/photos/icons/" + fileName + "_icon" + iconFileType;
         }
         else if (fileType == ".mp4" || fileType == ".mov")
         {
-            path = databaseURL + "/" + "videos" + "/" + fileName + fileType;
-            pathToIcon = databaseURL + "/" + "videos" + "/" + "icons" + "/" + fileName + ".png";
+            path = databaseURL + "/videos/" + fileName + fileType;
+            pathToIcon = databaseURL + "/videos/icons/" + fileName + "_icon" + iconFileType;
         }
         else if (fileType == ".anim")
         {
-            path = databaseURL + "/" + "animations" + "/" + fileName + fileType;
-            pathToIcon = databaseURL + "/" + "animations" + "/" + "icons" + "/" + fileName + ".png";
+            path = databaseURL + "/animations/" + fileName + fileType;
+            pathToIcon = databaseURL + "/animations/icons/" + fileName + "_icon" + iconFileType;
         }
 
         if (path != null && pathToIcon != null)
@@ -138,5 +173,26 @@ public class FirebaseService : Database
         {
             Debug.Log("This filetype cannot be uploaded to database!");
         }
+    }
+
+    public void getAllModelFileData()
+    {
+        dbreference.GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsFaulted)
+            {
+                Debug.LogError("Error retrieving data: " + task.Exception);
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                // Iterate through the snapshot to access data
+                foreach (var child in snapshot.Children)
+                {
+                    Debug.Log("Key: " + child.Key);
+                    Debug.Log("Value: " + child.GetRawJsonValue());
+                }
+            }
+        });
     }
 }

@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EditScene.unity
     guid: c24f8a69f2701da45a711cfdd08cd23f
+  - enabled: 1
+    path: Assets/Scenes/UploadFiles.unity
+    guid: 914eff1bc08871c4f96577671e74b431
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: f302e151e50e9e749bd73f9773c05f72, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 492c9cf5db23fa043ba414ba11e0bc0a, type: 2}

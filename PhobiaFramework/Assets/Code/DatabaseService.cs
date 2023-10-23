@@ -44,6 +44,14 @@ public class DatabaseService : MonoBehaviour
         else { return null; }
     }
 
+    public void addIcon(string filePath, string iconFileName, string fileType)
+    {
+        if (database != null)
+        {
+            database.addIcon(filePath, iconFileName, fileType);
+        }
+    }
+
     public void addFile(string filePath, string fileName, string fileType)
     {
         if (database != null)
@@ -52,11 +60,19 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public void addFileData(string fileName, string filetype)
+    public void addFileData(string fileName, string fileType, string iconFileType)
     {
         if (database != null)
         {
-            database.addFileData(fileName, filetype);
+            database.addFileData(fileName, fileType, iconFileType);
+        }
+    }
+
+    public void getAllModelFileData()
+    {
+        if (database != null)
+        {
+            database.getAllModelFileData();
         }
     }
 }
