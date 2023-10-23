@@ -18,6 +18,8 @@ public interface Database
 
     Task<string> GetDownloadURL(string fileUrl);
 
+    //Task<byte[]> getFile(string downloadUrl);
+
     void addIcon(string filePath, string iconFileName, string fileType);
 
     void addFile(string filePath, string fileName, string fileType);

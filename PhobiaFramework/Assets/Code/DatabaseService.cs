@@ -44,6 +44,15 @@ public class DatabaseService : MonoBehaviour
         else { return null; }
     }
 
+    /*public async Task<byte[]> getFile(string downloadUrl)
+    {
+        if (database != null)
+        {
+            return await database.getFile(downloadUrl);
+        }
+        else { return null; }
+    }*/
+
     public void addIcon(string filePath, string iconFileName, string fileType)
     {
         if (database != null)

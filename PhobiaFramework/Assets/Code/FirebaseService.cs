@@ -51,6 +51,25 @@ public class FirebaseService : Database
         return downloadUrl;
     }
 
+    /*public async Task<byte[]> getFile(string downloadUrl) 
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(downloadUrl))
+        {
+            await www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                byte[] binaryData = www.downloadHandler.data;
+
+                return binaryData;
+            }
+            else
+            {
+                Debug.LogError("Error downloading image file: " + www.error);
+            }
+        }
+    }*/
+
     public void addIcon(string filePath, string iconFileName, string fileType)
     {
         StorageReference fileRef = null;

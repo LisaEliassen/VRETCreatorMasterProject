@@ -7,6 +7,8 @@ using System.IO;
 using static SimpleFileBrowser.FileBrowser;
 using UnityEngine.Video;
 using UnityEngine.Networking;
+using System.Threading.Tasks;
+
 
 public class MediaManager : MonoBehaviour
 {
@@ -46,7 +48,7 @@ public class MediaManager : MonoBehaviour
         string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/photos/ESO_Paranal_360_Marcio_Cabral_Chile_07-CC.jpg");
         if (!string.IsNullOrEmpty(downloadUrl))
         {
-            StartCoroutine(HandleImageSelected(downloadUrl));
+            HandleImageSelected(downloadUrl);
         }
         else
         {
@@ -69,6 +71,22 @@ public class MediaManager : MonoBehaviour
 
     IEnumerator HandleImageSelected(string downloadUrl)
     {
+        /*byte[] binaryData = await dbService.getFile(downloadUrl);
+
+        if (binaryData != null)
+        {
+            Texture2D equirectangularImage = new Texture2D(2, 2);
+            equirectangularImage.LoadImage(binaryData);
+
+            // Set the loaded texture as the Skybox texture
+            skyboxMaterial.SetTexture("_MainTex", equirectangularImage);
+
+            // Deactivate the VideoPlayer if it's active
+            videoPlayer.Stop();
+            videoPlayer.targetTexture = null;
+        }*/
+
+        
         using (UnityWebRequest www = UnityWebRequest.Get(downloadUrl))
         {
             yield return www.SendWebRequest();
@@ -76,7 +94,7 @@ public class MediaManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 byte[] binaryData = www.downloadHandler.data;
-
+                
                 Texture2D equirectangularImage = new Texture2D(2, 2);
                 equirectangularImage.LoadImage(binaryData);
 
