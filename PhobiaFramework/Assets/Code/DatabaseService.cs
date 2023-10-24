@@ -44,14 +44,14 @@ public class DatabaseService : MonoBehaviour
         else { return null; }
     }
 
-    /*public async Task<byte[]> getFile(string downloadUrl)
+    public async Task<byte[]> getFile(string downloadUrl)
     {
         if (database != null)
         {
             return await database.getFile(downloadUrl);
         }
         else { return null; }
-    }*/
+    }
 
     public void addIcon(string filePath, string iconFileName, string fileType)
     {
@@ -77,11 +77,11 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public void getAllModelFileData()
+    public IEnumerator getAllModelFileData(System.Action<List<FileMetaData>> callback)
     {
         if (database != null)
         {
-            database.getAllModelFileData();
+            yield return database.getAllModelFileData(callback);
         }
     }
 }

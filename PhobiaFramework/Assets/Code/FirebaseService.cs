@@ -51,24 +51,30 @@ public class FirebaseService : Database
         return downloadUrl;
     }
 
-    /*public async Task<byte[]> getFile(string downloadUrl) 
+    public async Task<byte[]> getFile(string downloadUrl)
     {
         using (UnityWebRequest www = UnityWebRequest.Get(downloadUrl))
         {
-            await www.SendWebRequest();
+            var asyncOperation = www.SendWebRequest();
+
+            // Wait until the request is completed or times out
+            while (!asyncOperation.isDone)
+            {
+                await Task.Yield();
+            }
 
             if (www.result == UnityWebRequest.Result.Success)
             {
                 byte[] binaryData = www.downloadHandler.data;
-
                 return binaryData;
             }
             else
             {
-                Debug.LogError("Error downloading image file: " + www.error);
+                Debug.LogError("Error downloading file: " + www.error);
+                return null; // or throw an exception
             }
         }
-    }*/
+    }
 
     public void addIcon(string filePath, string iconFileName, string fileType)
     {
@@ -83,7 +89,8 @@ public class FirebaseService : Database
         {
             // Upload the file to the path "images/rivers.jpg"
             fileRef.PutFileAsync(filePath)
-                .ContinueWith((Task<StorageMetadata> task) => {
+                .ContinueWith((Task<StorageMetadata> task) =>
+                {
                     if (task.IsFaulted || task.IsCanceled)
                     {
                         Debug.Log(task.Exception.ToString());
@@ -121,20 +128,19 @@ public class FirebaseService : Database
         {
             fileRef = storageRef.Child("videos/" + fileName + fileType);
         }
-        else if (fileType == ".anim") 
+        else if (fileType == ".anim")
         {
             fileRef = storageRef.Child("animations/" + fileName + fileType);
         }
 
         if (fileRef != null)
         {
-            // Upload the file to the path "images/rivers.jpg"
             fileRef.PutFileAsync(filePath)
-                .ContinueWith((Task<StorageMetadata> task) => {
+                .ContinueWith((Task<StorageMetadata> task) =>
+                {
                     if (task.IsFaulted || task.IsCanceled)
                     {
                         Debug.Log(task.Exception.ToString());
-                        // Uh-oh, an error occurred!
                     }
                     else
                     {
@@ -144,7 +150,7 @@ public class FirebaseService : Database
                         Debug.Log("Finished uploading...");
                         Debug.Log("md5 hash = " + md5Hash);
                     }
-            });
+                });
         }
         else
         {
@@ -194,24 +200,43 @@ public class FirebaseService : Database
         }
     }
 
-    public void getAllModelFileData()
+    public IEnumerator getAllModelFileData(Action<List<FileMetaData>> callback)
     {
-        dbreference.GetValueAsync().ContinueWith(task =>
+        var task = dbreference.Child("glb").GetValueAsync();
+        yield return new WaitUntil(() => task.IsCompleted);
+
+        if (task.Exception != null)
         {
-            if (task.IsFaulted)
+            Debug.LogError("Error retrieving data: " + task.Exception);
+        }
+        else if (task.Result != null)
+        {
+            List<FileMetaData> files = new List<FileMetaData>();
+            DataSnapshot snapshot = task.Result;
+
+            foreach (var child in snapshot.Children)
             {
-                Debug.LogError("Error retrieving data: " + task.Exception);
-            }
-            else if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                // Iterate through the snapshot to access data
-                foreach (var child in snapshot.Children)
+                if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
                 {
                     Debug.Log("Key: " + child.Key);
                     Debug.Log("Value: " + child.GetRawJsonValue());
+
+                    string filename = child.Child("filename").Value.ToString();
+                    string filetype = child.Child("filetype").Value.ToString();
+                    string path = child.Child("path").Value.ToString();
+                    string pathToIcon = child.Child("pathToIcon").Value.ToString();
+
+                    FileMetaData fileData = new FileMetaData(filename, filetype, path, pathToIcon);
+                    files.Add(fileData);
+                }
+                else
+                {
+                    Debug.LogError("One of the child properties is null.");
                 }
             }
-        });
+
+            callback(files);
+
+        }
     }
 }

@@ -29,7 +29,6 @@ public class MediaManager : MonoBehaviour
 
         // Find the GameObject with the DatabaseService script
         GameObject databaseServiceObject = GameObject.Find("DatabaseService");
-        //dbService = new DatabaseService("Firebase");
 
         // Check if the GameObject was found
         if (databaseServiceObject != null)
@@ -48,7 +47,7 @@ public class MediaManager : MonoBehaviour
         string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/photos/ESO_Paranal_360_Marcio_Cabral_Chile_07-CC.jpg");
         if (!string.IsNullOrEmpty(downloadUrl))
         {
-            HandleImageSelected(downloadUrl);
+            await HandleImageSelected(downloadUrl);
         }
         else
         {
@@ -61,7 +60,7 @@ public class MediaManager : MonoBehaviour
         string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/videos/360_vr_london_on_tower_bridge.mp4");
         if (!string.IsNullOrEmpty(downloadUrl))
         {
-            StartCoroutine(HandleVideoSelected(downloadUrl));
+            await HandleVideoSelected(downloadUrl);
         }
         else
         {
@@ -69,9 +68,9 @@ public class MediaManager : MonoBehaviour
         }
     }
 
-    IEnumerator HandleImageSelected(string downloadUrl)
+    async Task<IEnumerator> HandleImageSelected(string downloadUrl)
     {
-        /*byte[] binaryData = await dbService.getFile(downloadUrl);
+        byte[] binaryData = await dbService.getFile(downloadUrl);
 
         if (binaryData != null)
         {
@@ -84,68 +83,36 @@ public class MediaManager : MonoBehaviour
             // Deactivate the VideoPlayer if it's active
             videoPlayer.Stop();
             videoPlayer.targetTexture = null;
-        }*/
-
-        
-        using (UnityWebRequest www = UnityWebRequest.Get(downloadUrl))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                byte[] binaryData = www.downloadHandler.data;
-                
-                Texture2D equirectangularImage = new Texture2D(2, 2);
-                equirectangularImage.LoadImage(binaryData);
-
-                // Set the loaded texture as the Skybox texture
-                skyboxMaterial.SetTexture("_MainTex", equirectangularImage);
-
-                // Deactivate the VideoPlayer if it's active
-                videoPlayer.Stop();
-                videoPlayer.targetTexture = null;
-            }
-            else
-            {
-                Debug.LogError("Error downloading image file: " + www.error);
-            }
         }
+
+        return null;
     }
 
-    IEnumerator HandleVideoSelected(string downloadUrl)
+    async Task<IEnumerator> HandleVideoSelected(string downloadUrl)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(downloadUrl))
+        byte[] binaryData = await dbService.getFile(downloadUrl);
+
+        if (binaryData != null)
         {
-            yield return www.SendWebRequest();
+            // Set the video source and clip for the VideoPlayer
+            videoPlayer.source = VideoSource.VideoClip;
 
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                byte[] binaryData = www.downloadHandler.data;
+            // Create a temporary file with the byte array data
+            string tempPath = Application.persistentDataPath + "/tempVideo.mp4";
+            File.WriteAllBytes(tempPath, binaryData);
 
-                
-                // Set the video source and clip for the VideoPlayer
-                videoPlayer.source = VideoSource.VideoClip;
+            videoPlayer.url = tempPath;
 
-                // Create a temporary file with the byte array data
-                string tempPath = Application.persistentDataPath + "/tempVideo.mp4";
-                File.WriteAllBytes(tempPath, binaryData);
+            videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+            videoPlayer.targetTexture = renderTexture;
 
-                videoPlayer.url = tempPath;
+            // Set the Render Texture as the Skybox material
+            skyboxMaterial.SetTexture("_MainTex", renderTexture);
 
-                videoPlayer.renderMode = VideoRenderMode.RenderTexture;
-                videoPlayer.targetTexture = renderTexture;
-
-                // Set the Render Texture as the Skybox material
-                skyboxMaterial.SetTexture("_MainTex", renderTexture);
-
-                // Play the video
-                videoPlayer.Play();
-            }
-            else
-            {
-                Debug.LogError("Error downloading video file: " + www.error);
-            }
+            // Play the video
+            videoPlayer.Play();
         }
+        return null;
     }
 }
 

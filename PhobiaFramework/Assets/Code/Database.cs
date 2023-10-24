@@ -18,7 +18,7 @@ public interface Database
 
     Task<string> GetDownloadURL(string fileUrl);
 
-    //Task<byte[]> getFile(string downloadUrl);
+    Task<byte[]> getFile(string downloadUrl);
 
     void addIcon(string filePath, string iconFileName, string fileType);
 
@@ -26,5 +26,5 @@ public interface Database
 
     void addFileData(string fileName, string fileType, string iconFileType);
 
-    void getAllModelFileData();
+    IEnumerator getAllModelFileData(System.Action<List<FileMetaData>> callback);
 }

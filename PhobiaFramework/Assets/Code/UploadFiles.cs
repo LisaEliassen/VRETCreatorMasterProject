@@ -33,7 +33,6 @@ public class UploadFiles : MonoBehaviour
     {
         // Find the GameObject with the DatabaseService script
         GameObject databaseServiceObject = GameObject.Find("DatabaseService");
-        //dbService = new DatabaseService("Firebase");
 
         // Check if the GameObject was found
         if (databaseServiceObject != null)
@@ -113,11 +112,11 @@ public class UploadFiles : MonoBehaviour
             {
                 string fileExtension = Path.GetExtension(filePath);
                 string iconExtension = Path.GetExtension(iconPath);
-                /*dbService.addFileData(Path.GetFileNameWithoutExtension(path), extension);
-                dbService.addFile(path, Path.GetFileNameWithoutExtension(path), extension);*/
+
                 dbService.addFile(filePath, fileName, fileExtension);
                 dbService.addIcon(iconPath, fileName+"_icon", iconExtension);
                 dbService.addFileData(fileName, fileExtension, iconExtension);
+
                 yield return null;
             }
         }
