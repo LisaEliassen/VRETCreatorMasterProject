@@ -1,17 +1,18 @@
+using System;
+using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using GLTFast;
 using GLTFast.Schema;
 using UnityEngine.Networking;
-using System;
-using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
 public class LoadGlb : MonoBehaviour
 {
     GameObject loadedModel;
     DatabaseService dbService;
+    AnimationController animController;
     Vector3 position;
     string triggerName;
 
@@ -20,7 +21,6 @@ public class LoadGlb : MonoBehaviour
     {
         // Find the GameObject with the DatabaseService script
         GameObject databaseServiceObject = GameObject.Find("DatabaseService");
-        //dbService = new DatabaseService("Firebase");
 
         // Check if the GameObject was found
         if (databaseServiceObject != null)
@@ -33,6 +33,20 @@ public class LoadGlb : MonoBehaviour
             Debug.LogError("GameObject with DatabaseService not found.");
         }
 
+        // Find the GameObject with the DatabaseService script
+        GameObject animationControllerObject = GameObject.Find("AnimationController");
+
+        // Check if the GameObject was found
+        if (animationControllerObject != null)
+        {
+            // Get the DatabaseService component from the found GameObject
+            animController = animationControllerObject.GetComponent<AnimationController>();
+        }
+        else
+        {
+            Debug.LogError("GameObject with AnimationController not found.");
+        }
+
         position = GameObject.Find("Position2").transform.position;
         triggerName = "Trigger";
     }
@@ -43,64 +57,93 @@ public class LoadGlb : MonoBehaviour
         LoadGlbFile(loadedModel);
     }
 
+    //public async void LoadGlbFile(GameObject loadedModel, string downloadUrl, string modelName)
     public async void LoadGlbFile(GameObject loadedModel)
     {
         var gltFastImport = new GLTFast.GltfImport();
         string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/blueJay.glb");
-        //dbService.addFileData("0", "blueJay", downloadUrl, "glb");
+        string modelName = "blueJay";
+        string avatarUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/avatars/blueJayAvatar.asset");
+        string animUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/animations/watch01.anim");
 
-        if (!string.IsNullOrEmpty(downloadUrl))
+        // Get byte data from database
+        byte[] glbData = await dbService.getFile(downloadUrl);
+        byte[] avatarData = await dbService.getFile(avatarUrl);
+        byte[] animData = await dbService.getFile(animUrl);
+
+        if (glbData != null)
         {
-            StartCoroutine(DownloadGltfFile(downloadUrl, loadedModel));
-        }
-        else
-        {
-            Debug.Log("Failed to retrieve download URL!");
-        }
+            // Create a new GLTFast loader
+            var gltfImport = new GLTFast.GltfImport();
 
-    }
-
-    IEnumerator DownloadGltfFile(string downloadUrl, GameObject loadedModel)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get(downloadUrl))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.Success)
+            var settings = new ImportSettings
             {
-                byte[] gltfBinaryData = www.downloadHandler.data;
+                GenerateMipMaps = true,
+                AnisotropicFilterLevel = 3,
+                NodeNameMethod = NameImportMethod.OriginalUnique
+            };
 
-                // Create a new GLTFast loader
-                var gltfImport = new GLTFast.GltfImport();
 
-                var settings = new ImportSettings
+            // Load the GLTF model from the byte array
+            bool success = await LoadGltfBinaryFromMemory(glbData, loadedModel, downloadUrl, gltfImport);
+
+            if (success)
+            {
+                loadedModel.transform.position = position;
+                loadedModel.SetActive(true);
+
+
+                // Find the child GameObject named "Trigger"
+                Transform triggerTransform = loadedModel.transform.Find(modelName);
+
+                // Check if the child GameObject was found
+                if (triggerTransform != null)
                 {
-                    GenerateMipMaps = true,
-                    AnisotropicFilterLevel = 3,
-                    NodeNameMethod = NameImportMethod.OriginalUnique
-                };
+                    // Add the Animator component to the child GameObject
+                    //Animator animator = triggerTransform.gameObject.AddComponent<Animator>();
+                    //LoadAvatar(avatarData, triggerTransform.gameObject, modelName);*/
 
+                    // animator.runtimeAnimatorController = yourAnimatorController;
 
-                // Load the GLTF model from the byte array
-                Task<bool> loadTask = LoadGltfBinaryFromMemory(gltfBinaryData, loadedModel, downloadUrl, gltfImport);
-                yield return new WaitUntil(() => loadTask.IsCompleted);
-
-                bool success = loadTask.Result;
-
-                if (success)
-                {
-                    loadedModel.transform.position = position;
-                    loadedModel.SetActive(true);
+                    animController.LoadAnimation(animData, triggerTransform.gameObject, "watch01");
                 }
                 else
                 {
-                    Debug.LogError("Loading glTF failed!");
+                    Debug.LogError("Child GameObject with name" + modelName + "not found.");
                 }
             }
             else
             {
-                Debug.LogError("Error downloading GLTF file: " + www.error);
+                Debug.LogError("Loading glTF failed!");
             }
+        }
+    }
+
+    public void LoadAvatar(byte[] data, GameObject gameObjectWithAnimator, string modelName)
+    {
+        string tempFilePath = Path.GetTempFileName();
+
+        //string tempFilePath = Application.persistentDataPath + "/tempAvatar/" + modelName + ".asset";
+        File.WriteAllBytes(tempFilePath, data);
+
+        // Load the Avatar from the temporary file
+        Avatar loadedAvatar = AvatarBuilder.BuildGenericAvatar(gameObjectWithAnimator, tempFilePath);
+
+        // Check if the Avatar was loaded successfully
+        if (loadedAvatar != null)
+        {
+            // Get the Animator component from the provided GameObject
+            Animator animator = gameObjectWithAnimator.GetComponent<Animator>();
+
+            // Assign the loaded Avatar to the Animator component
+            animator.avatar = loadedAvatar;
+
+            // Delete the temporary file
+            File.Delete(tempFilePath);
+        }
+        else
+        {
+            Debug.LogError("Failed to load Avatar.");
         }
     }
 
