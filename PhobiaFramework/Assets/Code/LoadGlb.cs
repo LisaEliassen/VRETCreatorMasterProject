@@ -109,7 +109,7 @@ public class LoadGlb : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Child GameObject with name" + modelName + "not found.");
+                    Debug.LogError("Child GameObject with name " + modelName + " not found.");
                 }
             }
             else
