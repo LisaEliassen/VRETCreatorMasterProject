@@ -61,14 +61,14 @@ public class LoadGlb : MonoBehaviour
     public async void LoadGlbFile(GameObject loadedModel)
     {
         var gltFastImport = new GLTFast.GltfImport();
-        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/blueJay.glb");
-        string modelName = "blueJay";
-        string avatarUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/avatars/blueJayAvatar.asset");
+        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/crowAnimated.glb");
+        string modelName = "crowAnimated";
+        //string avatarUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/avatars/blueJayAvatar.asset");
         string animUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/animations/watch01.anim");
 
         // Get byte data from database
         byte[] glbData = await dbService.getFile(downloadUrl);
-        byte[] avatarData = await dbService.getFile(avatarUrl);
+        //byte[] avatarData = await dbService.getFile(avatarUrl);
         byte[] animData = await dbService.getFile(animUrl);
 
         if (glbData != null)
@@ -92,20 +92,23 @@ public class LoadGlb : MonoBehaviour
                 loadedModel.transform.position = position;
                 loadedModel.SetActive(true);
 
-
                 // Find the child GameObject named "Trigger"
-                Transform triggerTransform = loadedModel.transform.Find(modelName);
+                Transform triggerTransform = loadedModel.transform.GetChild(0);
 
                 // Check if the child GameObject was found
                 if (triggerTransform != null)
                 {
+                    //triggerTransform.gameObject.tag = "Trigger";
+
                     // Add the Animator component to the child GameObject
                     //Animator animator = triggerTransform.gameObject.AddComponent<Animator>();
                     //LoadAvatar(avatarData, triggerTransform.gameObject, modelName);*/
 
                     // animator.runtimeAnimatorController = yourAnimatorController;
 
-                    animController.LoadAnimation(animData, triggerTransform.gameObject, "watch01");
+                    //animController.LoadAnimation(animData, triggerTransform.gameObject, "peck");
+
+                    //animController.PlayAnimation(loadedModel, "2_Peck");
                 }
                 else
                 {
