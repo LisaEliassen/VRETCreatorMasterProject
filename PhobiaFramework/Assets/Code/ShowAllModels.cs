@@ -68,6 +68,12 @@ public class ShowAllModels : MonoBehaviour
     public IEnumerator CreateGridItem(string modelName, string modelIconPath, string modelStoragePath, int index)
     {
         GameObject gridItem = Instantiate(gridItemPrefab, gridParent);
+
+        GridLayoutGroup gridLayoutGroup = gridParent.GetComponent<GridLayoutGroup>();
+        float cellSizeX = gridLayoutGroup.cellSize.x;
+        float spacingX = gridLayoutGroup.spacing.x;
+        int columnCount = Mathf.FloorToInt(gridParent.GetComponent<RectTransform>().rect.width / (cellSizeX + spacingX));
+
         gridItem.name = "GridItem" + index;
 
         Image iconImage = gridItem.transform.Find("IconImage").GetComponent<Image>();
@@ -75,6 +81,20 @@ public class ShowAllModels : MonoBehaviour
 
         TextMeshProUGUI nameText = gridItem.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
         nameText.text = modelName;
+
+        int row = index / columnCount;
+        int column = index % columnCount;
+
+        // Adjust the anchored position to include the top padding
+        float paddingTop = 80; // Adjust this value as needed
+        float adjustedPosY = -(cellSizeX + spacingX) * row - paddingTop;
+
+        RectTransform rectTransform = gridItem.GetComponent<RectTransform>();
+        rectTransform.anchorMin = new Vector2(0, 1);
+        rectTransform.anchorMax = new Vector2(0, 1);
+        rectTransform.pivot = new Vector2(0, 1);
+        rectTransform.anchoredPosition = new Vector2((cellSizeX + spacingX) * column, adjustedPosY);
+        //rectTransform.anchoredPosition = new Vector2((cellSizeX + spacingX) * column, -(cellSizeX + spacingX) * row);
 
         // Add an onclick listener for the grid item to load the model from Firebase Storage
         /*Button button = gridItem.GetComponent<Button>();
