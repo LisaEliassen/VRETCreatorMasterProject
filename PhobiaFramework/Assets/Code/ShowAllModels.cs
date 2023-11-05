@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 public class ShowAllModels : MonoBehaviour
 {
     DatabaseService dbService;
+    LoadGlb loadGlbScript;
     public GameObject gridItemPrefab;
     public Transform gridParent;
     public Button showModelsButton;
+    public Button backButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
+    List<FileMetaData> files;
 
     // Start is called before the first frame update
     void Start()
@@ -26,15 +29,26 @@ public class ShowAllModels : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
+
+
+            loadGlbScript = databaseServiceObject.GetComponent<LoadGlb>();
         }
         else
         {
             Debug.LogError("GameObject with DatabaseService not found.");
         }
 
+        files = new List<FileMetaData>();
+
         showModelsButton.onClick.AddListener(() =>
         {
             StartCoroutine(FetchModels());
+        });
+
+        backButton.onClick.AddListener(() =>
+        {
+            EditSceneUI.SetActive(true);
+            ModelUI.SetActive(false);
         });
     }
 
@@ -43,26 +57,27 @@ public class ShowAllModels : MonoBehaviour
         EditSceneUI.SetActive(false);
         ModelUI.SetActive(true);
 
-        List<FileMetaData> files = new List<FileMetaData>();
-
-        yield return dbService.getAllModelFileData((data) =>
-        {
-            files = data;
-        });
-
-        if (files.Count > 0)
-        {
-            int index = 0;
-            foreach (var file in files)
+        if (files.Count == 0) 
+        { 
+            yield return dbService.getAllModelFileData((data) =>
             {
-                yield return StartCoroutine(CreateGridItem(file.filename, file.pathToIcon, file.path, index));
-                index++;
+                files = data;
+            });
+
+            if (files.Count > 0)
+            {
+                int index = 0;
+                foreach (var file in files)
+                {
+                    yield return StartCoroutine(CreateGridItem(file.filename, file.pathToIcon, file.path, index));
+                    index++;
+                }
             }
-        }
-        else
-        {
-            Debug.LogError("No models found in the database.");
-        }
+            else
+            {
+                Debug.LogError("No models found in the database.");
+            }
+        }        
     }
 
     public IEnumerator CreateGridItem(string modelName, string modelIconPath, string modelStoragePath, int index)
@@ -96,12 +111,16 @@ public class ShowAllModels : MonoBehaviour
         rectTransform.anchoredPosition = new Vector2((cellSizeX + spacingX) * column, adjustedPosY);
         //rectTransform.anchoredPosition = new Vector2((cellSizeX + spacingX) * column, -(cellSizeX + spacingX) * row);
 
+        Button button = gridItem.AddComponent<Button>();
+
         // Add an onclick listener for the grid item to load the model from Firebase Storage
-        /*Button button = gridItem.GetComponent<Button>();
         button.onClick.AddListener(() =>
         {
-            LoadModelFromFirebase(modelStoragePath);
-        });*/
+            loadGlbScript.SpawnObject(modelName, modelStoragePath);
+            EditSceneUI.SetActive(true);
+            ModelUI.SetActive(false);
+            Debug.Log("Button for model " + modelName + " was clicked!");
+        });
     }
 
     public IEnumerator LoadImageFromFirebase(string modelIconPath, Image iconImage)

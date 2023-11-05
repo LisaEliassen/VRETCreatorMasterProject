@@ -4,16 +4,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using GLTFast;
 using GLTFast.Schema;
 using UnityEngine.Networking;
 
 public class LoadGlb : MonoBehaviour
 {
-    GameObject loadedModel;
+    GameObject trigger;
     DatabaseService dbService;
     AnimationController animController;
+    public Slider moveSliderX;
+    public Slider moveSliderY;
+    public Slider sizeSlider;
     Vector3 position;
+    public GameObject posObject;
     string triggerName;
 
     // Start is called before the first frame update
@@ -47,29 +52,31 @@ public class LoadGlb : MonoBehaviour
             Debug.LogError("GameObject with AnimationController not found.");
         }
 
-        position = GameObject.Find("Position2").transform.position;
-        triggerName = "Trigger";
+        position = posObject.transform.position;
     }
 
-    public void SpawnObject()
+    
+    //public void SpawnObject()
+    public void SpawnObject(string modelName, string path)
     {
-        loadedModel = new GameObject(triggerName);
-        LoadGlbFile(loadedModel);
+        if (trigger != null)
+        {
+            DestroyImmediate(trigger);
+        }
+
+        //LoadGlbFile(loadedModel, "gs://vr-framework-95ccc.appspot.com/models/crowAnimated.glb", "crowAnimated");
+        trigger = new GameObject("Trigger");
+        LoadGlbFile(trigger, path, modelName);
     }
 
-    //public async void LoadGlbFile(GameObject loadedModel, string downloadUrl, string modelName)
-    public async void LoadGlbFile(GameObject loadedModel)
+    //public async void LoadGlbFile(GameObject loadedModel, string path)
+    public async void LoadGlbFile(GameObject loadedModel, string path, string modelName)
     {
         var gltFastImport = new GLTFast.GltfImport();
-        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/crowAnimated.glb");
-        string modelName = "crowAnimated";
-        //string avatarUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/models/avatars/blueJayAvatar.asset");
-        string animUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/animations/watch01.anim");
+        string downloadUrl = await dbService.GetDownloadURL(path);
 
         // Get byte data from database
         byte[] glbData = await dbService.getFile(downloadUrl);
-        //byte[] avatarData = await dbService.getFile(avatarUrl);
-        byte[] animData = await dbService.getFile(animUrl);
 
         if (glbData != null)
         {
@@ -83,7 +90,6 @@ public class LoadGlb : MonoBehaviour
                 NodeNameMethod = NameImportMethod.OriginalUnique
             };
 
-
             // Load the GLTF model from the byte array
             bool success = await LoadGltfBinaryFromMemory(glbData, loadedModel, downloadUrl, gltfImport);
 
@@ -91,62 +97,20 @@ public class LoadGlb : MonoBehaviour
             {
                 loadedModel.transform.position = position;
                 loadedModel.SetActive(true);
+                DontDestroyOnLoad(loadedModel);
 
-                // Find the child GameObject named "Trigger"
-                Transform triggerTransform = loadedModel.transform.GetChild(0);
+                animController.FindAnimations(loadedModel);
 
-                // Check if the child GameObject was found
-                if (triggerTransform != null)
-                {
-                    //triggerTransform.gameObject.tag = "Trigger";
+                sizeSlider.value = 1;
 
-                    // Add the Animator component to the child GameObject
-                    //Animator animator = triggerTransform.gameObject.AddComponent<Animator>();
-                    //LoadAvatar(avatarData, triggerTransform.gameObject, modelName);*/
-
-                    // animator.runtimeAnimatorController = yourAnimatorController;
-
-                    //animController.LoadAnimation(animData, triggerTransform.gameObject, "peck");
-
-                    //animController.PlayAnimation(loadedModel, "2_Peck");
-                }
-                else
-                {
-                    Debug.LogError("Child GameObject with name " + modelName + " not found.");
-                }
+                sizeSlider.interactable = true;
+                moveSliderX.interactable = true;
+                moveSliderY.interactable = true;
             }
             else
             {
                 Debug.LogError("Loading glTF failed!");
             }
-        }
-    }
-
-    public void LoadAvatar(byte[] data, GameObject gameObjectWithAnimator, string modelName)
-    {
-        string tempFilePath = Path.GetTempFileName();
-
-        //string tempFilePath = Application.persistentDataPath + "/tempAvatar/" + modelName + ".asset";
-        File.WriteAllBytes(tempFilePath, data);
-
-        // Load the Avatar from the temporary file
-        Avatar loadedAvatar = AvatarBuilder.BuildGenericAvatar(gameObjectWithAnimator, tempFilePath);
-
-        // Check if the Avatar was loaded successfully
-        if (loadedAvatar != null)
-        {
-            // Get the Animator component from the provided GameObject
-            Animator animator = gameObjectWithAnimator.GetComponent<Animator>();
-
-            // Assign the loaded Avatar to the Animator component
-            animator.avatar = loadedAvatar;
-
-            // Delete the temporary file
-            File.Delete(tempFilePath);
-        }
-        else
-        {
-            Debug.LogError("Failed to load Avatar.");
         }
     }
 

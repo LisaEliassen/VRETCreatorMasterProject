@@ -1,18 +1,19 @@
 using UnityEngine;
 using UnityGLTF;
+using UnityEngine.UI;
 using System.Threading.Tasks;
 using GLTFast;
 
 public class ScaleObject : MonoBehaviour
 {
-    // file:///Assets/Assets/blueJay.gltf
-    public UnityEngine.UI.Slider sizeSlider;
+    public Slider sizeSlider;
     GameObject trigger;
 
     void Start()
     {
         // Add an event listener to the slider's value changed event
         sizeSlider.onValueChanged.AddListener(ChangeObjectSize);
+        sizeSlider.interactable = false;
     }
 
     // Callback method to adjust object size based on the slider's value
@@ -25,7 +26,7 @@ public class ScaleObject : MonoBehaviour
             trigger = GameObject.Find("Trigger");
         }
         /// Map the slider value (0-100) to the desired scale range (minScale-maxScale)
-        float scaledValue = scaleValue;
+        float scaledValue = scaleValue/2;
         Vector3 newScale = new Vector3(scaledValue, scaledValue, scaledValue);
         trigger.transform.localScale = newScale;
     }

@@ -4,6 +4,7 @@ using SimpleFileBrowser;
 using static SimpleFileBrowser.FileBrowser;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using System.IO;
@@ -13,6 +14,8 @@ public class UploadFiles : MonoBehaviour
     public Button chooseFileButton;
     public Button chooseIconButton;
     public Button uploadButton;
+    public Button backButton;
+    public TextMeshProUGUI message;
     public TextMeshProUGUI warningOrErrorMessage;
     public TextMeshProUGUI filePathText;
     public TextMeshProUGUI iconPathText;
@@ -48,6 +51,11 @@ public class UploadFiles : MonoBehaviour
         chooseIconButton.onClick.AddListener(chooseIcon);
         chooseFileButton.onClick.AddListener(chooseFile);
         uploadButton.onClick.AddListener(uploadFile);
+
+        backButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene(1);
+        });
     }
 
     public void chooseIcon()
@@ -116,6 +124,13 @@ public class UploadFiles : MonoBehaviour
                 dbService.addFile(filePath, fileName, fileExtension);
                 dbService.addIcon(iconPath, fileName+"_icon", iconExtension);
                 dbService.addFileData(fileName, fileExtension, iconExtension);
+
+                message.text = "File has been uploaded!";
+
+                fileNameInput.text = "";
+                filePath = null; iconPath = null;
+                fileChosen = false;
+                iconChosen = false;
 
                 yield return null;
             }
