@@ -14,6 +14,7 @@ public class UploadFiles : MonoBehaviour
     public Button chooseFileButton;
     public Button chooseIconButton;
     public Button uploadButton;
+    public TMP_Dropdown dropdown;
     public TextMeshProUGUI message;
     public TextMeshProUGUI warningOrErrorMessage;
     public TextMeshProUGUI filePathText;
@@ -24,6 +25,7 @@ public class UploadFiles : MonoBehaviour
     string fileName = string.Empty;
     string filePath = string.Empty;
     string iconPath = string.Empty;
+    string fileType = string.Empty;
 
     bool fileChosen = false;
     bool iconChosen = false;
@@ -50,6 +52,29 @@ public class UploadFiles : MonoBehaviour
         chooseIconButton.onClick.AddListener(chooseIcon);
         chooseFileButton.onClick.AddListener(chooseFile);
         uploadButton.onClick.AddListener(uploadFile);
+
+        // Ensure that the dropdown is assigned in the Inspector
+        if (dropdown != null)
+        {
+            // Add a listener to the dropdown's onValueChanged event
+            dropdown.onValueChanged.AddListener(delegate {
+                DropdownValueChanged(dropdown);
+            });
+
+            // Get the index of the initial option without user interaction
+            int initialIndex = dropdown.value;
+
+            // Get the text of the initial option
+            string fileType = dropdown.options[initialIndex].text;
+            Debug.Log(fileType);
+
+            FileBrowser.SetFilters(true, new FileBrowser.Filter("Models", ".glb"));
+            FileBrowser.SetDefaultFilter(".glb");
+        }
+        else
+        {
+            Debug.LogError("TMP Dropdown is not assigned.");
+        }
     }
 
     public void chooseIcon()
@@ -69,13 +94,30 @@ public class UploadFiles : MonoBehaviour
         iconPathText.text = "Path of file icon: " + iconPath;
     }
 
+    void DropdownValueChanged(TMP_Dropdown change)
+    {
+        fileType = change.options[change.value].text;
+    }
+
     public void chooseFile()
     {
         iconChosen = false;
 
-        FileBrowser.SetFilters(true, new FileBrowser.Filter("Models", ".glb"), new FileBrowser.Filter("Animations", ".anim"),
-            new FileBrowser.Filter("Images", ".jpg", ".png"), new FileBrowser.Filter("Videos", ".mp4", ".mov"));
-        FileBrowser.SetDefaultFilter(".glb");
+        if (fileType == "Model")
+        {
+            FileBrowser.SetFilters(true, new FileBrowser.Filter("Models", ".glb"));
+            FileBrowser.SetDefaultFilter(".glb");
+        }
+        else if (fileType == "Texture" || fileType == "360 image")
+        {
+            FileBrowser.SetFilters(true, new FileBrowser.Filter("Images", ".jpg", ".png", ".jpeg"));
+            FileBrowser.SetDefaultFilter(".jpg");
+        }
+        else if(fileType == "360 video")
+        {
+            FileBrowser.SetFilters(true, new FileBrowser.Filter("Videos", ".mp4", ".mov"));
+            FileBrowser.SetDefaultFilter(".mp4");
+        }
 
         StartCoroutine(ShowLoadDialogCoroutine(PickMode.Files, setFilePath));
     }
@@ -115,9 +157,15 @@ public class UploadFiles : MonoBehaviour
                 string fileExtension = Path.GetExtension(filePath);
                 string iconExtension = Path.GetExtension(iconPath);
 
+                /*
                 dbService.addFile(filePath, fileName, fileExtension);
                 dbService.addIcon(iconPath, fileName+"_icon", iconExtension);
                 dbService.addFileData(fileName, fileExtension, iconExtension);
+                */
+
+                dbService.addFile(filePath, fileName, fileType, fileExtension);
+                dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
+                dbService.addFileData(fileName, fileType, fileExtension, iconExtension);
 
                 message.text = "File has been uploaded!";
 

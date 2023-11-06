@@ -56,7 +56,56 @@ public class MediaManager : MonoBehaviour
 
     private void HandleMediaSelected(string[] paths)
     {
-        Debug.Log("");
+        if (paths.Length > 0)
+        {
+            string path = paths[0];
+
+            if (IsVideoFile(path))
+            {
+                // Handle video file
+                videoPlayer.source = VideoSource.Url;
+                videoPlayer.url = path;
+
+                videoPlayer.targetTexture = renderTexture;
+
+                // Set the Render Texture as the Skybox material
+                skyboxMaterial.SetTexture("_MainTex", renderTexture);
+
+                // Play the video
+                videoPlayer.Play();
+            }
+            else if (IsImageFile(path))
+            {
+                // Handle image file
+                byte[] fileData = File.ReadAllBytes(path);
+                Texture2D equirectangularImage = new Texture2D(2, 2);
+                equirectangularImage.LoadImage(fileData);
+
+                // Set the loaded texture as the Skybox texture
+                skyboxMaterial.SetTexture("_MainTex", equirectangularImage);
+
+                // Deactivate the VideoPlayer if it's active
+                videoPlayer.Stop();
+                videoPlayer.targetTexture = null;
+            }
+            else
+            {
+                // Handle unsupported file type
+                Debug.Log("Selected file is not supported.");
+            }
+        }
+    }
+
+    private bool IsVideoFile(string path)
+    {
+        string extension = Path.GetExtension(path);
+        return extension.Equals(".mp4", StringComparison.OrdinalIgnoreCase) || extension.Equals(".mov", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private bool IsImageFile(string path)
+    {
+        string extension = Path.GetExtension(path);
+        return extension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) || extension.Equals(".png", StringComparison.OrdinalIgnoreCase);
     }
 
     IEnumerator ShowLoadDialogCoroutine(PickMode pickMode, Action<string[]> callback)

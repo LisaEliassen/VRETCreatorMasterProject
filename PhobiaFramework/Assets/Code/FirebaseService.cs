@@ -76,13 +76,25 @@ public class FirebaseService : Database
         }
     }
 
-    public void addIcon(string filePath, string iconFileName, string fileType)
+    public void addIcon(string filePath, string iconFileName, string fileType, string iconExtension)
     {
         StorageReference fileRef = null;
 
-        if (fileType == ".jpeg" || fileType == ".png" || fileType == ".jpg")
+        if (fileType == "Model")
         {
-            fileRef = storageRef.Child("models/icons/" + iconFileName + fileType);
+            fileRef = storageRef.Child("models/icons/" + iconFileName + iconExtension);
+        }
+        else if (fileType == "360 image")
+        {
+            fileRef = storageRef.Child("photos/icons/" + iconFileName + iconExtension);
+        }
+        else if (fileType == "360 video")
+        {
+            fileRef = storageRef.Child("videos/icons/" + iconFileName + iconExtension);
+        }
+        else if (fileType == "Texture")
+        {
+            fileRef = storageRef.Child("textures/icons/" + iconFileName + iconExtension);
         }
 
         if (fileRef != null)
@@ -112,25 +124,25 @@ public class FirebaseService : Database
         }
     }
 
-    public void addFile(string filePath, string fileName, string fileType)
+    public void addFile(string filePath, string fileName, string fileType, string extension)
     {
         StorageReference fileRef = null;
 
-        if (fileType == ".glb")
+        if (fileType == "Model")
         {
-            fileRef = storageRef.Child("models/" + fileName + fileType);
+            fileRef = storageRef.Child("models/" + fileName + extension);
         }
-        else if (fileType == ".jpeg" || fileType == ".png" || fileType == ".jpg")
+        else if (fileType == "360 image")
         {
-            fileRef = storageRef.Child("photos/" + fileName + fileType);
+            fileRef = storageRef.Child("photos/" + fileName + extension);
         }
-        else if (fileType == ".mp4" || fileType == ".mov")
+        else if (fileType == "360 video")
         {
-            fileRef = storageRef.Child("videos/" + fileName + fileType);
+            fileRef = storageRef.Child("videos/" + fileName + extension);
         }
-        else if (fileType == ".anim")
+        else if (fileType == "Texture")
         {
-            fileRef = storageRef.Child("animations/" + fileName + fileType);
+            fileRef = storageRef.Child("textures/" + fileName + extension);
         }
 
         if (fileRef != null)
@@ -158,39 +170,44 @@ public class FirebaseService : Database
         }
     }
 
-    public void addFileData(string fileName, string fileType, string iconFileType)
+    public void addFileData(string fileName, string fileType, string extension, string iconExtension)
     {
         string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
         string path = null;
         string pathToIcon = null;
+        string childStr = null;
 
-        if (fileType == ".glb")
+        if (fileType == "Model")
         {
-            path = databaseURL + "/models/" + fileName + fileType;
-            pathToIcon = databaseURL + "/models/icons/" + fileName + "_icon" + iconFileType;
+            path = databaseURL + "/models/" + fileName + extension;
+            pathToIcon = databaseURL + "/models/icons/" + fileName + "_icon" + iconExtension;
+            childStr = "glb";
         }
-        else if (fileType == ".jpeg" || fileType == ".png" || fileType == ".jpg")
+        else if (fileType == "360 image")
         {
-            path = databaseURL + "/photos/" + fileName + fileType;
-            pathToIcon = databaseURL + "/photos/icons/" + fileName + "_icon" + iconFileType;
+            path = databaseURL + "/photos/" + fileName + extension;
+            pathToIcon = databaseURL + "/photos/icons/" + fileName + "_icon" + iconExtension;
+            childStr = "360images";
         }
-        else if (fileType == ".mp4" || fileType == ".mov")
+        else if (fileType == "360 video")
         {
-            path = databaseURL + "/videos/" + fileName + fileType;
-            pathToIcon = databaseURL + "/videos/icons/" + fileName + "_icon" + iconFileType;
+            path = databaseURL + "/videos/" + fileName + extension;
+            pathToIcon = databaseURL + "/videos/icons/" + fileName + "_icon" + iconExtension;
+            childStr = "360videos";
         }
-        else if (fileType == ".anim")
+        else if (fileType == "Texture")
         {
-            path = databaseURL + "/animations/" + fileName + fileType;
-            pathToIcon = databaseURL + "/animations/icons/" + fileName + "_icon" + iconFileType;
+            path = databaseURL + "/textures/" + fileName + extension;
+            pathToIcon = databaseURL + "/textures/icons/" + fileName + "_icon" + iconExtension;
+            childStr = "textures";
         }
 
-        if (path != null && pathToIcon != null)
+        if (path != null && pathToIcon != null && childStr != null)
         {
             FileMetaData fileMetaData = new FileMetaData(fileName, fileType.Replace(".", ""), path, pathToIcon);
             string json = JsonUtility.ToJson(fileMetaData);
 
-            dbreference.Child(fileType.Replace(".", "")).Child(uniqueID).SetRawJsonValueAsync(json);
+            dbreference.Child(childStr).Child(uniqueID).SetRawJsonValueAsync(json);
 
             Debug.Log("After uploading file data");
         }
@@ -238,5 +255,45 @@ public class FirebaseService : Database
             callback(files);
 
         }
+    }
+
+    public IEnumerator getAll360Media(Action<List<FileMetaData>> callback)
+    {
+        var task = dbreference.Child("glb").GetValueAsync();
+        yield return new WaitUntil(() => task.IsCompleted);
+
+        if (task.Exception != null)
+        {
+            Debug.LogError("Error retrieving data: " + task.Exception);
+        }
+        else if (task.Result != null)
+        {
+            List<FileMetaData> files = new List<FileMetaData>();
+            DataSnapshot snapshot = task.Result;
+
+            foreach (var child in snapshot.Children)
+            {
+                if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
+                {
+                    Debug.Log("Key: " + child.Key);
+                    Debug.Log("Value: " + child.GetRawJsonValue());
+
+                    string filename = child.Child("filename").Value.ToString();
+                    string filetype = child.Child("filetype").Value.ToString();
+                    string path = child.Child("path").Value.ToString();
+                    string pathToIcon = child.Child("pathToIcon").Value.ToString();
+
+                    FileMetaData fileData = new FileMetaData(filename, filetype, path, pathToIcon);
+                    files.Add(fileData);
+                }
+                else
+                {
+                    Debug.LogError("One of the child properties is null.");
+                }
+            }
+
+            callback(files);
+        }
+
     }
 }

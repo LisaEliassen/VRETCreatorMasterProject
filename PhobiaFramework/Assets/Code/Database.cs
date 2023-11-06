@@ -20,11 +20,13 @@ public interface Database
 
     Task<byte[]> getFile(string downloadUrl);
 
-    void addIcon(string filePath, string iconFileName, string fileType);
+    void addIcon(string filePath, string iconFileName, string fileType, string iconExtension);
 
-    void addFile(string filePath, string fileName, string fileType);
+    void addFile(string filePath, string fileName, string fileType, string extension);
 
-    void addFileData(string fileName, string fileType, string iconFileType);
+    void addFileData(string fileName, string fileType, string extension, string iconExtension);
 
     IEnumerator getAllModelFileData(System.Action<List<FileMetaData>> callback);
+
+    IEnumerator getAll360Media(Action<List<FileMetaData>> callback);
 }

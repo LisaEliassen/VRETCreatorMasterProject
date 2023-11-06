@@ -53,27 +53,27 @@ public class DatabaseService : MonoBehaviour
         else { return null; }
     }
 
-    public void addIcon(string filePath, string iconFileName, string fileType)
+    public void addIcon(string filePath, string iconFileName, string fileType, string iconExtension)
     {
         if (database != null)
         {
-            database.addIcon(filePath, iconFileName, fileType);
+            database.addIcon(filePath, iconFileName, fileType, iconExtension);
         }
     }
 
-    public void addFile(string filePath, string fileName, string fileType)
+    public void addFile(string filePath, string fileName, string fileType, string extension)
     {
         if (database != null)
         {
-            database.addFile(filePath, fileName, fileType);
+            database.addFile(filePath, fileName, fileType, extension);
         }
     }
 
-    public void addFileData(string fileName, string fileType, string iconFileType)
+    public void addFileData(string fileName, string fileType, string extension, string iconExtension)
     {
         if (database != null)
         {
-            database.addFileData(fileName, fileType, iconFileType);
+            database.addFileData(fileName, fileType, extension, iconExtension);
         }
     }
 
@@ -82,6 +82,14 @@ public class DatabaseService : MonoBehaviour
         if (database != null)
         {
             yield return database.getAllModelFileData(callback);
+        }
+    }
+
+    public IEnumerator getAll360Media(Action<List<FileMetaData>> callback)
+    {
+        if (database != null)
+        {
+            yield return database.getAll360Media(callback);
         }
     }
 }
