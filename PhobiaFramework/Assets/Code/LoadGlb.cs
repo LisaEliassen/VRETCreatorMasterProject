@@ -97,7 +97,7 @@ public class LoadGlb : MonoBehaviour
             {
                 loadedModel.transform.position = position;
                 loadedModel.SetActive(true);
-                DontDestroyOnLoad(loadedModel);
+                //DontDestroyOnLoad(loadedModel);
 
                 animController.FindAnimations(loadedModel);
 

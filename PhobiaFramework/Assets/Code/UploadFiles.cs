@@ -14,7 +14,6 @@ public class UploadFiles : MonoBehaviour
     public Button chooseFileButton;
     public Button chooseIconButton;
     public Button uploadButton;
-    public Button backButton;
     public TextMeshProUGUI message;
     public TextMeshProUGUI warningOrErrorMessage;
     public TextMeshProUGUI filePathText;
@@ -51,11 +50,6 @@ public class UploadFiles : MonoBehaviour
         chooseIconButton.onClick.AddListener(chooseIcon);
         chooseFileButton.onClick.AddListener(chooseFile);
         uploadButton.onClick.AddListener(uploadFile);
-
-        backButton.onClick.AddListener(() =>
-        {
-            SceneManager.LoadScene(1);
-        });
     }
 
     public void chooseIcon()

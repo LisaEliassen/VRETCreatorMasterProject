@@ -31,18 +31,4 @@ public class ScreenManager : MonoBehaviour
         });
     }
 
-    public void changeScene(string sceneName)
-    {
-        if (sceneName == "upload")
-        {
-            //SceneManager.LoadScene(2);
-            
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

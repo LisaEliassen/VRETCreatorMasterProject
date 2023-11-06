@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 public class MediaManager : MonoBehaviour
 {
     public Material skyboxMaterial;
+    public Button uploadFromDeviceButton;
     public Button importImageButton;
     public Button importVideoButton;
     public GameObject photoSphere;
@@ -39,6 +40,32 @@ public class MediaManager : MonoBehaviour
         else
         {
             Debug.LogError("GameObject with DatabaseService not found.");
+        }
+
+        FileBrowser.SetFilters(true, new FileBrowser.Filter("Images", ".jpg", ".png"), new FileBrowser.Filter("Videos", ".mp4", ".mov"));
+        FileBrowser.SetDefaultFilter(".jpg");
+
+        uploadFromDeviceButton.onClick.AddListener(ImportMedia);
+
+    }
+
+    private void ImportMedia()
+    {
+        StartCoroutine(ShowLoadDialogCoroutine(PickMode.Files, HandleMediaSelected));
+    }
+
+    private void HandleMediaSelected(string[] paths)
+    {
+        Debug.Log("");
+    }
+
+    IEnumerator ShowLoadDialogCoroutine(PickMode pickMode, Action<string[]> callback)
+    {
+        yield return FileBrowser.WaitForLoadDialog(pickMode, true, null, null, "Load Files", "Load");
+
+        if (FileBrowser.Success)
+        {
+            callback(FileBrowser.Result);
         }
     }
 

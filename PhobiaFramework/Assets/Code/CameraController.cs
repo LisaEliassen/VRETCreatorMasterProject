@@ -3,8 +3,10 @@ using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
-    public float moveSpeed = 10.0f;
-    public float rotationSpeed = 2.0f;
+    public GameObject EditUI;
+
+    public float moveSpeed = 1.0f;
+    public float rotationSpeed = 0.5f;
     public float scrollSpeed = 5.0f;
     public float minZoomDistance = 2.0f;
     public float maxZoomDistance = 20.0f;
@@ -16,53 +18,69 @@ public class CameraController : MonoBehaviour
 
     private float rotationX = 0.0f;
 
+    private float scroll;
+
+    private void Start()
+    {
+        float scrollInput = Mouse.current.scroll.y.ReadValue();
+        scroll = scrollInput;
+    }
+
     private void Update()
     {
-        // Read movement input from the new Input System
-        movementInput = Keyboard.current.wKey.ReadValue() * Vector2.down +
-                        Keyboard.current.aKey.ReadValue() * Vector2.right +
-                        Keyboard.current.sKey.ReadValue() * Vector2.up +
-                        Keyboard.current.dKey.ReadValue() * Vector2.left;
-
-        // Read right mouse button state
-        isRightMouseButtonDown = Mouse.current.rightButton.isPressed;
-
-        // Read mouse position for rotation when the right mouse button is held down
-        if (isRightMouseButtonDown)
-        {
-            rotationInput = Mouse.current.delta.ReadValue();
-        }
-        else
-        {
-            rotationInput = Vector2.zero;
-        }
-
         // Read scroll wheel input for moving the camera up and down
         float scrollInput = Mouse.current.scroll.y.ReadValue();
 
-        // Update the camera's position based on the scroll input
-        MoveCameraVertically(scrollInput);
-    }
-
-    private void FixedUpdate()
-    {
-        // Move the camera based on the input
-        Vector3 moveDirection = new Vector3(movementInput.x, 0, movementInput.y);
-        transform.Translate(moveDirection * moveSpeed * Time.fixedDeltaTime);
-
-        // Rotate the camera based on the right mouse button
-        if (isRightMouseButtonDown)
+        if (EditUI.activeSelf)
         {
-            // Calculate rotation based on mouse movement
-            Vector3 eulerRotation = transform.rotation.eulerAngles;
-            eulerRotation.y += rotationInput.x * rotationSpeed;
-            rotationX -= rotationInput.y * rotationSpeed;
+            // Read movement input from the new Input System
+            movementInput = Keyboard.current.wKey.ReadValue() * Vector2.down +
+                            Keyboard.current.aKey.ReadValue() * Vector2.right +
+                            Keyboard.current.sKey.ReadValue() * Vector2.up +
+                            Keyboard.current.dKey.ReadValue() * Vector2.left +
+                            Keyboard.current.upArrowKey.ReadValue() * Vector2.down +
+                            Keyboard.current.leftArrowKey.ReadValue() * Vector2.right +
+                            Keyboard.current.downArrowKey.ReadValue() * Vector2.up +
+                            Keyboard.current.rightArrowKey.ReadValue() * Vector2.left;
 
-            // Clamp vertical rotation to prevent flipping
-            rotationX = Mathf.Clamp(rotationX, -90, 90);
+            // Move the camera based on the input
+            Vector3 moveDirection = new Vector3(movementInput.x, 0, movementInput.y);
+            transform.Translate(moveDirection * moveSpeed * Time.fixedDeltaTime);
 
-            // Apply the rotation
-            transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
+
+            // Read right mouse button state
+            isRightMouseButtonDown = Mouse.current.rightButton.isPressed;
+
+            // Rotate the camera based on the right mouse button
+            if (isRightMouseButtonDown)
+            {
+                // Read mouse position for rotation when the right mouse button is held down
+                rotationInput = Mouse.current.delta.ReadValue();
+
+                // Calculate rotation based on mouse movement
+                Vector3 eulerRotation = transform.rotation.eulerAngles;
+                eulerRotation.y += rotationInput.x * rotationSpeed;
+                rotationX -= rotationInput.y * rotationSpeed;
+
+                // Clamp vertical rotation to prevent flipping
+                rotationX = Mathf.Clamp(rotationX, -90, 90);
+
+                // Apply the rotation
+                transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
+            }
+            else
+            {
+                rotationInput = Vector2.zero;
+            }
+
+
+            if (scroll != scrollInput)
+            {
+                // Update the camera's position based on the scroll input
+                MoveCameraVertically(scrollInput);
+
+                scroll = scrollInput;
+            }
         }
     }
 
@@ -77,27 +95,3 @@ public class CameraController : MonoBehaviour
         transform.position = newPosition;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
