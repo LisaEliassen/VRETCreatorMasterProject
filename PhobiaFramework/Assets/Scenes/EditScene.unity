@@ -10101,7 +10101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditUI: {fileID: 927890619}
   moveSpeed: 1
-  rotationSpeed: 0.5
+  rotationSpeed: 0.1
   scrollSpeed: 5
   minZoomDistance: 2
   maxZoomDistance: 20

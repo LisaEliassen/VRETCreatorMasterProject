@@ -14,7 +14,6 @@ public class CameraController : MonoBehaviour
     private Vector2 movementInput;
     private Vector2 rotationInput;
     private bool isRightMouseButtonDown = false;
-    private Vector2 mouseStartPosition;
 
     private float rotationX = 0.0f;
 
@@ -59,14 +58,15 @@ public class CameraController : MonoBehaviour
 
                 // Calculate rotation based on mouse movement
                 Vector3 eulerRotation = transform.rotation.eulerAngles;
-                eulerRotation.y += rotationInput.x * rotationSpeed;
-                rotationX -= rotationInput.y * rotationSpeed;
+                eulerRotation.y -= rotationInput.x * rotationSpeed;
+                rotationX += rotationInput.y * rotationSpeed;
 
                 // Clamp vertical rotation to prevent flipping
                 rotationX = Mathf.Clamp(rotationX, -90, 90);
 
                 // Apply the rotation
                 transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
+
             }
             else
             {
@@ -87,7 +87,7 @@ public class CameraController : MonoBehaviour
     private void MoveCameraVertically(float scrollInput)
     {
         // Update the camera's vertical position based on the scroll input
-        Vector3 newPosition = transform.position + Vector3.up * scrollInput * scrollSpeed * Time.deltaTime;
+        Vector3 newPosition = transform.position + Vector3.down * scrollInput * scrollSpeed * Time.deltaTime;
 
         // Ensure the new position is within the specified bounds
         newPosition.y = Mathf.Clamp(newPosition.y, minZoomDistance, maxZoomDistance);
