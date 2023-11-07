@@ -66,7 +66,6 @@ public class UploadFiles : MonoBehaviour
 
             // Get the text of the initial option
             string fileType = dropdown.options[initialIndex].text;
-            Debug.Log(fileType);
 
             FileBrowser.SetFilters(true, new FileBrowser.Filter("Models", ".glb"));
             FileBrowser.SetDefaultFilter(".glb");

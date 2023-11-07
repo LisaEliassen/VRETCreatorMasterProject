@@ -4,18 +4,19 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Collections;
 using TMPro;
+using System.Linq;
 using System.Threading.Tasks;
 
-public class ShowAllModels : MonoBehaviour
+public class ShowAll360Media : MonoBehaviour
 {
     DatabaseService dbService;
-    LoadGlb loadGlbScript;
-    public GameObject gridItemPrefab;
+    MediaManager mediaManager;
+    public GameObject gridItemPrefab360;
     public Transform gridParent;
-    public Button showModelsButton;
+    public Button addMediaButton;
     public Button backButton;
     public GameObject EditSceneUI;
-    public GameObject ModelUI;
+    public GameObject MediaUI;
     List<FileMetaData> files;
 
     // Start is called before the first frame update
@@ -31,7 +32,7 @@ public class ShowAllModels : MonoBehaviour
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
 
 
-            loadGlbScript = databaseServiceObject.GetComponent<LoadGlb>();
+            mediaManager = databaseServiceObject.GetComponent<MediaManager>();
         }
         else
         {
@@ -40,49 +41,56 @@ public class ShowAllModels : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        showModelsButton.onClick.AddListener(() =>
+        addMediaButton.onClick.AddListener(() =>
         {
-            StartCoroutine(FetchModels());
+            StartCoroutine(FetchMedia());
         });
 
         backButton.onClick.AddListener(() =>
         {
             EditSceneUI.SetActive(true);
-            ModelUI.SetActive(false);
+            MediaUI.SetActive(false);
         });
     }
 
-    public IEnumerator FetchModels()
+    public IEnumerator FetchMedia()
     {
         EditSceneUI.SetActive(false);
-        ModelUI.SetActive(true);
+        MediaUI.SetActive(true);
 
         List<FileMetaData> newFilesList = new List<FileMetaData>();
 
-        yield return dbService.getAllModelFileData((data) =>
+        yield return dbService.getAll360Media((data) =>
         {
             newFilesList = data;
         });
 
+        Debug.Log(files.Count + " " + newFilesList.Count);
         if (files.Count < newFilesList.Count)
         {
             int index = 0;
             foreach (var file in newFilesList)
             {
-                yield return StartCoroutine(CreateGridItem(file.filename, file.pathToIcon, file.path, index));
+                yield return StartCoroutine(CreateGridItem(file.filename, file.filetype, file.pathToIcon, file.path, index));
                 index++;
             }
             files = newFilesList;
         }
         else
         {
-            Debug.Log("No more models found in the database.");
+            Debug.Log("No more files found in the database.");
         }
     }
 
-    public IEnumerator CreateGridItem(string modelName, string modelIconPath, string modelStoragePath, int index)
+    public IEnumerator CreateGridItem(string filename, string filetype, string iconPath, string storagePath, int index)
     {
-        GameObject gridItem = Instantiate(gridItemPrefab, gridParent);
+        if (files.Any(x => x.filetype == filetype && x.pathToIcon == iconPath && x.path == storagePath))
+        {
+            Debug.Log("Grid item already exists for file: " + filename);
+            yield break; // Exit the function early if the grid item already exists
+        }
+
+        GameObject gridItem = Instantiate(gridItemPrefab360, gridParent);
 
         GridLayoutGroup gridLayoutGroup = gridParent.GetComponent<GridLayoutGroup>();
         float cellSizeX = gridLayoutGroup.cellSize.x;
@@ -92,10 +100,10 @@ public class ShowAllModels : MonoBehaviour
         gridItem.name = "GridItem" + index;
 
         Image iconImage = gridItem.transform.Find("IconImage").GetComponent<Image>();
-        yield return StartCoroutine(LoadImageFromFirebase(modelIconPath, iconImage));
+        yield return StartCoroutine(LoadImageFromFirebase(iconPath, iconImage));
 
         TextMeshProUGUI nameText = gridItem.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
-        nameText.text = modelName;
+        nameText.text = filename;
 
         int row = index / columnCount;
         int column = index % columnCount;
@@ -114,18 +122,34 @@ public class ShowAllModels : MonoBehaviour
         Button button = gridItem.AddComponent<Button>();
 
         // Add an onclick listener for the grid item to load the model from Firebase Storage
-        button.onClick.AddListener(() =>
+        button.onClick.AddListener(async () =>
         {
-            loadGlbScript.SpawnObject(modelName, modelStoragePath);
-            EditSceneUI.SetActive(true);
-            ModelUI.SetActive(false);
-            Debug.Log("Button for model " + modelName + " was clicked!");
+            string downloadUrl = await dbService.GetDownloadURL(storagePath);
+            if (downloadUrl != null)
+            {
+                if (filetype == "360 image")
+                {
+                    await mediaManager.HandleImageSelected(downloadUrl);
+                }
+                else if (filetype == "360 video")
+                {
+                    await mediaManager.HandleVideoSelected(downloadUrl);
+                }               
+
+                EditSceneUI.SetActive(true);
+                MediaUI.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("Download url is null!");
+            }
+            Debug.Log("Button for file " + filename + " was clicked!");
         });
     }
 
-    public IEnumerator LoadImageFromFirebase(string modelIconPath, Image iconImage)
+    public IEnumerator LoadImageFromFirebase(string iconPath, Image iconImage)
     {
-        Task<Texture2D> loadTextureTask = LoadTextureAsync(modelIconPath);
+        Task<Texture2D> loadTextureTask = LoadTextureAsync(iconPath);
         yield return new WaitUntil(() => loadTextureTask.IsCompleted);
 
         if (loadTextureTask.IsFaulted || loadTextureTask.IsCanceled)
@@ -142,9 +166,9 @@ public class ShowAllModels : MonoBehaviour
         }
     }
 
-    private async Task<Texture2D> LoadTextureAsync(string modelIconPath)
+    private async Task<Texture2D> LoadTextureAsync(string iconPath)
     {
-        string downloadUrl = await dbService.GetDownloadURL(modelIconPath);
+        string downloadUrl = await dbService.GetDownloadURL(iconPath);
         if (!string.IsNullOrEmpty(downloadUrl))
         {
             byte[] imageData = await dbService.getFile(downloadUrl);
@@ -159,9 +183,24 @@ public class ShowAllModels : MonoBehaviour
         return null;
     }
 
-    // Update is called once per frame
-    void Update()
+    // Custom class to compare FileMetaData instances for equality
+    public class FileMetaDataEqualityComparer : IEqualityComparer<FileMetaData>
     {
-        
+        public bool Equals(FileMetaData x, FileMetaData y)
+        {
+            return x.filetype == y.filetype && x.path == y.path;
+        }
+
+        public int GetHashCode(FileMetaData obj)
+        {
+            unchecked
+            {
+                int hashCode = obj.filename.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.filetype.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.path.GetHashCode();
+                hashCode = (hashCode * 397) ^ obj.pathToIcon.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 }

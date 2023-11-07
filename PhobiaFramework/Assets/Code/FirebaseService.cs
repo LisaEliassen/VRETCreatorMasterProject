@@ -86,7 +86,7 @@ public class FirebaseService : Database
         }
         else if (fileType == "360 image")
         {
-            fileRef = storageRef.Child("photos/icons/" + iconFileName + iconExtension);
+            fileRef = storageRef.Child("images/icons/" + iconFileName + iconExtension);
         }
         else if (fileType == "360 video")
         {
@@ -134,7 +134,7 @@ public class FirebaseService : Database
         }
         else if (fileType == "360 image")
         {
-            fileRef = storageRef.Child("photos/" + fileName + extension);
+            fileRef = storageRef.Child("images/" + fileName + extension);
         }
         else if (fileType == "360 video")
         {
@@ -185,8 +185,8 @@ public class FirebaseService : Database
         }
         else if (fileType == "360 image")
         {
-            path = databaseURL + "/photos/" + fileName + extension;
-            pathToIcon = databaseURL + "/photos/icons/" + fileName + "_icon" + iconExtension;
+            path = databaseURL + "/images/" + fileName + extension;
+            pathToIcon = databaseURL + "/images/icons/" + fileName + "_icon" + iconExtension;
             childStr = "360images";
         }
         else if (fileType == "360 video")
@@ -259,41 +259,74 @@ public class FirebaseService : Database
 
     public IEnumerator getAll360Media(Action<List<FileMetaData>> callback)
     {
-        var task = dbreference.Child("glb").GetValueAsync();
-        yield return new WaitUntil(() => task.IsCompleted);
+        List<FileMetaData> files = new List<FileMetaData>();
 
-        if (task.Exception != null)
+        var taskImages = dbreference.Child("360images").GetValueAsync();
+        yield return new WaitUntil(() => taskImages.IsCompleted);
+
+        var taskVideos = dbreference.Child("360videos").GetValueAsync();
+        yield return new WaitUntil(() => taskVideos.IsCompleted);
+
+        if (taskImages.Exception != null)
         {
-            Debug.LogError("Error retrieving data: " + task.Exception);
+            Debug.LogError("Error retrieving data: " + taskImages.Exception);
         }
-        else if (task.Result != null)
+        else if (taskVideos.Exception != null)
         {
-            List<FileMetaData> files = new List<FileMetaData>();
-            DataSnapshot snapshot = task.Result;
+            Debug.LogError("Error retrieving data: " + taskVideos.Exception);
+        }
+        else {
+            if (taskImages.Result != null) {
+                DataSnapshot snapshot = taskImages.Result;
 
-            foreach (var child in snapshot.Children)
-            {
-                if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
+                foreach (var child in snapshot.Children)
                 {
-                    Debug.Log("Key: " + child.Key);
-                    Debug.Log("Value: " + child.GetRawJsonValue());
+                    if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
+                    {
+                        Debug.Log("Key: " + child.Key);
+                        Debug.Log("Value: " + child.GetRawJsonValue());
 
-                    string filename = child.Child("filename").Value.ToString();
-                    string filetype = child.Child("filetype").Value.ToString();
-                    string path = child.Child("path").Value.ToString();
-                    string pathToIcon = child.Child("pathToIcon").Value.ToString();
+                        string filename = child.Child("filename").Value.ToString();
+                        string filetype = child.Child("filetype").Value.ToString();
+                        string path = child.Child("path").Value.ToString();
+                        string pathToIcon = child.Child("pathToIcon").Value.ToString();
 
-                    FileMetaData fileData = new FileMetaData(filename, filetype, path, pathToIcon);
-                    files.Add(fileData);
+                        FileMetaData fileData = new FileMetaData(filename, filetype, path, pathToIcon);
+                        files.Add(fileData);
+                    }
+                    else
+                    {
+                        Debug.LogError("One of the child properties is null.");
+                    }
                 }
-                else
+            }
+            if (taskVideos.Result != null)
+            {
+                DataSnapshot snapshot = taskVideos.Result;
+
+                foreach (var child in snapshot.Children)
                 {
-                    Debug.LogError("One of the child properties is null.");
+                    if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
+                    {
+                        Debug.Log("Key: " + child.Key);
+                        Debug.Log("Value: " + child.GetRawJsonValue());
+
+                        string filename = child.Child("filename").Value.ToString();
+                        string filetype = child.Child("filetype").Value.ToString();
+                        string path = child.Child("path").Value.ToString();
+                        string pathToIcon = child.Child("pathToIcon").Value.ToString();
+
+                        FileMetaData fileData = new FileMetaData(filename, filetype, path, pathToIcon);
+                        files.Add(fileData);
+                    }
+                    else
+                    {
+                        Debug.LogError("One of the child properties is null.");
+                    }
                 }
             }
 
             callback(files);
         }
-
     }
 }

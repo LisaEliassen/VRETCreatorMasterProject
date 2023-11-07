@@ -13,13 +13,16 @@ using System.Threading.Tasks;
 public class MediaManager : MonoBehaviour
 {
     public Material skyboxMaterial;
-    public Button uploadFromDeviceButton;
+    public Button chooseFromDeviceButton;
     public Button importImageButton;
     public Button importVideoButton;
     public GameObject photoSphere;
     public GameObject videoSphere;
     public VideoPlayer videoPlayer;
     public RenderTexture renderTexture;
+
+    public GameObject EditSceneUI;
+    public GameObject MediaUI;
 
     DatabaseService dbService;
 
@@ -42,10 +45,7 @@ public class MediaManager : MonoBehaviour
             Debug.LogError("GameObject with DatabaseService not found.");
         }
 
-        FileBrowser.SetFilters(true, new FileBrowser.Filter("Images", ".jpg", ".png"), new FileBrowser.Filter("Videos", ".mp4", ".mov"));
-        FileBrowser.SetDefaultFilter(".jpg");
-
-        uploadFromDeviceButton.onClick.AddListener(ImportMedia);
+        chooseFromDeviceButton.onClick.AddListener(ImportMedia);
 
     }
 
@@ -73,6 +73,9 @@ public class MediaManager : MonoBehaviour
 
                 // Play the video
                 videoPlayer.Play();
+
+                EditSceneUI.SetActive(true);
+                MediaUI.SetActive(false);
             }
             else if (IsImageFile(path))
             {
@@ -87,6 +90,9 @@ public class MediaManager : MonoBehaviour
                 // Deactivate the VideoPlayer if it's active
                 videoPlayer.Stop();
                 videoPlayer.targetTexture = null;
+
+                EditSceneUI.SetActive(true);
+                MediaUI.SetActive(false);
             }
             else
             {
@@ -110,6 +116,9 @@ public class MediaManager : MonoBehaviour
 
     IEnumerator ShowLoadDialogCoroutine(PickMode pickMode, Action<string[]> callback)
     {
+        FileBrowser.SetFilters(true, new FileBrowser.Filter("360 media", ".jpg", ".png", ".jpeg", ".mp4", ".mov"));
+        FileBrowser.SetDefaultFilter(".jpg");
+
         yield return FileBrowser.WaitForLoadDialog(pickMode, true, null, null, "Load Files", "Load");
 
         if (FileBrowser.Success)
@@ -144,7 +153,7 @@ public class MediaManager : MonoBehaviour
         }
     }
 
-    async Task<IEnumerator> HandleImageSelected(string downloadUrl)
+    public async Task<IEnumerator> HandleImageSelected(string downloadUrl)
     {
         byte[] binaryData = await dbService.getFile(downloadUrl);
 
@@ -164,7 +173,7 @@ public class MediaManager : MonoBehaviour
         return null;
     }
 
-    async Task<IEnumerator> HandleVideoSelected(string downloadUrl)
+    public async Task<IEnumerator> HandleVideoSelected(string downloadUrl)
     {
         byte[] binaryData = await dbService.getFile(downloadUrl);
 
