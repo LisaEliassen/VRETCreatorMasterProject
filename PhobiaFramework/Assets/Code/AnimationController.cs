@@ -61,6 +61,7 @@ public class AnimationController : MonoBehaviour
                     if (dropdown != null)
                     {
                         dropdown.ClearOptions(); // Clear any existing options
+                        options.Add(new TMP_Dropdown.OptionData("Pause animation"));
                         dropdown.AddOptions(options); // Add the new options
                     }
                     else
@@ -121,12 +122,22 @@ public class AnimationController : MonoBehaviour
     {
         if (animationComponent != null && !string.IsNullOrEmpty(clipName))
         {
+            if (clipName == "Pause animation")
+            {
+                animationComponent.Stop();
+            }
             animationComponent.Play(clipName);
         }
         else
         {
             Debug.LogError("Animation component not found or clip name is empty.");
         }
+    }
+
+    public void StopAnimation(GameObject trigger)
+    {
+        Animation animation = trigger.GetComponent<Animation>();
+        animation.Stop();
     }
 
     private async Task LoadAnimClip(Animation anim, string clipName, string localFilePath)
