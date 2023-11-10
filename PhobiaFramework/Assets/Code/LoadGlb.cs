@@ -12,6 +12,7 @@ using UnityEngine.Networking;
 public class LoadGlb : MonoBehaviour
 {
     GameObject trigger;
+    List<GameObject> triggerCopies;
     DatabaseService dbService;
     AnimationController animController;
     public Slider moveSliderX;
@@ -22,10 +23,12 @@ public class LoadGlb : MonoBehaviour
     string triggerName;
     private Vector3 offset;
     private bool isDragging = false;
+    int numCopies = 0; 
 
     // Start is called before the first frame update
     void Start()
     {
+
         // Find the GameObject with the DatabaseService script
         GameObject databaseServiceObject = GameObject.Find("DatabaseService");
 
@@ -55,9 +58,20 @@ public class LoadGlb : MonoBehaviour
         }
 
         position = posObject.transform.position;
+
+        triggerCopies = new List<GameObject>();
     }
 
-    
+
+    public void makeCopy(string modelName, string path)
+    {
+        numCopies++;
+        GameObject copy = new GameObject("Trigger_copy" + numCopies);
+        triggerCopies.Add(copy);
+        LoadGlbFile(copy, path, modelName);
+    }
+
+
     //public void SpawnObject()
     public void SpawnObject(string modelName, string path)
     {
@@ -65,8 +79,7 @@ public class LoadGlb : MonoBehaviour
         {
             DestroyImmediate(trigger);
         }
-
-        //LoadGlbFile(loadedModel, "gs://vr-framework-95ccc.appspot.com/models/crowAnimated.glb", "crowAnimated");
+        
         trigger = new GameObject("Trigger");
 
         // Add a Box Collider to the GameObject
@@ -74,8 +87,7 @@ public class LoadGlb : MonoBehaviour
 
         // You can also set various properties of the Box Collider
         boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
-        boxCollider.size = new Vector3(1.0f, 1.0f, 1.0f); // Set the size of the collider
-
+        //boxCollider.size = new Vector3(1.0f, 1.0f, 1.0f); // Set the size of the collider
 
         LoadGlbFile(trigger, path, modelName);
     }
