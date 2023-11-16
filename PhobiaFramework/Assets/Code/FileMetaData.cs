@@ -7,6 +7,7 @@ using UnityEngine;
 [Serializable]
 public class FileMetaData
 {
+    private string ID;
     public string filename;
     public string filetype;
     public string path;
@@ -15,11 +16,17 @@ public class FileMetaData
     public FileMetaData() {
     }
 
-    public FileMetaData(string filename, string filetype, string path, string pathToIcon)
+    public FileMetaData(string ID, string filename, string filetype, string path, string pathToIcon)
     {
+        this.ID = ID;
         this.filename = filename;
         this.filetype = filetype;
         this.path = path;
         this.pathToIcon = pathToIcon;
+    }
+
+    public string GetID()
+    {
+        return this.ID;
     }
 }

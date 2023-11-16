@@ -61,12 +61,13 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public void addFile(string filePath, string fileName, string fileType, string extension)
+    public bool addFile(string filePath, string fileName, string fileType, string extension)
     {
         if (database != null)
         {
-            database.addFile(filePath, fileName, fileType, extension);
+            return database.addFile(filePath, fileName, fileType, extension);
         }
+        return false;
     }
 
     public void addFileData(string fileName, string fileType, string extension, string iconExtension)
@@ -90,6 +91,14 @@ public class DatabaseService : MonoBehaviour
         if (database != null)
         {
             yield return database.getAll360Media(callback);
+        }
+    }
+
+    public void deleteFile(string fileName, string fileType, string extension, FileMetaData fileData)
+    {
+        if (database != null)
+        {
+            database.deleteFile(fileName, fileType, extension, fileData);
         }
     }
 }

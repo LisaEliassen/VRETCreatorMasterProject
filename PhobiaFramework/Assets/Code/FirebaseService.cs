@@ -124,7 +124,7 @@ public class FirebaseService : Database
         }
     }
 
-    public void addFile(string filePath, string fileName, string fileType, string extension)
+    public bool addFile(string filePath, string fileName, string fileType, string extension)
     {
         StorageReference fileRef = null;
 
@@ -163,10 +163,12 @@ public class FirebaseService : Database
                         Debug.Log("md5 hash = " + md5Hash);
                     }
                 });
+            return true;
         }
         else
         {
             Debug.Log("Failed to set StorageReference for file!");
+            return false;
         }
     }
 
@@ -181,7 +183,7 @@ public class FirebaseService : Database
         {
             path = databaseURL + "/models/" + fileName + extension;
             pathToIcon = databaseURL + "/models/icons/" + fileName + "_icon" + iconExtension;
-            childStr = "glb";
+            childStr = "models";
         }
         else if (fileType == "360 image")
         {
@@ -204,7 +206,7 @@ public class FirebaseService : Database
 
         if (path != null && pathToIcon != null && childStr != null)
         {
-            FileMetaData fileMetaData = new FileMetaData(fileName, fileType.Replace(".", ""), path, pathToIcon);
+            FileMetaData fileMetaData = new FileMetaData(uniqueID, fileName, fileType.Replace(".", ""), path, pathToIcon);
             string json = JsonUtility.ToJson(fileMetaData);
 
             dbreference.Child(childStr).Child(uniqueID).SetRawJsonValueAsync(json);
@@ -219,7 +221,7 @@ public class FirebaseService : Database
 
     public IEnumerator getAllModelFileData(Action<List<FileMetaData>> callback)
     {
-        var task = dbreference.Child("glb").GetValueAsync();
+        var task = dbreference.Child("models").GetValueAsync();
         yield return new WaitUntil(() => task.IsCompleted);
 
         if (task.Exception != null)
@@ -238,12 +240,13 @@ public class FirebaseService : Database
                     Debug.Log("Key: " + child.Key);
                     Debug.Log("Value: " + child.GetRawJsonValue());
 
+                    string uniqueID = child.Key;
                     string filename = child.Child("filename").Value.ToString();
                     string filetype = child.Child("filetype").Value.ToString();
                     string path = child.Child("path").Value.ToString();
                     string pathToIcon = child.Child("pathToIcon").Value.ToString();
 
-                    FileMetaData fileData = new FileMetaData(filename, filetype, path, pathToIcon);
+                    FileMetaData fileData = new FileMetaData(uniqueID, filename, filetype, path, pathToIcon);
                     files.Add(fileData);
                 }
                 else
@@ -286,12 +289,13 @@ public class FirebaseService : Database
                         Debug.Log("Key: " + child.Key);
                         Debug.Log("Value: " + child.GetRawJsonValue());
 
+                        string uniqueID = child.Key;
                         string filename = child.Child("filename").Value.ToString();
                         string filetype = child.Child("filetype").Value.ToString();
                         string path = child.Child("path").Value.ToString();
                         string pathToIcon = child.Child("pathToIcon").Value.ToString();
 
-                        FileMetaData fileData = new FileMetaData(filename, filetype, path, pathToIcon);
+                        FileMetaData fileData = new FileMetaData(uniqueID, filename, filetype, path, pathToIcon);
                         files.Add(fileData);
                     }
                     else
@@ -311,12 +315,13 @@ public class FirebaseService : Database
                         Debug.Log("Key: " + child.Key);
                         Debug.Log("Value: " + child.GetRawJsonValue());
 
+                        string uniqueID = child.Key;
                         string filename = child.Child("filename").Value.ToString();
                         string filetype = child.Child("filetype").Value.ToString();
                         string path = child.Child("path").Value.ToString();
                         string pathToIcon = child.Child("pathToIcon").Value.ToString();
 
-                        FileMetaData fileData = new FileMetaData(filename, filetype, path, pathToIcon);
+                        FileMetaData fileData = new FileMetaData(uniqueID, filename, filetype, path, pathToIcon);
                         files.Add(fileData);
                     }
                     else
@@ -327,6 +332,65 @@ public class FirebaseService : Database
             }
 
             callback(files);
+        }
+    }
+
+    public void deleteFile(string fileName, string fileType, string extension, FileMetaData fileData)
+    {
+        StorageReference fileRef = null;
+        DatabaseReference fileDataRef = null;
+
+        if (fileType == "Model")
+        {
+            fileRef = storageRef.Child("models/" + fileName + extension);
+            fileDataRef = dbreference.Child("models/" + fileData.GetID());
+        }
+        else if (fileType == "360 image")
+        {
+            fileRef = storageRef.Child("images/" + fileName + extension);
+            fileDataRef = dbreference.Child("360images/" + fileData.GetID());
+        }
+        else if (fileType == "360 video")
+        {
+            fileRef = storageRef.Child("videos/" + fileName + extension);
+            fileDataRef = dbreference.Child("360videos/" + fileData.GetID());
+        }
+        else if (fileType == "Texture")
+        {
+            fileRef = storageRef.Child("textures/" + fileName + extension);
+            fileDataRef = dbreference.Child("textures/" + fileData.GetID());
+        }
+
+        if (fileRef != null)
+        {
+            fileRef.DeleteAsync().ContinueWithOnMainThread(task => {
+                if (task.IsCompleted)
+                {
+                    Debug.Log("File deleted successfully.");
+                }
+                else
+                {
+                    Debug.LogError("Datareference for file could not be found!");
+                }
+            });
+        }
+        else
+        {
+            Debug.Log("Failed to set StorageReference for file!");
+        }
+
+        if (fileData != null)
+        {
+            fileDataRef.RemoveValueAsync().ContinueWithOnMainThread(task => {
+                if (task.IsCompleted)
+                {
+                    Debug.Log("Value deleted successfully");
+                }
+                else if (task.IsFaulted)
+                {
+                    Debug.LogError("Failed to delete value: " + task.Exception);
+                }
+            });
         }
     }
 }

@@ -18,7 +18,6 @@ public class ShowAll360Media : MonoBehaviour
     public GameObject EditSceneUI;
     public GameObject MediaUI;
     List<FileMetaData> files;
-    string fileTypeImagePath;
 
     // Start is called before the first frame update
     void Start()
@@ -39,8 +38,6 @@ public class ShowAll360Media : MonoBehaviour
         {
             Debug.LogError("GameObject with DatabaseService not found.");
         }
-
-        fileTypeImagePath = "Assets/360/";
 
         files = new List<FileMetaData>();
 

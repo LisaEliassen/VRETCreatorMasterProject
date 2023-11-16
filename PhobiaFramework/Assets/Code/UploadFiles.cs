@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using System.Linq;
 using System.IO;
 
 public class UploadFiles : MonoBehaviour
@@ -23,8 +24,8 @@ public class UploadFiles : MonoBehaviour
     public TMP_InputField fileNameInput;
 
     string fileName = string.Empty;
-    string filePath = string.Empty;
-    string iconPath = string.Empty;
+    string filePath = null; 
+    string iconPath = null;
     string fileType = string.Empty;
 
     bool fileChosen = false;
@@ -65,7 +66,7 @@ public class UploadFiles : MonoBehaviour
             int initialIndex = dropdown.value;
 
             // Get the text of the initial option
-            string fileType = dropdown.options[initialIndex].text;
+            fileType = dropdown.options[initialIndex].text;
 
             FileBrowser.SetFilters(true, new FileBrowser.Filter("Models", ".glb"));
             FileBrowser.SetDefaultFilter(".glb");
@@ -74,10 +75,24 @@ public class UploadFiles : MonoBehaviour
         {
             Debug.LogError("TMP Dropdown is not assigned.");
         }
+
+        fileNameInput.onValueChanged.AddListener((x) => checkInput(fileNameInput.text));
+    }
+
+    public void checkInput(string input)
+    {
+        if (fileChosen && iconChosen)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                warningOrErrorMessage.text = "";
+            }
+        }
     }
 
     public void chooseIcon()
     {
+        message.text = "";
         iconChosen = false;
 
         FileBrowser.SetFilters(true, new FileBrowser.Filter("Images", ".jpg", ".png", ".jpeg"));
@@ -88,18 +103,38 @@ public class UploadFiles : MonoBehaviour
 
     public void setIconPath(string[] paths)
     {
-        iconPath = paths[0];
-        iconChosen = true;
-        iconPathText.text = "Path of file icon: " + iconPath;
+        if (paths != null || paths.Count() > 0)
+        {
+            iconPath = paths[0];
+            iconChosen = true;
+            iconPathText.text = "Path of file icon: " + iconPath;
+        }
+        else
+        {
+            iconChosen = false;
+        }
+
+        if (fileChosen && iconChosen)
+        {
+            warningOrErrorMessage.text = "";
+        }
     }
 
     void DropdownValueChanged(TMP_Dropdown change)
     {
+        message.text = "";
         fileType = change.options[change.value].text;
+        filePathText.text = "";
+        iconPathText.text = "";
+        filePath = null;
+        iconPath = null;
+        fileChosen = false;
+        iconChosen = false;
     }
 
     public void chooseFile()
     {
+        message.text = "";
         iconChosen = false;
 
         if (fileType == "Model")
@@ -123,9 +158,21 @@ public class UploadFiles : MonoBehaviour
 
     public void setFilePath(string[] paths)
     {
-        filePath = paths[0];
-        fileChosen = true;
-        filePathText.text = "Path of file: " + filePath;
+        if (paths != null || paths.Count() > 0)
+        {
+            filePath = paths[0];
+            fileChosen = true;
+            filePathText.text = "Path of file: " + filePath;
+        }
+        else
+        {
+            fileChosen = false;
+        }
+
+        if (fileChosen && iconChosen)
+        {
+            warningOrErrorMessage.text = "";
+        }
     }
 
     public void uploadFile()
@@ -162,14 +209,28 @@ public class UploadFiles : MonoBehaviour
                 dbService.addFileData(fileName, fileExtension, iconExtension);
                 */
 
-                dbService.addFile(filePath, fileName, fileType, fileExtension);
+                Debug.Log(fileType);
+
+                bool success = dbService.addFile(filePath, fileName, fileType, fileExtension);
                 dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
                 dbService.addFileData(fileName, fileType, fileExtension, iconExtension);
 
-                message.text = "File has been uploaded!";
+                if (success)
+                {
+                    warningOrErrorMessage.text = "";
+                    message.text = "File has been uploaded!";
+                }
+                else
+                {
+                    message.text = "";
+                    warningOrErrorMessage.text = "Something went wrong!";
+                }
 
                 fileNameInput.text = "";
-                filePath = null; iconPath = null;
+                filePathText.text = "";
+                iconPathText.text = "";
+                filePath = null; 
+                iconPath = null;
                 fileChosen = false;
                 iconChosen = false;
 
@@ -179,21 +240,15 @@ public class UploadFiles : MonoBehaviour
 
         else if (string.IsNullOrEmpty(fileName)) 
         {
+            message.text = "";
             warningOrErrorMessage.text = "File name cannot be empty!";
         }
 
-        else if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(iconPath)) 
+        else if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(iconPath) || !fileChosen || !iconChosen) 
         {
+            message.text = "";
             warningOrErrorMessage.text = "You need to choose both a file and an icon!";
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!string.IsNullOrEmpty(fileNameInput.text) || (!string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(iconPath)))
-        {
-            warningOrErrorMessage.text = "";
-        }
-    }
 }

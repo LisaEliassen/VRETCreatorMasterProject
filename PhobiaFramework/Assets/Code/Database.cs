@@ -22,11 +22,13 @@ public interface Database
 
     void addIcon(string filePath, string iconFileName, string fileType, string iconExtension);
 
-    void addFile(string filePath, string fileName, string fileType, string extension);
+    bool addFile(string filePath, string fileName, string fileType, string extension);
 
     void addFileData(string fileName, string fileType, string extension, string iconExtension);
 
     IEnumerator getAllModelFileData(System.Action<List<FileMetaData>> callback);
 
     IEnumerator getAll360Media(Action<List<FileMetaData>> callback);
+
+    void deleteFile(string fileName, string fileType, string extension, FileMetaData fileData);
 }
