@@ -30,5 +30,5 @@ public interface Database
 
     IEnumerator getAll360Media(Action<List<FileMetaData>> callback);
 
-    void deleteFile(string fileName, string fileType, string extension, FileMetaData fileData);
+    void deleteFile(string fileName, string fileType, FileMetaData fileData);
 }

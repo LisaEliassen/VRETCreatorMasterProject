@@ -94,11 +94,11 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public void deleteFile(string fileName, string fileType, string extension, FileMetaData fileData)
+    public void deleteFile(string fileName, string fileType, FileMetaData fileData)
     {
         if (database != null)
         {
-            database.deleteFile(fileName, fileType, extension, fileData);
+            database.deleteFile(fileName, fileType, fileData);
         }
     }
 }

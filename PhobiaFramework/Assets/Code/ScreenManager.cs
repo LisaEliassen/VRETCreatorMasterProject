@@ -12,10 +12,13 @@ public class ScreenManager : MonoBehaviour
     public Button chooseMediaButton;
     public Button backFromUploadButton;
     public Button backFrom360Media;
+    public Button deleteFilesButton;
+    public Button backFromDeleteButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
     public GameObject UploadUI;
     public GameObject ChooseMediaUI;
+    public GameObject DeleteUI;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,8 @@ public class ScreenManager : MonoBehaviour
         chooseMediaButton.onClick.AddListener(() => ShowUI("360Media"));
         backFrom360Media.onClick.AddListener(() => ShowUI("EditScene"));
         backFromUploadButton.onClick.AddListener(() => ShowUI("EditScene"));
+        deleteFilesButton.onClick.AddListener(() => ShowUI("Delete"));
+        backFromDeleteButton.onClick.AddListener(() => ShowUI("Upload"));
     }
 
     public void ShowUI(string UIname)
@@ -34,6 +39,7 @@ public class ScreenManager : MonoBehaviour
             ModelUI.SetActive(false);
             ChooseMediaUI.SetActive(false);
             UploadUI.SetActive(false);
+            DeleteUI.SetActive(false);
         }
         else if (UIname == "Upload")
         {
@@ -41,6 +47,7 @@ public class ScreenManager : MonoBehaviour
             ModelUI.SetActive(false);
             ChooseMediaUI.SetActive(false);
             UploadUI.SetActive(true);
+            DeleteUI.SetActive(false);
         }
         else if (UIname == "360Media")
         {
@@ -48,6 +55,15 @@ public class ScreenManager : MonoBehaviour
             ModelUI.SetActive(false);
             ChooseMediaUI.SetActive(true);
             UploadUI.SetActive(false);
+            DeleteUI.SetActive(false);
+        }
+        else if(UIname == "Delete")
+        {
+            EditSceneUI.SetActive(false);
+            ModelUI.SetActive(false);
+            ChooseMediaUI.SetActive(false);
+            UploadUI.SetActive(false);
+            DeleteUI.SetActive(true);
         }
     }
 

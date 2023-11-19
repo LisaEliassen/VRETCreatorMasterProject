@@ -1,22 +1,18 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-using System.Collections;
 using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 
-public class ShowAllModels : MonoBehaviour
+public class DeleteFiles : MonoBehaviour
 {
     DatabaseService dbService;
-    LoadGlb loadGlbScript;
     public GameObject gridItemPrefab;
     public Transform gridParent;
-    public Button showModelsButton;
-    public Button backButton;
-    public GameObject EditSceneUI;
-    public GameObject ModelUI;
+    public Button deleteFilesButton;
     List<FileMetaData> files;
 
     // Start is called before the first frame update
@@ -30,8 +26,6 @@ public class ShowAllModels : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
-
-            loadGlbScript = databaseServiceObject.GetComponent<LoadGlb>();
         }
         else
         {
@@ -40,24 +34,15 @@ public class ShowAllModels : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        showModelsButton.onClick.AddListener(() =>
+        deleteFilesButton.onClick.AddListener(() =>
         {
-            
-            StartCoroutine(FetchModels());
-        });
 
-        backButton.onClick.AddListener(() =>
-        {
-            EditSceneUI.SetActive(true);
-            ModelUI.SetActive(false);
+            StartCoroutine(showModels());
         });
     }
 
-    public IEnumerator FetchModels()
+    public IEnumerator showModels()
     {
-        EditSceneUI.SetActive(false);
-        ModelUI.SetActive(true);
-
         List<FileMetaData> newFilesList = new List<FileMetaData>();
 
         yield return dbService.getAllModelFileData((data) =>
@@ -67,10 +52,10 @@ public class ShowAllModels : MonoBehaviour
 
         if (files.Count < newFilesList.Count)
         {
-            int index = 1;
+            int index = 0;
             foreach (var file in newFilesList)
             {
-                yield return StartCoroutine(CreateGridItem(file.filename, file.filetype, file.pathToIcon, file.path, index));
+                yield return StartCoroutine(CreateGridItem(file, index));
                 index++;
             }
             files = newFilesList;
@@ -93,14 +78,14 @@ public class ShowAllModels : MonoBehaviour
             Destroy(child.gameObject);
         }
         files = new List<FileMetaData>();
-        StartCoroutine(FetchModels());
+        StartCoroutine(showModels());
     }
 
-    public IEnumerator CreateGridItem(string modelName, string filetype, string modelIconPath, string modelStoragePath, int index)
+    public IEnumerator CreateGridItem(FileMetaData file, int index)
     {
-        if (files.Any(x => x.filetype == filetype && x.pathToIcon == modelIconPath && x.path == modelStoragePath))
+        if (files.Any(x => x.filetype == file.filetype && x.pathToIcon == file.pathToIcon && x.path == file.path))
         {
-            Debug.Log("Grid item already exists for file: " + modelName);
+            Debug.Log("Grid item already exists for file: " + file.filename);
             yield break; // Exit the function early if the grid item already exists
         }
 
@@ -114,10 +99,10 @@ public class ShowAllModels : MonoBehaviour
         gridItem.name = "GridItem" + index;
 
         Image iconImage = gridItem.transform.Find("IconImage").GetComponent<Image>();
-        yield return StartCoroutine(LoadImageFromFirebase(modelIconPath, iconImage));
+        yield return StartCoroutine(LoadImageFromFirebase(file.pathToIcon, iconImage));
 
         TextMeshProUGUI nameText = gridItem.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
-        nameText.text = modelName;
+        nameText.text = file.filename;
 
         int row = index / columnCount;
         int column = index % columnCount;
@@ -138,10 +123,8 @@ public class ShowAllModels : MonoBehaviour
         // Add an onclick listener for the grid item to load the model from Firebase Storage
         button.onClick.AddListener(() =>
         {
-            loadGlbScript.SpawnObject(modelName, modelStoragePath);
-            EditSceneUI.SetActive(true);
-            ModelUI.SetActive(false);
-            Debug.Log("Button for model " + modelName + " was clicked!");
+            dbService.deleteFile(file.filename, file.filetype, file);
+            reloadModels();
         });
     }
 
@@ -181,9 +164,4 @@ public class ShowAllModels : MonoBehaviour
         return null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

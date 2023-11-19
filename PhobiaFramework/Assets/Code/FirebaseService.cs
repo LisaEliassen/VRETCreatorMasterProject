@@ -9,6 +9,7 @@ using GLTFast;
 using GLTFast.Schema;
 using UnityEngine.Networking;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
@@ -335,10 +336,11 @@ public class FirebaseService : Database
         }
     }
 
-    public void deleteFile(string fileName, string fileType, string extension, FileMetaData fileData)
+    public void deleteFile(string fileName, string fileType, FileMetaData fileData)
     {
         StorageReference fileRef = null;
         DatabaseReference fileDataRef = null;
+        string extension = Path.GetExtension(fileData.path);
 
         if (fileType == "Model")
         {

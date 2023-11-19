@@ -65,7 +65,6 @@ public class ShowAll360Media : MonoBehaviour
             newFilesList = data;
         });
 
-        Debug.Log(files.Count + " " + newFilesList.Count);
         if (files.Count < newFilesList.Count)
         {
             int index = 0;
