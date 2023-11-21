@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using SimpleFileBrowser;
+using static SimpleFileBrowser.FileBrowser;
 using UnityEngine;
 using UnityEngine.UI;
 using GLTFast;
@@ -18,6 +20,9 @@ public class LoadGlb : MonoBehaviour
     public Slider moveSliderX;
     public Slider moveSliderY;
     public Slider sizeSlider;
+    public Button chooseFromDeviceButton;
+    public GameObject EditSceneUI;
+    public GameObject ModelUI;
     Vector3 position;
     public GameObject posObject;
     string triggerName;
@@ -60,8 +65,63 @@ public class LoadGlb : MonoBehaviour
         position = posObject.transform.position;
 
         triggerCopies = new List<GameObject>();
+
+        chooseFromDeviceButton.onClick.AddListener(ImportModel);
     }
 
+    public void ImportModel()
+    {
+        FileBrowser.SetFilters(true, new FileBrowser.Filter("Models", ".glb"));
+        FileBrowser.SetDefaultFilter(".glb");
+        StartCoroutine(ShowLoadDialogCoroutine(PickMode.Files, HandleModelSelected));
+    }
+
+    public async void HandleModelSelected(string[] paths)
+    {
+        if (trigger != null)
+        {
+            DestroyImmediate(trigger);
+        }
+
+        trigger = new GameObject("Trigger");
+
+        if (paths.Length > 0)
+        {
+            string path = paths[0];
+            var gltf = new GltfImport();
+            byte[] data = File.ReadAllBytes(path);
+            bool success = await gltf.LoadGltfBinary(
+                data,
+                // The URI of the original data is important for resolving relative URIs within the glTF
+                new Uri(path)
+            );
+            if (success)
+            {
+                success = await gltf.InstantiateMainSceneAsync(trigger.transform);
+                if (success)
+                {
+                    trigger.transform.position = position;
+                    trigger.SetActive(true);
+                    //DontDestroyOnLoad(loadedModel);
+
+                    animController.FindAnimations(trigger);
+
+                    sizeSlider.value = 1;
+
+                    sizeSlider.interactable = true;
+                    moveSliderX.interactable = true;
+                    moveSliderY.interactable = true;
+
+                    EditSceneUI.SetActive(true);
+                    ModelUI.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogError("Loading glTF failed!");
+                }
+            }
+        }     
+    }
 
     public void makeCopy(string modelName, string path)
     {
@@ -155,9 +215,20 @@ public class LoadGlb : MonoBehaviour
         return success;
     }
 
+
     public string GetFilepath(string downloadURL)
     {
         return downloadURL.Replace("https", "file");
+    }
+
+    IEnumerator ShowLoadDialogCoroutine(PickMode pickMode, Action<string[]> callback)
+    {
+        yield return FileBrowser.WaitForLoadDialog(pickMode, true, null, null, "Load Files", "Load");
+
+        if (FileBrowser.Success)
+        {
+            callback(FileBrowser.Result);
+        }
     }
 
     // Update is called once per frame

@@ -247,25 +247,4 @@ public class ShowAll360Media : MonoBehaviour
 
         return null;
     }
-
-    // Custom class to compare FileMetaData instances for equality
-    public class FileMetaDataEqualityComparer : IEqualityComparer<FileMetaData>
-    {
-        public bool Equals(FileMetaData x, FileMetaData y)
-        {
-            return x.filetype == y.filetype && x.path == y.path;
-        }
-
-        public int GetHashCode(FileMetaData obj)
-        {
-            unchecked
-            {
-                int hashCode = obj.filename.GetHashCode();
-                hashCode = (hashCode * 397) ^ obj.filetype.GetHashCode();
-                hashCode = (hashCode * 397) ^ obj.path.GetHashCode();
-                hashCode = (hashCode * 397) ^ obj.pathToIcon.GetHashCode();
-                return hashCode;
-            }
-        }
-    }
 }
