@@ -162,6 +162,7 @@ public class FirebaseService : Database
                         string md5Hash = metadata.Md5Hash;
                         Debug.Log("Finished uploading...");
                         Debug.Log("md5 hash = " + md5Hash);
+                        
                     }
                 });
             return true;
@@ -173,7 +174,7 @@ public class FirebaseService : Database
         }
     }
 
-    public void addFileData(string fileName, string fileType, string extension, string iconExtension)
+    public async void addFileData(string fileName, string fileType, string extension, string iconExtension)
     {
         string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
         string path = null;
@@ -208,16 +209,54 @@ public class FirebaseService : Database
         if (path != null && pathToIcon != null && childStr != null)
         {
             FileMetaData fileMetaData = new FileMetaData(uniqueID, fileName, fileType.Replace(".", ""), path, pathToIcon);
-            string json = JsonUtility.ToJson(fileMetaData);
 
-            dbreference.Child(childStr).Child(uniqueID).SetRawJsonValueAsync(json);
+            // Check if the entry already exists
+            bool entryExists = await FileDataExists(fileMetaData, childStr);
 
-            Debug.Log("After uploading file data");
+            if (entryExists)
+            {
+                Debug.Log("File already exists, and has been updated!");
+            }
+            else
+            {
+                string json = JsonUtility.ToJson(fileMetaData);
+                await dbreference.Child(childStr).Child(uniqueID).SetRawJsonValueAsync(json);
+                Debug.Log("After uploading file data");
+            }
         }
         else
         {
             Debug.Log("This filetype cannot be uploaded to database!");
         }
+    }
+
+    public async Task<bool> FileDataExists(FileMetaData fileData, string databaseGroup)
+    {
+        var query = dbreference.Child(databaseGroup)
+                               .OrderByChild("filename")
+                               .EqualTo(fileData.GetFilename());
+
+        var snapshot = await query.GetValueAsync();
+
+        if (!snapshot.Exists)
+        {
+            return false;
+        }
+
+        foreach (var child in snapshot.Children)
+        {
+            // Compare each property except ID
+            if (child.Child("filename").Value.ToString() == fileData.GetFilename() &&
+                child.Child("filetype").Value.ToString() == fileData.GetFileType() &&
+                child.Child("path").Value.ToString() == fileData.GetPath() &&
+                child.Child("pathToIcon").Value.ToString() == fileData.GetPathToIcon())
+            {
+                // All properties match, consider it as a match
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public IEnumerator getAllModelFileData(Action<List<FileMetaData>> callback)

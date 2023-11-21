@@ -29,4 +29,24 @@ public class FileMetaData
     {
         return this.ID;
     }
+
+    public string GetFilename()
+    {
+        return this.filename;
+    }
+
+    public string GetFileType()
+    {
+        return this.filetype;
+    }
+
+    public string GetPath() 
+    { 
+        return this.path;
+    }
+
+    public string GetPathToIcon() 
+    {
+        return this.pathToIcon;
+    }
 }

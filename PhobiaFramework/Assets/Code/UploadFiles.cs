@@ -212,11 +212,11 @@ public class UploadFiles : MonoBehaviour
                 Debug.Log(fileType);
 
                 bool success = dbService.addFile(filePath, fileName, fileType, fileExtension);
-                dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
-                dbService.addFileData(fileName, fileType, fileExtension, iconExtension);
-
+                
                 if (success)
                 {
+                    dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
+                    dbService.addFileData(fileName, fileType, fileExtension, iconExtension);
                     warningOrErrorMessage.text = "";
                     message.text = "File has been uploaded!";
                 }
