@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class CameraController : MonoBehaviour
     private float rotationX = 0.0f;
 
     private float scroll;
+    public Toggle invertCameraMovement;
+    public Toggle invertRotationMovement;
+    public Toggle invertScrollingMovement;
 
     private void Start()
     {
@@ -32,16 +36,33 @@ public class CameraController : MonoBehaviour
 
         if (EditUI.activeSelf)
         {
-            // Read movement input from the new Input System
-            movementInput = Keyboard.current.wKey.ReadValue() * Vector2.down +
-                            Keyboard.current.aKey.ReadValue() * Vector2.right +
-                            Keyboard.current.sKey.ReadValue() * Vector2.up +
-                            Keyboard.current.dKey.ReadValue() * Vector2.left +
-                            Keyboard.current.upArrowKey.ReadValue() * Vector2.down +
-                            Keyboard.current.leftArrowKey.ReadValue() * Vector2.right +
-                            Keyboard.current.downArrowKey.ReadValue() * Vector2.up +
-                            Keyboard.current.rightArrowKey.ReadValue() * Vector2.left;
+            if (invertCameraMovement != null && invertCameraMovement.isOn)
+            {
 
+                // Read movement input from the new Input System
+                movementInput = Keyboard.current.wKey.ReadValue() * Vector2.up +
+                            Keyboard.current.aKey.ReadValue() * Vector2.left +
+                            Keyboard.current.sKey.ReadValue() * Vector2.down +
+                            Keyboard.current.dKey.ReadValue() * Vector2.right +
+                            Keyboard.current.upArrowKey.ReadValue() * Vector2.up +
+                            Keyboard.current.leftArrowKey.ReadValue() * Vector2.left +
+                            Keyboard.current.downArrowKey.ReadValue() * Vector2.down +
+                            Keyboard.current.rightArrowKey.ReadValue() * Vector2.right;
+
+            }
+            else
+            {
+                // Read movement input from the new Input System
+                movementInput = Keyboard.current.wKey.ReadValue() * Vector2.down +
+                                Keyboard.current.aKey.ReadValue() * Vector2.right +
+                                Keyboard.current.sKey.ReadValue() * Vector2.up +
+                                Keyboard.current.dKey.ReadValue() * Vector2.left +
+                                Keyboard.current.upArrowKey.ReadValue() * Vector2.down +
+                                Keyboard.current.leftArrowKey.ReadValue() * Vector2.right +
+                                Keyboard.current.downArrowKey.ReadValue() * Vector2.up +
+                                Keyboard.current.rightArrowKey.ReadValue() * Vector2.left;
+
+            }
             // Move the camera based on the input
             Vector3 moveDirection = new Vector3(movementInput.x, 0, movementInput.y);
             transform.Translate(moveDirection * moveSpeed * Time.fixedDeltaTime);
@@ -56,16 +77,33 @@ public class CameraController : MonoBehaviour
                 // Read mouse position for rotation when the right mouse button is held down
                 rotationInput = Mouse.current.delta.ReadValue();
 
-                // Calculate rotation based on mouse movement
-                Vector3 eulerRotation = transform.rotation.eulerAngles;
-                eulerRotation.y -= rotationInput.x * rotationSpeed;
-                rotationX += rotationInput.y * rotationSpeed;
+                if (invertRotationMovement != null && invertRotationMovement.isOn)
+                {
+                    // Calculate rotation based on mouse movement
+                    Vector3 eulerRotation = transform.rotation.eulerAngles;
+                    eulerRotation.y += rotationInput.x * rotationSpeed;
+                    rotationX -= rotationInput.y * rotationSpeed;
 
-                // Clamp vertical rotation to prevent flipping
-                rotationX = Mathf.Clamp(rotationX, -90, 90);
+                    // Clamp vertical rotation to prevent flipping
+                    rotationX = Mathf.Clamp(rotationX, -90, 90);
 
-                // Apply the rotation
-                transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
+                    // Apply the rotation
+                    transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
+                }
+                else
+                {
+                    
+                    // Calculate rotation based on mouse movement
+                    Vector3 eulerRotation = transform.rotation.eulerAngles;
+                    eulerRotation.y -= rotationInput.x * rotationSpeed;
+                    rotationX += rotationInput.y * rotationSpeed;
+
+                    // Clamp vertical rotation to prevent flipping
+                    rotationX = Mathf.Clamp(rotationX, -90, 90);
+
+                    // Apply the rotation
+                    transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
+                }
 
             }
             else
@@ -86,12 +124,27 @@ public class CameraController : MonoBehaviour
 
     private void MoveCameraVertically(float scrollInput)
     {
-        // Update the camera's vertical position based on the scroll input
-        Vector3 newPosition = transform.position + Vector3.down * scrollInput * scrollSpeed * Time.deltaTime;
 
-        // Ensure the new position is within the specified bounds
-        newPosition.y = Mathf.Clamp(newPosition.y, minZoomDistance, maxZoomDistance);
+        if (invertScrollingMovement != null && invertScrollingMovement.isOn)
+        {
+            // Update the camera's vertical position based on the scroll input
+            Vector3 newPosition = transform.position + Vector3.down * -scrollInput * scrollSpeed * Time.deltaTime;
 
-        transform.position = newPosition;
+            // Ensure the new position is within the specified bounds
+            newPosition.y = Mathf.Clamp(newPosition.y, minZoomDistance, maxZoomDistance);
+
+            transform.position = newPosition;
+        }
+        else
+        {
+            // Update the camera's vertical position based on the scroll input
+            Vector3 newPosition = transform.position + Vector3.down * scrollInput * scrollSpeed * Time.deltaTime;
+
+            // Ensure the new position is within the specified bounds
+            newPosition.y = Mathf.Clamp(newPosition.y, minZoomDistance, maxZoomDistance);
+
+            transform.position = newPosition;
+
+        }
     }
 }
