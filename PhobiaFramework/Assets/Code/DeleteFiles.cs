@@ -37,17 +37,22 @@ public class DeleteFiles : MonoBehaviour
         deleteFilesButton.onClick.AddListener(() =>
         {
 
-            StartCoroutine(showModels());
+            StartCoroutine(showFiles());
         });
     }
 
-    public IEnumerator showModels()
+    public IEnumerator showFiles()
     {
         List<FileMetaData> newFilesList = new List<FileMetaData>();
 
         yield return dbService.getAllModelFileData((data) =>
         {
             newFilesList = data;
+        });
+
+        yield return dbService.getAll360Media((data) =>
+        {
+            newFilesList.AddRange(data);
         });
 
         if (files.Count < newFilesList.Count)
@@ -62,7 +67,7 @@ public class DeleteFiles : MonoBehaviour
         }
         else if (files.Count > newFilesList.Count)
         {
-            reloadModels();
+            reloadFiles();
         }
         else
         {
@@ -70,7 +75,7 @@ public class DeleteFiles : MonoBehaviour
         }
     }
 
-    public void reloadModels()
+    public void reloadFiles()
     {
         foreach (Transform child in gridParent.transform)
         {
@@ -78,7 +83,7 @@ public class DeleteFiles : MonoBehaviour
             Destroy(child.gameObject);
         }
         files = new List<FileMetaData>();
-        StartCoroutine(showModels());
+        StartCoroutine(showFiles());
     }
 
     public IEnumerator CreateGridItem(FileMetaData file, int index)
@@ -124,7 +129,7 @@ public class DeleteFiles : MonoBehaviour
         button.onClick.AddListener(() =>
         {
             dbService.deleteFile(file.filename, file.filetype, file);
-            reloadModels();
+            reloadFiles();
         });
     }
 

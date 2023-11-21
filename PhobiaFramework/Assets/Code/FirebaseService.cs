@@ -414,13 +414,15 @@ public class FirebaseService : Database
                     Debug.LogError("Datareference for file could not be found!");
                 }
             });
+
+            deleteFileIcon(fileName, fileType, fileData.GetPathToIcon());
         }
         else
         {
             Debug.Log("Failed to set StorageReference for file!");
         }
 
-        if (fileData != null)
+        if (fileDataRef != null)
         {
             fileDataRef.RemoveValueAsync().ContinueWithOnMainThread(task => {
                 if (task.IsCompleted)
@@ -432,6 +434,47 @@ public class FirebaseService : Database
                     Debug.LogError("Failed to delete value: " + task.Exception);
                 }
             });
+        }
+    }
+
+    public void deleteFileIcon(string fileName, string fileType, string iconPath)
+    {
+        StorageReference fileRef = null;
+        string extension = Path.GetExtension(iconPath);
+
+        if (fileType == "Model")
+        {
+            fileRef = storageRef.Child("models/icons/" + fileName + "_icon" + extension);
+        }
+        else if (fileType == "360 image")
+        {
+            fileRef = storageRef.Child("images/icons/" + fileName + "_icon" + extension);
+        }
+        else if (fileType == "360 video")
+        {
+            fileRef = storageRef.Child("videos/icons/" + fileName + "_icon" + extension);
+        }
+        else if (fileType == "Texture")
+        {
+            fileRef = storageRef.Child("textures/icons/" + fileName + "_icon" + extension);
+        }
+
+        if (fileRef != null)
+        {
+            fileRef.DeleteAsync().ContinueWithOnMainThread(task => {
+                if (task.IsCompleted)
+                {
+                    Debug.Log("File deleted successfully.");
+                }
+                else
+                {
+                    Debug.LogError("Datareference for file could not be found!");
+                }
+            });
+        }
+        else
+        {
+            Debug.Log("Failed to set StorageReference for file!");
         }
     }
 }
