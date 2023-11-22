@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 1203904}
   - component: {fileID: 1203903}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1018,7 +1018,7 @@ GameObject:
   - component: {fileID: 54375944}
   - component: {fileID: 54375943}
   m_Layer: 5
-  m_Name: Label
+  m_Name: Label InvertRotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2102,7 +2102,7 @@ GameObject:
   - component: {fileID: 163630237}
   - component: {fileID: 163630236}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) DeleteFiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3118,7 +3118,7 @@ GameObject:
   - component: {fileID: 324054281}
   - component: {fileID: 324054280}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3253,7 +3253,7 @@ GameObject:
   - component: {fileID: 325924136}
   - component: {fileID: 325924135}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) ShowModels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4480,7 +4480,7 @@ GameObject:
   - component: {fileID: 447859510}
   - component: {fileID: 447859509}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) SizeOfText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4750,7 +4750,7 @@ GameObject:
   - component: {fileID: 454561614}
   - component: {fileID: 454561613}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) ChooseFile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5993,7 +5993,7 @@ GameObject:
   - component: {fileID: 618086625}
   - component: {fileID: 618086624}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6370,7 +6370,7 @@ GameObject:
   - component: {fileID: 639304643}
   - component: {fileID: 639304642}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) 360Video
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6921,7 +6921,7 @@ GameObject:
   - component: {fileID: 697750396}
   - component: {fileID: 697750395}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) ChooseFromDevice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7548,7 +7548,7 @@ GameObject:
   - component: {fileID: 760570861}
   - component: {fileID: 760570860}
   m_Layer: 5
-  m_Name: Label
+  m_Name: Label Turotial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8359,7 +8359,7 @@ GameObject:
   - component: {fileID: 805307112}
   - component: {fileID: 805307111}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8761,7 +8761,7 @@ GameObject:
   - component: {fileID: 831459296}
   - component: {fileID: 831459295}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) FileName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9280,7 +9280,7 @@ GameObject:
   - component: {fileID: 901134988}
   - component: {fileID: 901134987}
   m_Layer: 0
-  m_Name: File (TMP)
+  m_Name: File (TMP) FileToUpload
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10841,7 +10841,7 @@ GameObject:
   - component: {fileID: 946710679}
   - component: {fileID: 946710680}
   m_Layer: 5
-  m_Name: InvertCamMovement
+  m_Name: InvertKeysMovement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11435,7 +11435,7 @@ GameObject:
   - component: {fileID: 1028053035}
   - component: {fileID: 1028053034}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) Add360Media
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11570,7 +11570,7 @@ GameObject:
   - component: {fileID: 1040197553}
   - component: {fileID: 1040197552}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) ChooseFromDevice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13400,7 +13400,7 @@ GameObject:
   - component: {fileID: 1197877281}
   - component: {fileID: 1197877280}
   m_Layer: 0
-  m_Name: Button
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14067,7 +14067,7 @@ GameObject:
   - component: {fileID: 1282786892}
   - component: {fileID: 1282786891}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) Upload
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15126,7 +15126,7 @@ GameObject:
   - component: {fileID: 1364515039}
   - component: {fileID: 1364515038}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15345,7 +15345,7 @@ GameObject:
   - component: {fileID: 1374275644}
   - component: {fileID: 1374275643}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15480,7 +15480,7 @@ GameObject:
   - component: {fileID: 1382762528}
   - component: {fileID: 1382762527}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) UploadFile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15691,7 +15691,7 @@ GameObject:
   - component: {fileID: 1399084365}
   - component: {fileID: 1399084364}
   m_Layer: 5
-  m_Name: Label
+  m_Name: Label InvertScroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16248,7 +16248,7 @@ GameObject:
   - component: {fileID: 1427266093}
   - component: {fileID: 1427266092}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17391,7 +17391,7 @@ GameObject:
   - component: {fileID: 1583225818}
   - component: {fileID: 1583225817}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) ChooseFileIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18307,7 +18307,7 @@ GameObject:
   - component: {fileID: 1706635224}
   - component: {fileID: 1706635223}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) SizeOfTextNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19238,7 +19238,7 @@ GameObject:
   - component: {fileID: 1837296327}
   - component: {fileID: 1837296326}
   m_Layer: 5
-  m_Name: Label
+  m_Name: Label InvertKeys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19550,7 +19550,7 @@ GameObject:
   - component: {fileID: 1859158613}
   - component: {fileID: 1859158612}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20036,7 +20036,7 @@ GameObject:
   - component: {fileID: 1897273851}
   - component: {fileID: 1897273850}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) 360Photo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20225,6 +20225,7 @@ MonoBehaviour:
   - {fileID: 653895374}
   - {fileID: 618086624}
   - {fileID: 399076186}
+  - {fileID: 830143444}
   - {fileID: 1382762527}
   - {fileID: 325924135}
   - {fileID: 1028053034}
@@ -20237,6 +20238,31 @@ MonoBehaviour:
   - {fileID: 247596728}
   - {fileID: 1866803371}
   - {fileID: 324054280}
+  - {fileID: 2111767535}
+  - {fileID: 1427266092}
+  - {fileID: 1291191114}
+  - {fileID: 697750395}
+  - {fileID: 1374275643}
+  - {fileID: 423022750}
+  - {fileID: 1364515038}
+  - {fileID: 1040197552}
+  - {fileID: 163630236}
+  - {fileID: 453969862}
+  - {fileID: 331896215}
+  - {fileID: 805307111}
+  - {fileID: 1282786891}
+  - {fileID: 770144474}
+  - {fileID: 1014744481}
+  - {fileID: 1583225817}
+  - {fileID: 1468222173}
+  - {fileID: 901134987}
+  - {fileID: 454561613}
+  - {fileID: 209325026}
+  - {fileID: 366523070}
+  - {fileID: 2052933988}
+  - {fileID: 831459295}
+  - {fileID: 904468761}
+  - {fileID: 1859136185}
   texts:
   - {fileID: 1837296326}
   - {fileID: 54375943}
@@ -20739,7 +20765,7 @@ GameObject:
   - component: {fileID: 2052933989}
   - component: {fileID: 2052933988}
   m_Layer: 0
-  m_Name: Label
+  m_Name: Label Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21988,7 +22014,7 @@ GameObject:
   - component: {fileID: 2111767536}
   - component: {fileID: 2111767535}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
