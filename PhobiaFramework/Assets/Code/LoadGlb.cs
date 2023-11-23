@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using GLTFast;
 using GLTFast.Schema;
 using UnityEngine.Networking;
+using TMPro;
 
 public class LoadGlb : MonoBehaviour
 {
@@ -17,15 +18,20 @@ public class LoadGlb : MonoBehaviour
     List<GameObject> triggerCopies;
     DatabaseService dbService;
     AnimationController animController;
+    public Toggle objectVisibility;
     public Slider moveSliderX;
     public Slider moveSliderY;
     public Slider sizeSlider;
     public Button chooseFromDeviceButton;
+    public Button addCopyButton;
+    public Button removeCopyButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
+    public TextMeshProUGUI numCopiesText;
     Vector3 position;
     public GameObject posObject;
     string triggerName;
+    string pathOfTrigger;
     private Vector3 offset;
     private bool isDragging = false;
     int numCopies = 0; 
@@ -67,6 +73,29 @@ public class LoadGlb : MonoBehaviour
         triggerCopies = new List<GameObject>();
 
         chooseFromDeviceButton.onClick.AddListener(ImportModel);
+
+        /*removeCopyButton.interactable = false;
+        addCopyButton.interactable = false;*/
+    }
+
+    public string GetModelPath()
+    {
+        return this.pathOfTrigger;
+    }
+
+    public List<GameObject> GetCopies()
+    {
+        return this.triggerCopies;
+    }
+
+    public int GetNumCopies()
+    {
+        return this.triggerCopies.Count;
+    }
+
+    public GameObject GetTrigger()
+    {
+        return this.trigger;
     }
 
     public void ImportModel()
@@ -81,6 +110,16 @@ public class LoadGlb : MonoBehaviour
         if (trigger != null)
         {
             DestroyImmediate(trigger);
+            if (triggerCopies != null && triggerCopies.Count > 0)  
+            {
+                foreach (GameObject copy in triggerCopies)
+                {
+                    DestroyImmediate(copy);
+                    triggerCopies = new List<GameObject>();
+                    numCopies = 0;
+                    numCopiesText.text = numCopies.ToString();
+                }
+            }
         }
 
         trigger = new GameObject("Trigger");
@@ -88,6 +127,7 @@ public class LoadGlb : MonoBehaviour
         if (paths.Length > 0)
         {
             string path = paths[0];
+            pathOfTrigger = path;
             var gltf = new GltfImport();
             byte[] data = File.ReadAllBytes(path);
             bool success = await gltf.LoadGltfBinary(
@@ -111,6 +151,10 @@ public class LoadGlb : MonoBehaviour
                     sizeSlider.interactable = true;
                     moveSliderX.interactable = true;
                     moveSliderY.interactable = true;
+                    addCopyButton.interactable = true;
+
+                    objectVisibility.isOn = true;
+                    objectVisibility.interactable = true;
 
                     EditSceneUI.SetActive(true);
                     ModelUI.SetActive(false);
@@ -123,37 +167,91 @@ public class LoadGlb : MonoBehaviour
         }     
     }
 
-    public void makeCopy(string modelName, string path)
+    public void RemoveTrigger()
     {
-        numCopies++;
-        GameObject copy = new GameObject("Trigger_copy" + numCopies);
-        triggerCopies.Add(copy);
-        LoadGlbFile(copy, path, modelName);
+        trigger = null;
+
+        DestroyImmediate(trigger);
+        if (triggerCopies != null && GetNumCopies() > 0)
+        {
+            foreach (GameObject copy in triggerCopies)
+            {
+                DestroyImmediate(copy);
+                triggerCopies = new List<GameObject>();
+                //numCopies = 0;
+                numCopiesText.text = GetNumCopies().ToString();
+            }
+        }
+        objectVisibility.interactable = false;
     }
 
+    public async void MakeCopy()
+    {
+        if (trigger != null && !string.IsNullOrEmpty(pathOfTrigger)) 
+        {
+            //numCopies++;
+            GameObject copy = new GameObject("Trigger_copy" + GetNumCopies());
+            triggerCopies.Add(copy);
+            bool success = await LoadGlbFile(copy, pathOfTrigger);
+            if (success)
+            {
+                Debug.Log("Successfully loaded model!");
+
+                Animation animationComponent = trigger.GetComponent<Animation>();
+
+                if (animationComponent != null)
+                {
+                    string clipname = animController.GetCurrentAnimation();
+                    if (clipname != null && clipname != "None")
+                    {
+                        animController.PlayAnimation(copy, clipname);
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Could not load model!");
+            }
+        }
+    }
+    
+    public void RemoveCopy()
+    {
+        if (triggerCopies != null && GetNumCopies() > 0)
+        {
+            Debug.Log(GetNumCopies());
+            DestroyImmediate(triggerCopies[GetNumCopies() - 1]);
+            triggerCopies.RemoveAt(GetNumCopies() - 1);
+            //numCopies--;
+        }
+    }
 
     //public void SpawnObject()
-    public void SpawnObject(string modelName, string path)
+    public async void SpawnObject(string modelName, string path)
     {
         if (trigger != null)
         {
-            DestroyImmediate(trigger);
+            RemoveTrigger();
         }
-        
+        sizeSlider.value = 1;
         trigger = new GameObject("Trigger");
 
-        // Add a Box Collider to the GameObject
-        BoxCollider boxCollider = trigger.AddComponent<BoxCollider>();
-
-        // You can also set various properties of the Box Collider
-        boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
-        //boxCollider.size = new Vector3(1.0f, 1.0f, 1.0f); // Set the size of the collider
-
-        LoadGlbFile(trigger, path, modelName);
+        pathOfTrigger = path;
+        bool success = await LoadGlbFile(trigger, path);
+        if (success)
+        {
+            animController.FindAnimations(trigger);
+            objectVisibility.isOn = true;
+            objectVisibility.interactable = true;
+        }
+        else
+        {
+            Debug.Log("The glb model could not be loaded!");
+        }
     }
 
     //public async void LoadGlbFile(GameObject loadedModel, string path)
-    public async void LoadGlbFile(GameObject loadedModel, string path, string modelName)
+    public async Task<bool> LoadGlbFile(GameObject loadedModel, string path)
     {
         var gltFastImport = new GLTFast.GltfImport();
         string downloadUrl = await dbService.GetDownloadURL(path);
@@ -182,19 +280,28 @@ public class LoadGlb : MonoBehaviour
                 loadedModel.SetActive(true);
                 //DontDestroyOnLoad(loadedModel);
 
-                animController.FindAnimations(loadedModel);
+                // Add a Box Collider to the GameObject
+                BoxCollider boxCollider = loadedModel.AddComponent<BoxCollider>();
 
-                sizeSlider.value = 1;
+                // You can also set various properties of the Box Collider
+                boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
+                //boxCollider.size = new Vector3(1.0f, 1.0f, 1.0f); // Set the size of the collider
+
+                loadedModel.AddComponent<DragObject>();
 
                 sizeSlider.interactable = true;
                 moveSliderX.interactable = true;
                 moveSliderY.interactable = true;
+                addCopyButton.interactable = true;
+
             }
             else
             {
                 Debug.LogError("Loading glTF failed!");
             }
+            return success;
         }
+        return false;
     }
 
     async Task<bool> LoadGltfBinaryFromMemory(byte[] data, GameObject gameObject, string downloadUrl, GltfImport gltfImport)
@@ -232,7 +339,7 @@ public class LoadGlb : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -269,7 +376,7 @@ public class LoadGlb : MonoBehaviour
             // Deselect the object
             isDragging = false;
         }
-    }
+    }*/
 
     public void SetSelectedObject(GameObject obj)
     {

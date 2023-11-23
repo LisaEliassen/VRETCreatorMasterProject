@@ -7,9 +7,11 @@ public class MoveObject : MonoBehaviour
 {
     public Slider moveSliderX;
     public Slider moveSliderY;
+    LoadGlb loadGlb;
     Vector3[] positionsX;
     Vector3[] positionsY;
     GameObject trigger;
+    List<GameObject> triggerCopies;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +26,18 @@ public class MoveObject : MonoBehaviour
 
         moveSliderX.interactable = false;
         moveSliderY.interactable = false;
+
+        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
+
+        loadGlb = databaseServiceObject.GetComponent<LoadGlb>();
+
+        triggerCopies = new List<GameObject>();
     }
 
     void ChangePositionX(float position)
     {
-        trigger = GameObject.Find("Trigger");
+        trigger = loadGlb.GetTrigger();
+        triggerCopies = loadGlb.GetCopies();
 
         if (trigger != null)
         {
@@ -47,7 +56,9 @@ public class MoveObject : MonoBehaviour
 
     void ChangePositionY(float position)
     {
-        trigger = GameObject.Find("Trigger");
+        trigger = loadGlb.GetTrigger();
+        triggerCopies = loadGlb.GetCopies();
+
         float xValue = moveSliderX.value;
 
         if (trigger != null)

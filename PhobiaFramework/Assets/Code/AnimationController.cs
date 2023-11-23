@@ -13,7 +13,9 @@ public class AnimationController : MonoBehaviour
     ResourceRequest request2;
     public RuntimeAnimatorController baseAnimatorController;
     public TMP_Dropdown dropdown;
+    LoadGlb loadGlb;
     GameObject trigger;
+    List<GameObject> triggerCopies;
     List<AnimationClip> animationClipList;
     List<TMP_Dropdown.OptionData> options;
     Animation animationComponent;
@@ -33,11 +35,17 @@ public class AnimationController : MonoBehaviour
             Debug.LogError("TMP Dropdown is not assigned.");
         }
         dropdown.interactable = false;
+
+        triggerCopies = new List<GameObject>();
+
+        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
+
+        loadGlb = databaseServiceObject.GetComponent<LoadGlb>();
     }
 
     public void FindAnimations(GameObject gameObject)
     {
-        trigger = gameObject;
+        trigger = loadGlb.GetTrigger();
 
         if (trigger != null)
         {
@@ -88,6 +96,19 @@ public class AnimationController : MonoBehaviour
         }
     }
 
+    public string GetCurrentAnimation()
+    {
+        if (dropdown != null)
+        {
+            int index = dropdown.value;
+            return dropdown.options[index].text;
+        }
+        else
+        {
+            return "None";
+        }
+    }
+
     // This method will be called whenever the dropdown's value changes
     void DropdownValueChanged(TMP_Dropdown change)
     {
@@ -120,24 +141,41 @@ public class AnimationController : MonoBehaviour
 
     public void PlayAnimation(GameObject gameObject, string clipName)
     {
+        trigger = loadGlb.GetTrigger();
+        triggerCopies = loadGlb.GetCopies();
+        Animation animationController = trigger.GetComponent<Animation>();
+
         if (animationComponent != null && !string.IsNullOrEmpty(clipName))
         {
             if (clipName == "Pause animation")
             {
                 animationComponent.Stop();
+                if (triggerCopies.Count > 0)
+                {
+                    foreach (GameObject copy in triggerCopies)
+                    {
+                        Animation animComponent = copy.GetComponent<Animation>();
+                        animComponent.Stop();
+                    }
+                }
+                            }
+            else
+            {
+                animationComponent.Play(clipName);
+                if (triggerCopies.Count > 0)
+                {
+                    foreach (GameObject copy in triggerCopies)
+                    {
+                        Animation animComponent = copy.GetComponent<Animation>();
+                        animComponent.Play(clipName);
+                    }
+                }
             }
-            animationComponent.Play(clipName);
         }
         else
         {
             Debug.LogError("Animation component not found or clip name is empty.");
         }
-    }
-
-    public void StopAnimation(GameObject trigger)
-    {
-        Animation animation = trigger.GetComponent<Animation>();
-        animation.Stop();
     }
 
     private async Task LoadAnimClip(Animation anim, string clipName, string localFilePath)
