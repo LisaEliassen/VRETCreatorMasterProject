@@ -14,6 +14,7 @@ public class VisibilityToggles : MonoBehaviour
     public Slider moveSliderX;
     public Slider moveSliderY;
     public Slider sizeSlider;
+    public TMP_InputField sizeInput;
     public Button addCopyButton;
     public Button removeCopyButton;
     public Toggle objectVisibility;
@@ -62,6 +63,7 @@ public class VisibilityToggles : MonoBehaviour
             addCopyButton.interactable = true;
             removeCopyButton.interactable = true;
             sizeSlider.interactable = true;
+            sizeInput.interactable = true;
             moveSliderX.interactable = true;
             moveSliderY.interactable = true;
             dropdown.interactable = true;
@@ -83,6 +85,7 @@ public class VisibilityToggles : MonoBehaviour
             addCopyButton.interactable = false;
             removeCopyButton.interactable = false;
             sizeSlider.interactable = false;
+            sizeInput.interactable = false;
             moveSliderX.interactable = false;
             moveSliderY.interactable = false;
             dropdown.interactable = false;

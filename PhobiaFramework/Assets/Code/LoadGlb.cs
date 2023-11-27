@@ -22,9 +22,12 @@ public class LoadGlb : MonoBehaviour
     public Slider moveSliderX;
     public Slider moveSliderY;
     public Slider sizeSlider;
+    public TMP_InputField sizeInput;
+    public TMP_Dropdown dropdown;
     public Button chooseFromDeviceButton;
     public Button addCopyButton;
     public Button removeCopyButton;
+    public Button removeTriggerButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
     public TextMeshProUGUI numCopiesText;
@@ -73,6 +76,7 @@ public class LoadGlb : MonoBehaviour
         triggerCopies = new List<GameObject>();
 
         chooseFromDeviceButton.onClick.AddListener(ImportModel);
+        removeTriggerButton.onClick.AddListener(RemoveTrigger);
 
         /*removeCopyButton.interactable = false;
         addCopyButton.interactable = false;*/
@@ -146,12 +150,15 @@ public class LoadGlb : MonoBehaviour
 
                     animController.FindAnimations(trigger);
 
-                    sizeSlider.value = 1;
+                    sizeSlider.value = 2;
+                    ((TextMeshProUGUI)sizeInput.placeholder).text = "2";
 
                     sizeSlider.interactable = true;
+                    sizeInput.interactable = true;
                     moveSliderX.interactable = true;
                     moveSliderY.interactable = true;
                     addCopyButton.interactable = true;
+                    removeTriggerButton.interactable = true;
 
                     objectVisibility.isOn = true;
                     objectVisibility.interactable = true;
@@ -169,9 +176,8 @@ public class LoadGlb : MonoBehaviour
 
     public void RemoveTrigger()
     {
-        trigger = null;
-
         DestroyImmediate(trigger);
+        trigger = null;
         if (triggerCopies != null && GetNumCopies() > 0)
         {
             foreach (GameObject copy in triggerCopies)
@@ -183,6 +189,16 @@ public class LoadGlb : MonoBehaviour
             }
         }
         objectVisibility.interactable = false;
+        removeTriggerButton.interactable = false;
+
+        sizeSlider.interactable = false;
+        sizeInput.interactable = false;
+        moveSliderX.interactable = false;
+        moveSliderY.interactable = false;
+        dropdown.interactable = false;
+        dropdown.ClearOptions();
+        addCopyButton.interactable = false;
+        removeCopyButton.interactable = false;
     }
 
     public async void MakeCopy()
@@ -195,6 +211,7 @@ public class LoadGlb : MonoBehaviour
             bool success = await LoadGlbFile(copy, pathOfTrigger);
             if (success)
             {
+                copy.transform.localScale = trigger.transform.localScale;
                 Debug.Log("Successfully loaded model!");
 
                 Animation animationComponent = trigger.GetComponent<Animation>();
@@ -233,7 +250,6 @@ public class LoadGlb : MonoBehaviour
         {
             RemoveTrigger();
         }
-        sizeSlider.value = 1;
         trigger = new GameObject("Trigger");
 
         pathOfTrigger = path;
@@ -243,6 +259,9 @@ public class LoadGlb : MonoBehaviour
             animController.FindAnimations(trigger);
             objectVisibility.isOn = true;
             objectVisibility.interactable = true;
+            removeTriggerButton.interactable = true;
+            sizeSlider.value = 2;
+            ((TextMeshProUGUI)sizeInput.placeholder).text = "2";
         }
         else
         {
@@ -290,10 +309,10 @@ public class LoadGlb : MonoBehaviour
                 loadedModel.AddComponent<DragObject>();
 
                 sizeSlider.interactable = true;
+                sizeInput.interactable = true;
                 moveSliderX.interactable = true;
                 moveSliderY.interactable = true;
                 addCopyButton.interactable = true;
-
             }
             else
             {

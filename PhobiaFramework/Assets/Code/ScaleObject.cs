@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityGLTF;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using TMPro;
 using GLTFast;
 
 public class ScaleObject : MonoBehaviour
 {
     public Slider sizeSlider;
     public GameObject databaseServiceObject;
+    public TMP_InputField sizeInput;
+    public 
     LoadGlb loadGlb;
     GameObject trigger;
     List<GameObject> triggerCopies;
@@ -20,8 +23,10 @@ public class ScaleObject : MonoBehaviour
 
         // Add an event listener to the slider's value changed event
         sizeSlider.onValueChanged.AddListener(ChangeObjectSize);
+        sizeInput.onValueChanged.AddListener((x) => ChangeObjectSizeInput(sizeInput.text));
         sizeSlider.interactable = false;
-    }
+        sizeInput.interactable = false;
+}
 
     // Callback method to adjust object size based on the slider's value
     private void ChangeObjectSize(float scaleValue)
@@ -34,7 +39,7 @@ public class ScaleObject : MonoBehaviour
             triggerCopies = loadGlb.GetCopies();
         }
         /// Map the slider value (0-100) to the desired scale range (minScale-maxScale)
-        float scaledValue = scaleValue/2;
+        float scaledValue = scaleValue/3;
         Vector3 newScale = new Vector3(scaledValue, scaledValue, scaledValue);
         trigger.transform.localScale = newScale;
         if (triggerCopies.Count > 0)
@@ -42,6 +47,15 @@ public class ScaleObject : MonoBehaviour
             foreach (GameObject copy in triggerCopies) {
                 copy.transform.localScale = newScale;
             }
+        }
+        ((TextMeshProUGUI)sizeInput.placeholder).text = scaleValue.ToString();
+    }
+
+    public void ChangeObjectSizeInput(string text)
+    {
+        if (!string.IsNullOrEmpty(text)) 
+        {
+            sizeSlider.value = int.Parse(text);
         }
     }
 }
