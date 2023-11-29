@@ -11,6 +11,7 @@ public class ShowAllModels : MonoBehaviour
 {
     DatabaseService dbService;
     LoadGlb loadGlbScript;
+    public GameObject databaseServiceObject;
     public GameObject gridItemPrefab;
     public Transform gridParent;
     public Button showModelsButton;
@@ -22,9 +23,6 @@ public class ShowAllModels : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Find the GameObject with the DatabaseService script
-        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
-
         // Check if the GameObject was found
         if (databaseServiceObject != null)
         {
@@ -123,7 +121,7 @@ public class ShowAllModels : MonoBehaviour
         int column = index % columnCount;
 
         // Adjust the anchored position to include the top padding
-        float paddingTop = 80; // Adjust this value as needed
+        float paddingTop = 100; // Adjust this value as needed
         float adjustedPosY = -(cellSizeX + spacingX) * row - paddingTop;
 
         RectTransform rectTransform = gridItem.GetComponent<RectTransform>();

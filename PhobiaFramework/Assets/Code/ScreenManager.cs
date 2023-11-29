@@ -19,6 +19,8 @@ public class ScreenManager : MonoBehaviour
     public GameObject UploadUI;
     public GameObject ChooseMediaUI;
     public GameObject DeleteUI;
+    public GameObject SettingsUI;
+    public GameObject ControlsUI;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +31,20 @@ public class ScreenManager : MonoBehaviour
         backFromUploadButton.onClick.AddListener(() => ShowUI("EditScene"));
         deleteFilesButton.onClick.AddListener(() => ShowUI("Delete"));
         backFromDeleteButton.onClick.AddListener(() => ShowUI("Upload"));
+
+        ModelUI.SetActive(true);
+        ChooseMediaUI.SetActive(true);
+        UploadUI.SetActive(true);
+        DeleteUI.SetActive(true);
+        SettingsUI.SetActive(true);
+        ControlsUI.SetActive(true);
+
+        ModelUI.SetActive(false);
+        ChooseMediaUI.SetActive(false);
+        UploadUI.SetActive(false);
+        DeleteUI.SetActive(false);
+        SettingsUI.SetActive(false);
+        ControlsUI.SetActive(false);
     }
 
     public void ShowUI(string UIname)
@@ -40,6 +56,8 @@ public class ScreenManager : MonoBehaviour
             ChooseMediaUI.SetActive(false);
             UploadUI.SetActive(false);
             DeleteUI.SetActive(false);
+            SettingsUI.SetActive(false);
+            ControlsUI.SetActive(false);
         }
         else if (UIname == "Upload")
         {
@@ -48,6 +66,8 @@ public class ScreenManager : MonoBehaviour
             ChooseMediaUI.SetActive(false);
             UploadUI.SetActive(true);
             DeleteUI.SetActive(false);
+            SettingsUI.SetActive(false);
+            ControlsUI.SetActive(false);
         }
         else if (UIname == "360Media")
         {
@@ -56,6 +76,8 @@ public class ScreenManager : MonoBehaviour
             ChooseMediaUI.SetActive(true);
             UploadUI.SetActive(false);
             DeleteUI.SetActive(false);
+            SettingsUI.SetActive(false);
+            ControlsUI.SetActive(false);
         }
         else if(UIname == "Delete")
         {
@@ -64,6 +86,8 @@ public class ScreenManager : MonoBehaviour
             ChooseMediaUI.SetActive(false);
             UploadUI.SetActive(false);
             DeleteUI.SetActive(true);
+            SettingsUI.SetActive(false);
+            ControlsUI.SetActive(false);
         }
     }
 

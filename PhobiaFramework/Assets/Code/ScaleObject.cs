@@ -12,7 +12,6 @@ public class ScaleObject : MonoBehaviour
     public Slider sizeSlider;
     public GameObject databaseServiceObject;
     public TMP_InputField sizeInput;
-    public 
     LoadGlb loadGlb;
     GameObject trigger;
     List<GameObject> triggerCopies;
@@ -49,6 +48,7 @@ public class ScaleObject : MonoBehaviour
             }
         }
         ((TextMeshProUGUI)sizeInput.placeholder).text = scaleValue.ToString();
+        sizeInput.text = scaleValue.ToString();
     }
 
     public void ChangeObjectSizeInput(string text)
