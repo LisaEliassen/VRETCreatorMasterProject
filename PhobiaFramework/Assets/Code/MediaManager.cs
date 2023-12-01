@@ -56,6 +56,7 @@ public class MediaManager : MonoBehaviour
 
     private void HandleMediaSelected(string[] paths)
     {
+        //FileBrowser.HideDialog(true);
         if (paths.Length > 0)
         {
             string path = paths[0];

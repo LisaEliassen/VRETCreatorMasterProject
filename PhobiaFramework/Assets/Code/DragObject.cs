@@ -6,11 +6,28 @@ public class DragObject : MonoBehaviour
 {
     private Vector3 mOffset;
     private float mZCoord;
+    public Camera mainCamera;
+
+    public void SetCamera(Camera camera)
+    {
+        mainCamera = camera;
+    }
 
     void OnMouseDown()
     {
-        mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        mOffset = gameObject.transform.position - GetMouseWorldPos();
+        if (mainCamera != null)
+        {
+            mZCoord = mainCamera.WorldToScreenPoint(gameObject.transform.position).z;
+            Vector3 mouseWorldPos = GetMouseWorldPos();
+            if (mouseWorldPos != null)
+            {
+                mOffset = gameObject.transform.position - GetMouseWorldPos();
+            }   
+        }
+        else
+        {
+            Debug.LogWarning("Main camera is null!");
+        }
     }
 
     private Vector3 GetMouseWorldPos()
@@ -18,7 +35,15 @@ public class DragObject : MonoBehaviour
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = mZCoord;
 
-        return Camera.main.ScreenToWorldPoint(mousePoint);
+        if (mainCamera != null)
+        {
+            return mainCamera.ScreenToWorldPoint(mousePoint);
+        }
+        else
+        {
+            Debug.LogWarning("Main camera is null!");
+            return mousePoint;
+        }
     }
 
     void OnMouseDrag()

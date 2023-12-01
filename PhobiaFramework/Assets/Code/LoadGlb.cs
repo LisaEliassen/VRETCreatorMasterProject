@@ -18,6 +18,7 @@ public class LoadGlb : MonoBehaviour
     List<GameObject> triggerCopies;
     DatabaseService dbService;
     AnimationController animController;
+    public UnityEngine.Camera mainCamera;
     public Toggle objectVisibility;
     public Slider moveSliderX;
     public Slider moveSliderY;
@@ -80,6 +81,10 @@ public class LoadGlb : MonoBehaviour
 
         /*removeCopyButton.interactable = false;
         addCopyButton.interactable = false;*/
+    }
+    public UnityEngine.Camera getCamera()
+    {
+        return this.mainCamera;
     }
 
     public string GetModelPath()
@@ -307,6 +312,8 @@ public class LoadGlb : MonoBehaviour
                 //boxCollider.size = new Vector3(1.0f, 1.0f, 1.0f); // Set the size of the collider
 
                 loadedModel.AddComponent<DragObject>();
+                DragObject dragObject = loadedModel.GetComponent<DragObject>();
+                dragObject.SetCamera(mainCamera);
 
                 sizeSlider.interactable = true;
                 sizeInput.interactable = true;
