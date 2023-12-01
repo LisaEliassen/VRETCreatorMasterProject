@@ -170,6 +170,9 @@ public class ShowAll360Media : MonoBehaviour
             }
             Debug.Log("Button for file " + filename + " was clicked!");
         });
+
+        gridLayoutGroup.gameObject.SetActive(false);
+        gridLayoutGroup.gameObject.SetActive(true);
     }
 
     public IEnumerator LoadImageFileType(string resourceName, Image image)

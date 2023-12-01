@@ -141,6 +141,9 @@ public class ShowAllModels : MonoBehaviour
             ModelUI.SetActive(false);
             Debug.Log("Button for model " + modelName + " was clicked!");
         });
+
+        gridLayoutGroup.gameObject.SetActive(false);
+        gridLayoutGroup.gameObject.SetActive(true);
     }
 
     public IEnumerator LoadImageFromFirebase(string modelIconPath, Image iconImage)
