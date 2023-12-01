@@ -19,7 +19,9 @@ public class VisibilityToggles : MonoBehaviour
     public Button removeCopyButton;
     public Toggle objectVisibility;
     public Toggle platformVisibility;
+    public Toggle wallsVisibility;
     public GameObject platform;
+    public GameObject walls;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,7 @@ public class VisibilityToggles : MonoBehaviour
 
         platformVisibility.onValueChanged.AddListener(PlatformVisibility);
         objectVisibility.onValueChanged.AddListener(ObjectVisibility);
+        wallsVisibility.onValueChanged.AddListener(WallsVisibility);
 
         trigger = loadGlb.GetTrigger();
         if (trigger != null )
@@ -101,6 +104,18 @@ public class VisibilityToggles : MonoBehaviour
         else
         {
             platform.GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+
+    public void WallsVisibility(bool visible)
+    {
+        if (visible)
+        {
+            walls.SetActive(true);
+        }
+        else
+        {
+            walls.SetActive(false);
         }
     }
 }
