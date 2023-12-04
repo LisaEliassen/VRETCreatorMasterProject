@@ -9,6 +9,7 @@ public class Tutorial : MonoBehaviour
     public GameObject HelpUI;
 
     public GameObject AskPanel;
+    public GameObject InfoPanel;
     public GameObject ModelHelpPanel;
     public GameObject SizeAndPositionHelpPanel;
     public GameObject CopiesHelpPanel;
@@ -28,6 +29,7 @@ public class Tutorial : MonoBehaviour
     public Button NextButton5;
     public Button NextButton6;
     public Button NextButton7;
+    public Button NextButton8;
 
     public Button PreviousButton1;
     public Button PreviousButton2;
@@ -35,7 +37,7 @@ public class Tutorial : MonoBehaviour
     public Button PreviousButton4;
     public Button PreviousButton5;
     public Button PreviousButton6;
-
+    public Button PreviousButton7;
 
     // Start is called before the first frame update
     void Start()
@@ -70,35 +72,40 @@ public class Tutorial : MonoBehaviour
     {
         NextButton1.onClick.AddListener(() =>
         {
+            InfoPanel.SetActive(false);
+            ModelHelpPanel.SetActive(true);
+        });
+        NextButton2.onClick.AddListener(() =>
+        {
             ModelHelpPanel.SetActive(false);
             SizeAndPositionHelpPanel.SetActive(true);
         });
-        NextButton2.onClick.AddListener(() =>
+        NextButton3.onClick.AddListener(() =>
         {
             SizeAndPositionHelpPanel.SetActive(false);
             CopiesHelpPanel.SetActive(true);
         });
-        NextButton3.onClick.AddListener(() =>
+        NextButton4.onClick.AddListener(() =>
         {
             CopiesHelpPanel.SetActive(false);
             AnimationHelpPanel.SetActive(true);
         });
-        NextButton4.onClick.AddListener(() =>
+        NextButton5.onClick.AddListener(() =>
         {
             AnimationHelpPanel.SetActive(false);
             VisibilityToggleHelpPanel.SetActive(true);
         });
-        NextButton5.onClick.AddListener(() =>
+        NextButton6.onClick.AddListener(() =>
         {
             VisibilityToggleHelpPanel.SetActive(false);
             RemoveTriggerHelpPanel.SetActive(true);
         });
-        NextButton6.onClick.AddListener(() =>
+        NextButton7.onClick.AddListener(() =>
         {
             RemoveTriggerHelpPanel.SetActive(false);
             Media360HelpPanel.SetActive(true);
         });
-        NextButton7.onClick.AddListener(() =>
+        NextButton8.onClick.AddListener(() =>
         {
             Media360HelpPanel.SetActive(false);
             HelpUI.SetActive(false);
@@ -107,30 +114,35 @@ public class Tutorial : MonoBehaviour
 
         PreviousButton1.onClick.AddListener(() =>
         {
+            ModelHelpPanel.SetActive(false);
+            InfoPanel.SetActive(true);
+        });
+        PreviousButton2.onClick.AddListener(() =>
+        {
             ModelHelpPanel.SetActive(true);
             SizeAndPositionHelpPanel.SetActive(false);
         });
-        PreviousButton2.onClick.AddListener(() =>
+        PreviousButton3.onClick.AddListener(() =>
         {
             SizeAndPositionHelpPanel.SetActive(true);
             CopiesHelpPanel.SetActive(false);
         });
-        PreviousButton3.onClick.AddListener(() =>
+        PreviousButton4.onClick.AddListener(() =>
         {
             CopiesHelpPanel.SetActive(true);
             AnimationHelpPanel.SetActive(false);
         });
-        PreviousButton4.onClick.AddListener(() =>
+        PreviousButton5.onClick.AddListener(() =>
         {
             AnimationHelpPanel.SetActive(true);
             VisibilityToggleHelpPanel.SetActive(false);
         });
-        PreviousButton5.onClick.AddListener(() =>
+        PreviousButton6.onClick.AddListener(() =>
         {
             VisibilityToggleHelpPanel.SetActive(true);
             RemoveTriggerHelpPanel.SetActive(false);
         });
-        PreviousButton6.onClick.AddListener(() =>
+        PreviousButton7.onClick.AddListener(() =>
         {
             RemoveTriggerHelpPanel.SetActive(true);
             Media360HelpPanel.SetActive(false);
@@ -141,7 +153,7 @@ public class Tutorial : MonoBehaviour
     {
         HideAskPanel();
         EditSceneUI.SetActive(true);
-        ModelHelpPanel.SetActive(true);
+        InfoPanel.SetActive(true);
         endTutorialButton.gameObject.SetActive(true);
     }
 
