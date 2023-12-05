@@ -197,6 +197,7 @@ public class MediaManager : MonoBehaviour
 
             // Play the video
             videoPlayer.Play();
+
         }
         return null;
     }
