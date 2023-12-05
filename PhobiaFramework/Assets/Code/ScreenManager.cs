@@ -14,6 +14,7 @@ public class ScreenManager : MonoBehaviour
     public Button backFrom360Media;
     public Button deleteFilesButton;
     public Button backFromDeleteButton;
+    public Button chooseSoundButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
     public GameObject UploadUI;
@@ -21,6 +22,7 @@ public class ScreenManager : MonoBehaviour
     public GameObject DeleteUI;
     public GameObject SettingsUI;
     public GameObject ControlsUI;
+    public GameObject SoundUI;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,7 @@ public class ScreenManager : MonoBehaviour
         backFromUploadButton.onClick.AddListener(() => ShowUI("EditScene"));
         deleteFilesButton.onClick.AddListener(() => ShowUI("Delete"));
         backFromDeleteButton.onClick.AddListener(() => ShowUI("Upload"));
+        chooseSoundButton.onClick.AddListener(() => ShowUI("Sound"));
 
         ModelUI.SetActive(true);
         ChooseMediaUI.SetActive(true);
@@ -38,6 +41,7 @@ public class ScreenManager : MonoBehaviour
         DeleteUI.SetActive(true);
         SettingsUI.SetActive(true);
         ControlsUI.SetActive(true);
+        SoundUI.SetActive(true);
 
         ModelUI.SetActive(false);
         ChooseMediaUI.SetActive(false);
@@ -45,6 +49,7 @@ public class ScreenManager : MonoBehaviour
         DeleteUI.SetActive(false);
         SettingsUI.SetActive(false);
         ControlsUI.SetActive(false);
+        SoundUI.SetActive(false);
     }
 
     public void ShowUI(string UIname)
@@ -58,6 +63,7 @@ public class ScreenManager : MonoBehaviour
             DeleteUI.SetActive(false);
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
+            SoundUI.SetActive(false);
         }
         else if (UIname == "Upload")
         {
@@ -68,6 +74,7 @@ public class ScreenManager : MonoBehaviour
             DeleteUI.SetActive(false);
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
+            SoundUI.SetActive(false);
         }
         else if (UIname == "360Media")
         {
@@ -78,6 +85,7 @@ public class ScreenManager : MonoBehaviour
             DeleteUI.SetActive(false);
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
+            SoundUI.SetActive(false);
         }
         else if(UIname == "Delete")
         {
@@ -88,6 +96,18 @@ public class ScreenManager : MonoBehaviour
             DeleteUI.SetActive(true);
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
+            SoundUI.SetActive(false);
+        }
+        else if (UIname == "Sound")
+        {
+            EditSceneUI.SetActive(false);
+            ModelUI.SetActive(false);
+            ChooseMediaUI.SetActive(false);
+            UploadUI.SetActive(false);
+            DeleteUI.SetActive(false);
+            SettingsUI.SetActive(false);
+            ControlsUI.SetActive(false);
+            SoundUI.SetActive(true);
         }
     }
 
