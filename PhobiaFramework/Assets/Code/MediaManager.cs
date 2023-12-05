@@ -14,8 +14,6 @@ public class MediaManager : MonoBehaviour
 {
     public Material skyboxMaterial;
     public Button chooseFromDeviceButton;
-    public Button importImageButton;
-    public Button importVideoButton;
     public GameObject photoSphere;
     public GameObject videoSphere;
     public VideoPlayer videoPlayer;
@@ -24,16 +22,11 @@ public class MediaManager : MonoBehaviour
     public GameObject EditSceneUI;
     public GameObject MediaUI;
 
+    public GameObject databaseServiceObject;
     DatabaseService dbService;
 
     void Start()
     {
-        importImageButton.onClick.AddListener(ImportImage);
-        importVideoButton.onClick.AddListener(ImportVideo);
-
-        // Find the GameObject with the DatabaseService script
-        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
-
         // Check if the GameObject was found
         if (databaseServiceObject != null)
         {
@@ -125,32 +118,6 @@ public class MediaManager : MonoBehaviour
         if (FileBrowser.Success)
         {
             callback(FileBrowser.Result);
-        }
-    }
-
-    private async void ImportImage()
-    {
-        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/photos/ESO_Paranal_360_Marcio_Cabral_Chile_07-CC.jpg");
-        if (!string.IsNullOrEmpty(downloadUrl))
-        {
-            await HandleImageSelected(downloadUrl);
-        }
-        else
-        {
-            Debug.Log("Failed to retrieve download URL!");
-        }
-    }
-
-    private async void ImportVideo()
-    {
-        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/videos/360_vr_london_on_tower_bridge.mp4");
-        if (!string.IsNullOrEmpty(downloadUrl))
-        {
-            await HandleVideoSelected(downloadUrl);
-        }
-        else
-        {
-            Debug.Log("Failed to retrieve download URL!");
         }
     }
 

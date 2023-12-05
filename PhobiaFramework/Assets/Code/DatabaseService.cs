@@ -53,6 +53,18 @@ public class DatabaseService : MonoBehaviour
         else { return null; }
     }
 
+    public async Task<AudioClip> getAudioClip(string downloadUrl)
+    {
+        if (database != null)
+        {
+            return await database.getAudioClip(downloadUrl);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void addIcon(string filePath, string iconFileName, string fileType, string iconExtension)
     {
         if (database != null)
@@ -91,6 +103,14 @@ public class DatabaseService : MonoBehaviour
         if (database != null)
         {
             yield return database.getAll360Media(callback);
+        }
+    }
+
+    public IEnumerator getAllSoundMedia(Action<List<FileMetaData>> callback)
+    {
+        if (database != null)
+        {
+            yield return database.getAllSoundMedia(callback);
         }
     }
 

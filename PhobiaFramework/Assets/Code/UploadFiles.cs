@@ -152,6 +152,11 @@ public class UploadFiles : MonoBehaviour
             FileBrowser.SetFilters(true, new FileBrowser.Filter("Videos", ".mp4", ".mov"));
             FileBrowser.SetDefaultFilter(".mp4");
         }
+        else if(fileType == "Sound")
+        {
+            FileBrowser.SetFilters(true, new FileBrowser.Filter("Sound", ".mp3", ".WAV"));
+            FileBrowser.SetDefaultFilter(".mp3");
+        }
 
         StartCoroutine(ShowLoadDialogCoroutine(PickMode.Files, setFilePath));
     }

@@ -7,16 +7,17 @@ using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 
-public class ShowAll360Media : MonoBehaviour
+
+public class ShowAllSoundMedia : MonoBehaviour
 {
     DatabaseService dbService;
-    MediaManager mediaManager;
+    SoundManager soundManager;
     public GameObject databaseServiceObject;
-    public GameObject gridItemPrefab360;
+    public GameObject gridItemPrefab;
     public Transform gridParent;
-    public Button addMediaButton;
+    public Button addSoundButton;
     public GameObject EditSceneUI;
-    public GameObject MediaUI;
+    public GameObject SoundUI;
     List<FileMetaData> files;
 
     // Start is called before the first frame update
@@ -29,7 +30,7 @@ public class ShowAll360Media : MonoBehaviour
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
 
 
-            mediaManager = databaseServiceObject.GetComponent<MediaManager>();
+            soundManager = databaseServiceObject.GetComponent<SoundManager>();
         }
         else
         {
@@ -38,17 +39,18 @@ public class ShowAll360Media : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        addMediaButton.onClick.AddListener(() =>
+        addSoundButton.onClick.AddListener(() =>
         {
-            StartCoroutine(FetchMedia());
+            StartCoroutine(FetchSoundMedia());
         });
+
     }
 
-    public IEnumerator FetchMedia()
+    public IEnumerator FetchSoundMedia()
     {
         List<FileMetaData> newFilesList = new List<FileMetaData>();
 
-        yield return dbService.getAll360Media((data) =>
+        yield return dbService.getAllSoundMedia((data) =>
         {
             newFilesList = data;
         });
@@ -81,7 +83,7 @@ public class ShowAll360Media : MonoBehaviour
             Destroy(child.gameObject);
         }
         files = new List<FileMetaData>();
-        StartCoroutine(FetchMedia());
+        StartCoroutine(FetchSoundMedia());
     }
 
     public IEnumerator CreateGridItem(string filename, string filetype, string iconPath, string storagePath, int index)
@@ -92,7 +94,7 @@ public class ShowAll360Media : MonoBehaviour
             yield break; // Exit the function early if the grid item already exists
         }
 
-        GameObject gridItem = Instantiate(gridItemPrefab360, gridParent);
+        GameObject gridItem = Instantiate(gridItemPrefab, gridParent);
 
         GridLayoutGroup gridLayoutGroup = gridParent.GetComponent<GridLayoutGroup>();
         float cellSizeX = gridLayoutGroup.cellSize.x;
@@ -111,7 +113,7 @@ public class ShowAll360Media : MonoBehaviour
         int column = index % columnCount;
 
         // Adjust the anchored position to include the top padding
-        float paddingTop = 80; // Adjust this value as needed
+        float paddingTop = 100; // Adjust this value as needed
         float adjustedPosY = -(cellSizeX + spacingX) * row - paddingTop;
 
         RectTransform rectTransform = gridItem.GetComponent<RectTransform>();
@@ -121,32 +123,6 @@ public class ShowAll360Media : MonoBehaviour
         rectTransform.anchoredPosition = new Vector2((cellSizeX + spacingX) * column, adjustedPosY);
         //rectTransform.anchoredPosition = new Vector2((cellSizeX + spacingX) * column, -(cellSizeX + spacingX) * row);
 
-        Image fileTypeImage = gridItem.transform.Find("TypeImage").GetComponent<Image>();
-
-        Texture2D texture = null;
-
-        if (filetype == "360 image")
-        {
-            //texture = Resources.Load<Texture2D>("image-icon.png");
-            yield return StartCoroutine(LoadImageFileType("image-icon", fileTypeImage));
-
-        }
-        else if (filetype == "360 video")
-        {
-            //texture = Resources.Load<Texture2D>("video-icon.png");
-            yield return StartCoroutine(LoadImageFileType("video-icon", fileTypeImage));
-        }
-
-        if (texture != null)
-        {
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            fileTypeImage.sprite = sprite;
-        }
-        else
-        {
-            Debug.Log("texture is null");
-        }
-
         Button button = gridItem.AddComponent<Button>();
 
         // Add an onclick listener for the grid item to load the model from Firebase Storage
@@ -155,17 +131,10 @@ public class ShowAll360Media : MonoBehaviour
             string downloadUrl = await dbService.GetDownloadURL(storagePath);
             if (downloadUrl != null)
             {
-                if (filetype == "360 image")
-                {
-                    await mediaManager.HandleImageSelected(downloadUrl);
-                }
-                else if (filetype == "360 video")
-                {
-                    await mediaManager.HandleVideoSelected(downloadUrl);
-                }               
-
+                await soundManager.HandleSoundSelected(downloadUrl);
+               
                 EditSceneUI.SetActive(true);
-                MediaUI.SetActive(false);
+                SoundUI.SetActive(false);
             }
             else
             {
@@ -177,46 +146,6 @@ public class ShowAll360Media : MonoBehaviour
         gridLayoutGroup.gameObject.SetActive(false);
         gridLayoutGroup.gameObject.SetActive(true);
     }
-
-    public IEnumerator LoadImageFileType(string resourceName, Image image)
-    {
-        Task<Texture2D> loadTextureTask = LoadTextureFromResourcesAsync(resourceName);
-        yield return new WaitUntil(() => loadTextureTask.IsCompleted);
-
-        if (loadTextureTask.IsFaulted || loadTextureTask.IsCanceled)
-        {
-            Debug.Log("Error loading texture.");
-        }
-        else
-        {
-            Texture2D texture = loadTextureTask.Result;
-            if (texture != null)
-            {
-                image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            }
-        }
-    }
-
-    private async Task<Texture2D> LoadTextureFromResourcesAsync(string resourceName)
-    {
-        ResourceRequest request = Resources.LoadAsync<Texture2D>(resourceName);
-
-        while (!request.isDone)
-        {
-            await Task.Delay(10); // Add a small delay to avoid blocking the main thread
-        }
-
-        if (request.asset != null)
-        {
-            return (Texture2D)request.asset;
-        }
-        else
-        {
-            Debug.LogError("Failed to load texture from resources: " + resourceName);
-            return null;
-        }
-    }
-
 
     public IEnumerator LoadImageFromFirebase(string iconPath, Image iconImage)
     {
@@ -253,4 +182,5 @@ public class ShowAll360Media : MonoBehaviour
 
         return null;
     }
+
 }

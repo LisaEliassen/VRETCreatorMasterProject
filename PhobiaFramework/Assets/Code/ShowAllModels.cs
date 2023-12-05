@@ -15,7 +15,6 @@ public class ShowAllModels : MonoBehaviour
     public GameObject gridItemPrefab;
     public Transform gridParent;
     public Button showModelsButton;
-    public Button backButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
     List<FileMetaData> files;
@@ -43,19 +42,10 @@ public class ShowAllModels : MonoBehaviour
             
             StartCoroutine(FetchModels());
         });
-
-        backButton.onClick.AddListener(() =>
-        {
-            EditSceneUI.SetActive(true);
-            ModelUI.SetActive(false);
-        });
     }
 
     public IEnumerator FetchModels()
     {
-        EditSceneUI.SetActive(false);
-        ModelUI.SetActive(true);
-
         List<FileMetaData> newFilesList = new List<FileMetaData>();
 
         yield return dbService.getAllModelFileData((data) =>
@@ -182,9 +172,4 @@ public class ShowAllModels : MonoBehaviour
         return null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -20,6 +20,8 @@ public interface Database
 
     Task<byte[]> getFile(string downloadUrl);
 
+    Task<AudioClip> getAudioClip(string downloadUrl);
+
     void addIcon(string filePath, string iconFileName, string fileType, string iconExtension);
 
     bool addFile(string filePath, string fileName, string fileType, string extension);
@@ -29,6 +31,8 @@ public interface Database
     IEnumerator getAllModelFileData(System.Action<List<FileMetaData>> callback);
 
     IEnumerator getAll360Media(Action<List<FileMetaData>> callback);
+
+    IEnumerator getAllSoundMedia(Action<List<FileMetaData>> callback);
 
     void deleteFile(string fileName, string fileType, FileMetaData fileData);
 }

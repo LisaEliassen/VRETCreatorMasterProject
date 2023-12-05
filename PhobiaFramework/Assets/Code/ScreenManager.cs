@@ -10,11 +10,16 @@ public class ScreenManager : MonoBehaviour
 {
     public Button uploadFileButton;
     public Button chooseMediaButton;
+    public Button addTriggerButton;
+    public Button backFromModelsButton;
     public Button backFromUploadButton;
     public Button backFrom360Media;
     public Button deleteFilesButton;
     public Button backFromDeleteButton;
     public Button chooseSoundButton;
+    public Button backFromSoundButton;
+    public Button settingsButton;
+    public Button backFromSettingsButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
     public GameObject UploadUI;
@@ -23,17 +28,28 @@ public class ScreenManager : MonoBehaviour
     public GameObject SettingsUI;
     public GameObject ControlsUI;
     public GameObject SoundUI;
+    public GameObject HelpUI;
 
     // Start is called before the first frame update
     void Start()
     {
         uploadFileButton.onClick.AddListener(() => ShowUI("Upload"));
+        backFromUploadButton.onClick.AddListener(() => ShowUI("EditScene"));
+
+        addTriggerButton.onClick.AddListener(() => ShowUI("Models"));
+        backFromModelsButton.onClick.AddListener(() => ShowUI("EditScene"));
+
         chooseMediaButton.onClick.AddListener(() => ShowUI("360Media"));
         backFrom360Media.onClick.AddListener(() => ShowUI("EditScene"));
-        backFromUploadButton.onClick.AddListener(() => ShowUI("EditScene"));
+        
         deleteFilesButton.onClick.AddListener(() => ShowUI("Delete"));
         backFromDeleteButton.onClick.AddListener(() => ShowUI("Upload"));
+        
         chooseSoundButton.onClick.AddListener(() => ShowUI("Sound"));
+        backFromSoundButton.onClick.AddListener(() => ShowUI("EditScene"));
+
+        settingsButton.onClick.AddListener(() => ShowUI("Settings"));
+        backFromSettingsButton.onClick.AddListener(() => ShowUI("EditScene"));
 
         ModelUI.SetActive(true);
         ChooseMediaUI.SetActive(true);
@@ -42,6 +58,7 @@ public class ScreenManager : MonoBehaviour
         SettingsUI.SetActive(true);
         ControlsUI.SetActive(true);
         SoundUI.SetActive(true);
+        HelpUI.SetActive(true);
 
         ModelUI.SetActive(false);
         ChooseMediaUI.SetActive(false);
@@ -64,6 +81,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            HelpUI.SetActive(false);
         }
         else if (UIname == "Upload")
         {
@@ -75,6 +93,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            HelpUI.SetActive(false);
         }
         else if (UIname == "360Media")
         {
@@ -86,6 +105,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            HelpUI.SetActive(false);
         }
         else if(UIname == "Delete")
         {
@@ -97,6 +117,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            HelpUI.SetActive(false);
         }
         else if (UIname == "Sound")
         {
@@ -108,6 +129,31 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(true);
+            HelpUI.SetActive(false);
+        }
+        else if (UIname == "Models")
+        {
+            EditSceneUI.SetActive(false);
+            ModelUI.SetActive(true);
+            ChooseMediaUI.SetActive(false);
+            UploadUI.SetActive(false);
+            DeleteUI.SetActive(false);
+            SettingsUI.SetActive(false);
+            ControlsUI.SetActive(false);
+            SoundUI.SetActive(false);
+            HelpUI.SetActive(false);
+        }
+        else if (UIname == "Settings")
+        {
+            EditSceneUI.SetActive(false);
+            ModelUI.SetActive(false);
+            ChooseMediaUI.SetActive(false);
+            UploadUI.SetActive(false);
+            DeleteUI.SetActive(false);
+            SettingsUI.SetActive(true);
+            ControlsUI.SetActive(false);
+            SoundUI.SetActive(false);
+            HelpUI.SetActive(false);
         }
     }
 

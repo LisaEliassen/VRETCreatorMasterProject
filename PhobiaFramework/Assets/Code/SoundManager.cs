@@ -13,22 +13,18 @@ using System.Net;
 public class SoundManager : MonoBehaviour
 {
     public Button chooseFromDeviceButton;
-    public Button importSoundButton;
+    public Button removeSoundButton;
     public AudioSource audioSource;
     private AudioClip audioClip;
 
     public GameObject EditSceneUI;
     public GameObject SoundUI;
 
+    public GameObject databaseServiceObject;
     DatabaseService dbService;
 
     void Start()
     {
-        //importSoundButton.onClick.AddListener(ImportSound);
-
-        // Find the GameObject with the DatabaseService script
-        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
-
         // Check if the GameObject was found
         if (databaseServiceObject != null)
         {
@@ -41,14 +37,23 @@ public class SoundManager : MonoBehaviour
         }
 
         chooseFromDeviceButton.onClick.AddListener(ImportMedia);
+
+        removeSoundButton.onClick.AddListener(RemoveSound);
+    }
+
+    public void RemoveSound()
+    {
+        audioSource.Stop();
+        audioClip = null;
+        audioSource.clip = audioClip;
+
+        removeSoundButton.interactable = false;
     }
 
     private void ImportMedia()
     {
         StartCoroutine(ShowLoadDialogCoroutine(PickMode.Files, HandleMediaSelected));
     }
-
-
 
     private void HandleMediaSelected(string[] paths)
     {
@@ -59,13 +64,10 @@ public class SoundManager : MonoBehaviour
 
             if (IsSoundFile(path))
             {
-                // Handle sound file
-                // Call your sound-related script/methods here
                 StartCoroutine((IEnumerator)HandleSoundSelected(path));
             }
             else
             {
-                // Handle unsupported file type
                 Debug.Log("Selected file is not supported.");
             }
         }
@@ -73,20 +75,18 @@ public class SoundManager : MonoBehaviour
 
     public async Task<IEnumerator> HandleSoundSelected(string downloadUrl)
     {
-        byte[] binaryData = await dbService.getFile(downloadUrl);
+        audioClip = await dbService.getAudioClip(downloadUrl);
 
-        if (binaryData != null)
+        if (audioClip != null)
         {
-            // Create an AudioClip from the byte array data
-            audioClip = WavUtility.ToAudioClip(binaryData, 0, "tempAudioClip");
-
             // Set the loaded audio clip as the AudioSource clip
             audioSource.clip = audioClip;
 
             // Play the audio
             audioSource.Play();
-        }
 
+            removeSoundButton.interactable = true;
+        }
         return null;
     }
 

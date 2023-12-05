@@ -11,6 +11,7 @@ using GLTFast;
 using GLTFast.Schema;
 using UnityEngine.Networking;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class LoadGlb : MonoBehaviour
 {
@@ -18,8 +19,10 @@ public class LoadGlb : MonoBehaviour
     List<GameObject> triggerCopies;
     DatabaseService dbService;
     AnimationController animController;
+    public GameObject databaseServiceObject;
     public UnityEngine.Camera mainCamera;
     public Toggle objectVisibility;
+    public Toggle interactableToggle;
     public Slider moveSliderX;
     public Slider moveSliderY;
     public Slider sizeSlider;
@@ -36,17 +39,11 @@ public class LoadGlb : MonoBehaviour
     public GameObject posObject;
     string triggerName;
     string pathOfTrigger;
-    private Vector3 offset;
-    private bool isDragging = false;
     int numCopies = 0; 
 
     // Start is called before the first frame update
     void Start()
     {
-
-        // Find the GameObject with the DatabaseService script
-        GameObject databaseServiceObject = GameObject.Find("DatabaseService");
-
         // Check if the GameObject was found
         if (databaseServiceObject != null)
         {
@@ -79,9 +76,38 @@ public class LoadGlb : MonoBehaviour
         chooseFromDeviceButton.onClick.AddListener(ImportModel);
         removeTriggerButton.onClick.AddListener(RemoveTrigger);
 
-        /*removeCopyButton.interactable = false;
-        addCopyButton.interactable = false;*/
+        interactableToggle.onValueChanged.AddListener(MakeInteractable);
     }
+
+    public void MakeInteractable(bool visible)
+    {
+        if (trigger != null)
+        {
+            if (visible)
+            {
+                trigger.AddComponent<XRGrabInteractable>();
+                if (triggerCopies != null && triggerCopies.Count > 0)
+                {
+                    foreach (GameObject copy in triggerCopies)
+                    {
+                        copy.AddComponent<XRGrabInteractable>();
+                    }
+                }
+            }
+            else
+            {
+                Destroy(trigger.GetComponent<XRGrabInteractable>());
+                if (triggerCopies != null && triggerCopies.Count > 0)
+                {
+                    foreach (GameObject copy in triggerCopies)
+                    {
+                        Destroy(copy.GetComponent<XRGrabInteractable>());
+                    }
+                }
+            }
+        }
+    }
+
     public UnityEngine.Camera getCamera()
     {
         return this.mainCamera;
@@ -151,7 +177,6 @@ public class LoadGlb : MonoBehaviour
                 {
                     trigger.transform.position = position;
                     trigger.SetActive(true);
-                    //DontDestroyOnLoad(loadedModel);
 
                     animController.FindAnimations(trigger);
 
@@ -189,7 +214,6 @@ public class LoadGlb : MonoBehaviour
             {
                 DestroyImmediate(copy);
                 triggerCopies = new List<GameObject>();
-                //numCopies = 0;
                 numCopiesText.text = GetNumCopies().ToString();
             }
         }
@@ -210,7 +234,6 @@ public class LoadGlb : MonoBehaviour
     {
         if (trigger != null && !string.IsNullOrEmpty(pathOfTrigger)) 
         {
-            //numCopies++;
             GameObject copy = new GameObject("Trigger_copy" + GetNumCopies());
             triggerCopies.Add(copy);
             bool success = await LoadGlbFile(copy, pathOfTrigger);
@@ -244,11 +267,9 @@ public class LoadGlb : MonoBehaviour
             Debug.Log(GetNumCopies());
             DestroyImmediate(triggerCopies[GetNumCopies() - 1]);
             triggerCopies.RemoveAt(GetNumCopies() - 1);
-            //numCopies--;
         }
     }
 
-    //public void SpawnObject()
     public async void SpawnObject(string modelName, string path)
     {
         if (trigger != null)
@@ -363,46 +384,6 @@ public class LoadGlb : MonoBehaviour
             callback(FileBrowser.Result);
         }
     }
-
-    // Update is called once per frame
-    /*void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.gameObject == trigger)
-                {
-                    // Select the object
-                    isDragging = true;
-                    offset = trigger.transform.position - hit.point;
-                }
-            }
-        }
-
-        if (isDragging && Input.GetMouseButton(0))
-        {
-            Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                // Move the selected object to the mouse position on the plane
-                Vector3 newPosition = hit.point + offset;
-                newPosition.y = trigger.transform.position.y;
-                trigger.transform.position = newPosition;
-            }
-        }
-
-        if (Input.GetMouseButtonUp(0) && isDragging)
-        {
-            // Deselect the object
-            isDragging = false;
-        }
-    }*/
 
     public void SetSelectedObject(GameObject obj)
     {

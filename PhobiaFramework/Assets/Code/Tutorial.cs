@@ -17,10 +17,13 @@ public class Tutorial : MonoBehaviour
     public GameObject VisibilityToggleHelpPanel;
     public GameObject RemoveTriggerHelpPanel;
     public GameObject Media360HelpPanel;
+    public GameObject AddSoundHelpPanel;
+    public GameObject RemoveSoundHelpPanel;
 
     public Button yesButton;
     public Button noButton;
     public Button endTutorialButton;
+    public Button showTutorialButton;
 
     public Button NextButton1;
     public Button NextButton2;
@@ -30,6 +33,8 @@ public class Tutorial : MonoBehaviour
     public Button NextButton6;
     public Button NextButton7;
     public Button NextButton8;
+    public Button NextButton9;
+    public Button NextButton10;
 
     public Button PreviousButton1;
     public Button PreviousButton2;
@@ -38,6 +43,8 @@ public class Tutorial : MonoBehaviour
     public Button PreviousButton5;
     public Button PreviousButton6;
     public Button PreviousButton7;
+    public Button PreviousButton8;
+    public Button PreviousButton9;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +73,8 @@ public class Tutorial : MonoBehaviour
         });
 
         PrepareButtons();
+
+        showTutorialButton.onClick.AddListener(StartTutorial);
     }
 
     public void PrepareButtons()
@@ -108,6 +117,17 @@ public class Tutorial : MonoBehaviour
         NextButton8.onClick.AddListener(() =>
         {
             Media360HelpPanel.SetActive(false);
+            AddSoundHelpPanel.SetActive(true);
+        });
+        NextButton9.onClick.AddListener(() =>
+        {
+            AddSoundHelpPanel.SetActive(false);
+            RemoveSoundHelpPanel.SetActive(true);
+        }); 
+        NextButton10.onClick.AddListener(() =>
+        {
+            RemoveSoundHelpPanel.SetActive(false);
+            showTutorialButton.gameObject.SetActive(true);
             HelpUI.SetActive(false);
         });
 
@@ -147,10 +167,21 @@ public class Tutorial : MonoBehaviour
             RemoveTriggerHelpPanel.SetActive(true);
             Media360HelpPanel.SetActive(false);
         });
+        PreviousButton8.onClick.AddListener(() =>
+        {
+            Media360HelpPanel.SetActive(true);
+            AddSoundHelpPanel.SetActive(false);
+        });
+        PreviousButton9.onClick.AddListener(() =>
+        {
+            AddSoundHelpPanel.SetActive(true);
+            RemoveSoundHelpPanel.SetActive(false);
+        });
     }
 
     public void StartTutorial()
     {
+        HelpUI.SetActive(true);
         HideAskPanel();
         EditSceneUI.SetActive(true);
         InfoPanel.SetActive(true);
@@ -160,5 +191,6 @@ public class Tutorial : MonoBehaviour
     public void HideAskPanel()
     {
         AskPanel.SetActive(false);
+        showTutorialButton.gameObject.SetActive(true);
     }
 }

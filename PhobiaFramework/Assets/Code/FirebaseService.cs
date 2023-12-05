@@ -77,6 +77,51 @@ public class FirebaseService : Database
         }
     }
 
+    public async Task<AudioClip> getAudioClip(string downloadUrl)
+    {
+        string extension = Path.GetExtension(downloadUrl);
+        AudioType audioType = GetAudioTypeFromExtension(extension);
+
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(downloadUrl, audioType))
+        {
+            var asyncOperation = www.SendWebRequest();
+
+            // Wait until the request is completed or times out
+            while (!asyncOperation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.Log(www.error);
+                return null;
+            }
+            else
+            {
+                AudioClip myClip = DownloadHandlerAudioClip.GetContent(www);
+                return myClip;
+            }
+        }
+    }
+
+    private AudioType GetAudioTypeFromExtension(string extension)
+    {
+        if (extension.Equals(".mp3", StringComparison.OrdinalIgnoreCase))
+        {
+            return AudioType.MPEG;
+        }
+        else if (extension.Equals(".wav", StringComparison.OrdinalIgnoreCase))
+        {
+            return AudioType.WAV;
+        }
+        else
+        {
+            // Default to MP3 if the extension is not recognized
+            return AudioType.MPEG;
+        }
+    }
+
     public void addIcon(string filePath, string iconFileName, string fileType, string iconExtension)
     {
         StorageReference fileRef = null;
@@ -96,6 +141,10 @@ public class FirebaseService : Database
         else if (fileType == "Texture")
         {
             fileRef = storageRef.Child("textures/icons/" + iconFileName + iconExtension);
+        }
+        else if (fileType == "Sound")
+        {
+            fileRef = storageRef.Child("sound/icons/" + iconFileName + iconExtension);
         }
 
         if (fileRef != null)
@@ -144,6 +193,10 @@ public class FirebaseService : Database
         else if (fileType == "Texture")
         {
             fileRef = storageRef.Child("textures/" + fileName + extension);
+        }
+        else if (fileType == "Sound")
+        {
+            fileRef = storageRef.Child("sound/" + fileName + extension);
         }
 
         if (fileRef != null)
@@ -204,6 +257,12 @@ public class FirebaseService : Database
             path = databaseURL + "/textures/" + fileName + extension;
             pathToIcon = databaseURL + "/textures/icons/" + fileName + "_icon" + iconExtension;
             childStr = "textures";
+        }
+        else if (fileType == "Sound")
+        {
+            path = databaseURL + "/sound/" + fileName + extension;
+            pathToIcon = databaseURL + "/sound/icons/" + fileName + "_icon" + iconExtension;
+            childStr = "sound";
         }
 
         if (path != null && pathToIcon != null && childStr != null)
@@ -372,6 +431,47 @@ public class FirebaseService : Database
             }
 
             callback(files);
+        }
+    }
+
+    public IEnumerator getAllSoundMedia(Action<List<FileMetaData>> callback)
+    {
+        var task = dbreference.Child("sound").GetValueAsync();
+        yield return new WaitUntil(() => task.IsCompleted);
+
+        if (task.Exception != null)
+        {
+            Debug.LogError("Error retrieving data: " + task.Exception);
+        }
+        else if (task.Result != null)
+        {
+            List<FileMetaData> files = new List<FileMetaData>();
+            DataSnapshot snapshot = task.Result;
+
+            foreach (var child in snapshot.Children)
+            {
+                if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
+                {
+                    Debug.Log("Key: " + child.Key);
+                    Debug.Log("Value: " + child.GetRawJsonValue());
+
+                    string uniqueID = child.Key;
+                    string filename = child.Child("filename").Value.ToString();
+                    string filetype = child.Child("filetype").Value.ToString();
+                    string path = child.Child("path").Value.ToString();
+                    string pathToIcon = child.Child("pathToIcon").Value.ToString();
+
+                    FileMetaData fileData = new FileMetaData(uniqueID, filename, filetype, path, pathToIcon);
+                    files.Add(fileData);
+                }
+                else
+                {
+                    Debug.LogError("One of the child properties is null.");
+                }
+            }
+
+            callback(files);
+
         }
     }
 
