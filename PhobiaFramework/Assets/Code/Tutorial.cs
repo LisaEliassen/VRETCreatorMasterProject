@@ -63,6 +63,7 @@ public class Tutorial : MonoBehaviour
             Media360HelpPanel.SetActive(false);
 
             HelpUI.SetActive(false);
+            showTutorialButton.gameObject.SetActive(true);
         });
 
         yesButton.onClick.AddListener(StartTutorial);
@@ -185,6 +186,7 @@ public class Tutorial : MonoBehaviour
         HideAskPanel();
         EditSceneUI.SetActive(true);
         InfoPanel.SetActive(true);
+        showTutorialButton.gameObject.SetActive(false);
         endTutorialButton.gameObject.SetActive(true);
     }
 

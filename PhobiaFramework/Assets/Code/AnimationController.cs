@@ -158,7 +158,7 @@ public class AnimationController : MonoBehaviour
                         animComponent.Stop();
                     }
                 }
-                            }
+            }
             else
             {
                 animationComponent.Play(clipName);
