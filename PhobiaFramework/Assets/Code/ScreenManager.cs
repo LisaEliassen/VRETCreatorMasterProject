@@ -33,6 +33,7 @@ public class ScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Display.displays[2].Activate(); // https://docs.unity3d.com/ScriptReference/Display.html
         uploadFileButton.onClick.AddListener(() => ShowUI("Upload"));
         backFromUploadButton.onClick.AddListener(() => ShowUI("EditScene"));
 
