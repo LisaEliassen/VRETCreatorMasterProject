@@ -33,6 +33,8 @@ public class ScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Application.runInBackground = true;
+
         //Display.displays[2].Activate(); // https://docs.unity3d.com/ScriptReference/Display.html
         uploadFileButton.onClick.AddListener(() => ShowUI("Upload"));
         backFromUploadButton.onClick.AddListener(() => ShowUI("EditScene"));
@@ -68,6 +70,30 @@ public class ScreenManager : MonoBehaviour
         SettingsUI.SetActive(false);
         ControlsUI.SetActive(false);
         SoundUI.SetActive(false);
+    }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus)
+        {
+            // Handle focus regained
+        }
+        else
+        {
+            // Handle focus lost
+        }
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            // Handle pause
+        }
+        else
+        {
+            // Handle resume
+        }
     }
 
     public void ShowUI(string UIname)
