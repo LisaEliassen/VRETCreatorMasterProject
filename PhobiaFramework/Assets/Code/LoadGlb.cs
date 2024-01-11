@@ -328,9 +328,25 @@ public class LoadGlb : MonoBehaviour
                 // Add a Box Collider to the GameObject
                 BoxCollider boxCollider = loadedModel.AddComponent<BoxCollider>();
 
+                // Set the default size of the collider
+                //Vector3 defaultColliderSize = new Vector3(0.5f, 0.5f, 0.5f);
+                //boxCollider.size = defaultColliderSize;
+
+                // Calculate the bounds of the loaded model
+                Bounds modelBounds = CalculateModelBounds(loadedModel);
+
+                // Set the default size of the collider based on the model's bounds
+                boxCollider.size = modelBounds.size;
+
+                // Set the default position of the collider to the center of the model
+                boxCollider.center = modelBounds.center - loadedModel.transform.position;
+
+                // Set the default position of the collider (adjust as needed)
+                //Vector3 defaultColliderPosition = new Vector3(0.0f, 0.25f, -0.1f); // Adjust as needed
+                //boxCollider.center = defaultColliderPosition;
+
                 // You can also set various properties of the Box Collider
                 boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
-                //boxCollider.size = new Vector3(1.0f, 1.0f, 1.0f); // Set the size of the collider
 
                 loadedModel.AddComponent<DragObject>();
                 DragObject dragObject = loadedModel.GetComponent<DragObject>();
@@ -349,6 +365,19 @@ public class LoadGlb : MonoBehaviour
             return success;
         }
         return false;
+    }
+
+    private Bounds CalculateModelBounds(GameObject model)
+    {
+        Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
+        Bounds bounds = renderers.Length > 0 ? renderers[0].bounds : new Bounds(Vector3.zero, Vector3.zero);
+
+        foreach (Renderer renderer in renderers)
+        {
+            bounds.Encapsulate(renderer.bounds);
+        }
+
+        return bounds;
     }
 
     async Task<bool> LoadGltfBinaryFromMemory(byte[] data, GameObject gameObject, string downloadUrl, GltfImport gltfImport)
