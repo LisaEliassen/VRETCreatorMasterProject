@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+//using System.Diagnostics;
 
 public class AnimationController : MonoBehaviour
 {
@@ -158,16 +159,20 @@ public class AnimationController : MonoBehaviour
                         animComponent.Stop();
                     }
                 }
-                            }
+        }
             else
             {
                 animationComponent.Play(clipName);
                 if (triggerCopies.Count > 0)
                 {
+                    int num = 1;
                     foreach (GameObject copy in triggerCopies)
                     {
                         Animation animComponent = copy.GetComponent<Animation>();
+                        float startTime = Random.Range(0f, animComponent[clipName].length);
+                        animComponent[clipName].time = startTime;
                         animComponent.Play(clipName);
+                        num++;
                     }
                 }
             }
