@@ -85,6 +85,7 @@ public class LoadGlb : MonoBehaviour
         {
             if (visible)
             {
+
                 trigger.AddComponent<XRGrabInteractable>();
                 if (triggerCopies != null && triggerCopies.Count > 0)
                 {
@@ -347,6 +348,14 @@ public class LoadGlb : MonoBehaviour
 
                 // You can also set various properties of the Box Collider
                 boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
+
+                Rigidbody rb = trigger.GetComponent<Rigidbody>();
+                if (rb == null)
+                {
+                    rb = trigger.AddComponent<Rigidbody>();
+                }
+                rb.isKinematic = true;  // Set to false if you want physics interactions
+
 
                 loadedModel.AddComponent<DragObject>();
                 DragObject dragObject = loadedModel.GetComponent<DragObject>();
