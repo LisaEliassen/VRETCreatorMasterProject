@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
     public GameObject EditUI;
+    public Button resetCam;
 
     public float moveSpeed = 1.0f;
     public float rotationSpeed = 0.5f;
@@ -23,14 +24,23 @@ public class CameraController : MonoBehaviour
     public Toggle invertRotationMovement;
     public Toggle invertScrollingMovement;
 
+    private Vector3 defaultPosition;
+    private Quaternion defaultRotation;
+
     private void Start()
     {
         float scrollInput = Mouse.current.scroll.y.ReadValue();
         scroll = scrollInput;
+
+        defaultPosition = transform.position;
+        defaultRotation = transform.rotation;
     }
 
     private void Update()
     {
+
+        resetCam.onClick.AddListener(resetCameraToDefaultPos);
+
         // Read scroll wheel input for moving the camera up and down
         float scrollInput = Mouse.current.scroll.y.ReadValue();
 
@@ -120,6 +130,12 @@ public class CameraController : MonoBehaviour
                 scroll = scrollInput;
             }
         }
+    }
+
+    private void resetCameraToDefaultPos()
+    {
+        transform.position = defaultPosition;
+        transform.rotation = defaultRotation;
     }
 
     private void MoveCameraVertically(float scrollInput)

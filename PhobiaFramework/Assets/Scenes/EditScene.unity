@@ -23152,6 +23152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EditUI: {fileID: 927890619}
+  resetCam: {fileID: 2020408422}
   moveSpeed: 5
   rotationSpeed: 0.1
   scrollSpeed: 2
