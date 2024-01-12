@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class TextSizeManager : MonoBehaviour
+public class TextSizeManagerNorsk : MonoBehaviour
 {
     public TMP_Dropdown dropdownSize;
 
@@ -14,14 +14,14 @@ public class TextSizeManager : MonoBehaviour
     void Start()
     {
 
-        if (dropdownSize != null) 
+        if (dropdownSize != null)
         {
             dropdownSize.ClearOptions();
             List<TMP_Dropdown.OptionData> optionsLang = new List<TMP_Dropdown.OptionData>();
 
-            optionsLang.Add(new TMP_Dropdown.OptionData("Default"));
+            optionsLang.Add(new TMP_Dropdown.OptionData("Standard"));
             optionsLang.Add(new TMP_Dropdown.OptionData("Medium"));
-            optionsLang.Add(new TMP_Dropdown.OptionData("Large"));
+            optionsLang.Add(new TMP_Dropdown.OptionData("stor"));
 
             dropdownSize.AddOptions(optionsLang);
             // Add a listener to the dropdown's onValueChanged event
@@ -56,22 +56,13 @@ public class TextSizeManager : MonoBehaviour
 
         Debug.Log(textObjects.Count.ToString());
 
-        if (textSizeChosen == "Default")
+        if (textSizeChosen == "Standard")
         {
             SetTextSize(24f);
         }
         else if (textSizeChosen == "Medium")
         {
             SetTextSize(32f);
-        }
-        else if (textSizeChosen == "Large")
-        {
-            SetTextSize(45f);
-        }
-        
-        if (textSizeChosen == "Standard")
-        {
-            SetTextSize(24f);
         }
         else if (textSizeChosen == "Stor")
         {
@@ -80,5 +71,3 @@ public class TextSizeManager : MonoBehaviour
 
     }
 }
-
-
