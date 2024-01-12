@@ -68,16 +68,6 @@ public class TextSizeManager : MonoBehaviour
         {
             SetTextSize(45f);
         }
-        
-        if (textSizeChosen == "Standard")
-        {
-            SetTextSize(24f);
-        }
-        else if (textSizeChosen == "Stor")
-        {
-            SetTextSize(45f);
-        }
-
     }
 }
 
