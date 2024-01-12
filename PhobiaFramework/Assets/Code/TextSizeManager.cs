@@ -7,26 +7,53 @@ using UnityEngine.UI;
 
 public class TextSizeManager : MonoBehaviour
 {
-    public TMP_Dropdown dropdown;
+    public TMP_Dropdown dropdownSize;
+    //public TMP_Dropdown language;
 
     private List<TextMeshProUGUI> textObjects = new List<TextMeshProUGUI>();
 
     void Start()
     {
-        if (dropdown != null)
+
+        if (dropdownSize != null) //&& language != null)
         {
+            
+            //string languageChosen = language.options[language.value].text;
+            //Debug.Log(languageChosen);
+
+            //SetDropdownOptions(languageChosen);
+
             // Add a listener to the dropdown's onValueChanged event
-            dropdown.onValueChanged.AddListener(delegate {
-                DropdownValueChanged(dropdown);
+            dropdownSize.onValueChanged.AddListener(delegate {
+                DropdownValueChanged(dropdownSize);
             });
-            dropdown.ClearOptions();
+
+        }
+    }
+
+    /*
+    void SetDropdownOptions(string languageChosen)
+    {
+        if (languageChosen == "English")
+        {
+            dropdownSize.ClearOptions();
             List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
             options.Add(new TMP_Dropdown.OptionData("Default"));
             options.Add(new TMP_Dropdown.OptionData("Medium"));
             options.Add(new TMP_Dropdown.OptionData("Large"));
-            dropdown.AddOptions(options);
+            dropdownSize.AddOptions(options);
         }
-    }
+        else if (languageChosen == "Norsk")
+        {
+            dropdownSize.ClearOptions();
+            List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+            options.Add(new TMP_Dropdown.OptionData("Standard"));
+            options.Add(new TMP_Dropdown.OptionData("Medium"));
+            options.Add(new TMP_Dropdown.OptionData("Stor"));
+            dropdownSize.AddOptions(options);
+        }
+    }*/
+
 
     public void RegisterTextObject(TextMeshProUGUI textObject)
     {
@@ -64,6 +91,16 @@ public class TextSizeManager : MonoBehaviour
         {
             SetTextSize(45f);
         }
+        /*
+        if (textSizeChosen == "Standard")
+        {
+            SetTextSize(24f);
+        }
+        else if (textSizeChosen == "Stor")
+        {
+            SetTextSize(45f);
+        }*/
+
     }
 }
 
