@@ -19,7 +19,6 @@ public class EnglishLanguageManager : MonoBehaviour
     public GameObject helpUI;
     public GameObject helpUINorsk;
 
-    private List<TextMeshProUGUI> textObjects = new List<TextMeshProUGUI>();
 
     // Start is called before the first frame update
     void Start()
@@ -38,15 +37,6 @@ public class EnglishLanguageManager : MonoBehaviour
                 DropdownValueChanged(dropdownLanguage);
             });
 
-        }
-    }
-
-    public void RegisterTextObject(TextMeshProUGUI textObject)
-    {
-        textObjects.Add(textObject);
-        if (!textObjects.Contains(textObject))
-        {
-            textObjects.Add(textObject);
         }
     }
 

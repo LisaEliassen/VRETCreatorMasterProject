@@ -12,7 +12,6 @@ public class AnimationController : MonoBehaviour
 {
     ResourceRequest request;
     ResourceRequest request2;
-    public RuntimeAnimatorController baseAnimatorController;
     public TMP_Dropdown dropdown;
     LoadGlb loadGlb;
     GameObject trigger;

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NorwegianLanguageManager : MonoBehaviour
 {
+    public string language;
 
     public TMP_Dropdown dropdownLanguage;
     public GameObject englishSettingsUI;
@@ -19,8 +20,6 @@ public class NorwegianLanguageManager : MonoBehaviour
     public GameObject helpUI;
     public GameObject helpUINorsk;
 
-    private List<TextMeshProUGUI> textObjects = new List<TextMeshProUGUI>();
-
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +28,8 @@ public class NorwegianLanguageManager : MonoBehaviour
             dropdownLanguage.ClearOptions();
             List<TMP_Dropdown.OptionData> optionsLang = new List<TMP_Dropdown.OptionData>();
 
-            optionsLang.Add(new TMP_Dropdown.OptionData("Norsk"));
             optionsLang.Add(new TMP_Dropdown.OptionData("Engelsk"));
+            optionsLang.Add(new TMP_Dropdown.OptionData("Norsk"));
 
             dropdownLanguage.AddOptions(optionsLang);
             // Add a listener to the dropdown's onValueChanged event
@@ -38,15 +37,6 @@ public class NorwegianLanguageManager : MonoBehaviour
                 DropdownValueChanged(dropdownLanguage);
             });
 
-        }
-    }
-
-    public void RegisterTextObject(TextMeshProUGUI textObject)
-    {
-        textObjects.Add(textObject);
-        if (!textObjects.Contains(textObject))
-        {
-            textObjects.Add(textObject);
         }
     }
 
@@ -68,6 +58,9 @@ public class NorwegianLanguageManager : MonoBehaviour
             norwegianParent.SetActive(false);
             editSceneNorsk.SetActive(false);
             helpUINorsk.SetActive(false);
+
+
+
         }
         else if (languageChosen == "Norsk")
         {
@@ -79,6 +72,8 @@ public class NorwegianLanguageManager : MonoBehaviour
             norwegianParent.SetActive(true);
             editSceneNorsk.SetActive(false);
             helpUINorsk.SetActive(false);
+
+            language = "NO";
         }
     }
 }
