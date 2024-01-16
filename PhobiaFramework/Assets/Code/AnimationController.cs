@@ -79,6 +79,7 @@ public class AnimationController : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("No animations!");
                     dropdown.interactable = false;
                 }
             }

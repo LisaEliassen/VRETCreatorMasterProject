@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class LanguageManager : MonoBehaviour
 {
+
+    string language;
     public TMP_Dropdown languageDropdownEN;
     public TMP_Dropdown languageDropdownNO;
 
@@ -27,9 +29,12 @@ public class LanguageManager : MonoBehaviour
     {
         EnglishButton.onClick.AddListener(() =>
         {
+
             englishParent.SetActive(true);
             norwegianParent.SetActive(false);
             LanguageUI.SetActive(false);
+
+            language = "EN";
 
             /*int optionIndex = languageDropdownEN.options.FindIndex(option => option.text == "English");
             languageDropdownEN.value = optionIndex;*/
@@ -41,8 +46,10 @@ public class LanguageManager : MonoBehaviour
             norwegianParent.SetActive(true);
             LanguageUI.SetActive(false);
 
-            /*int optionIndex = languageDropdownNO.options.FindIndex(option => option.text == "Norsk");
-            languageDropdownNO.value = optionIndex;*/
+            language = "NO";
+
+            int optionIndex = languageDropdownNO.options.FindIndex(option => option.text == "Norsk");
+            languageDropdownNO.value = optionIndex;
         });
 
 
@@ -77,6 +84,11 @@ public class LanguageManager : MonoBehaviour
         }
     }
 
+    public string getLanguage()
+    {
+        return language;
+    }
+
     void DropdownValueChangedEN(TMP_Dropdown change)
     {
         string languageChosen = change.options[change.value].text;
@@ -91,14 +103,18 @@ public class LanguageManager : MonoBehaviour
             {
                 englishSettingsUI.SetActive(true);
                 norwegianSettingsUI.SetActive(false);
+                editScene.SetActive(false);
+                helpUI.SetActive(false);
             } 
 
-            englishParent.SetActive(true);
-            editScene.SetActive(false);
-            helpUI.SetActive(false);
+            // Norwegian UIs:
             norwegianParent.SetActive(false);
             editSceneNO.SetActive(false);
             helpUI_NO.SetActive(false);
+
+            englishParent.SetActive(true);
+
+            language = "EN";
 
             int optionIndex = languageDropdownNO.options.FindIndex(option => option.text == "Engelsk");
             languageDropdownNO.value = optionIndex;
@@ -109,13 +125,18 @@ public class LanguageManager : MonoBehaviour
             {
                 englishSettingsUI.SetActive(false);
                 norwegianSettingsUI.SetActive(true);
+                editSceneNO.SetActive(false);
+                helpUI_NO.SetActive(false);
             }
+
+            // English UIs:
             englishParent.SetActive(false);
             editScene.SetActive(false);
             helpUI.SetActive(false);
+
             norwegianParent.SetActive(true);
-            editSceneNO.SetActive(false);
-            helpUI_NO.SetActive(false);
+
+            language = "NO";
 
             int optionIndex = languageDropdownNO.options.FindIndex(option => option.text == "Norsk");
             languageDropdownNO.value = optionIndex;
@@ -134,17 +155,20 @@ public class LanguageManager : MonoBehaviour
         {
             if (norwegianSettingsUI.activeSelf)
             {
-                Debug.Log("From settings");
                 norwegianSettingsUI.SetActive(false);
                 englishSettingsUI.SetActive(true);
+                editScene.SetActive(false);
+                helpUI.SetActive(false);
             }
-           
-            englishParent.SetActive(true);
-            editScene.SetActive(false);
-            helpUI.SetActive(false);
+
+            // Norwegian UIs:
             norwegianParent.SetActive(false);
             editSceneNO.SetActive(false);
             helpUI_NO.SetActive(false);
+
+            englishParent.SetActive(true);
+
+            language = "EN";
 
             int optionIndex = languageDropdownEN.options.FindIndex(option => option.text == "English");
             languageDropdownEN.value = optionIndex;
@@ -156,14 +180,18 @@ public class LanguageManager : MonoBehaviour
             {
                 englishSettingsUI.SetActive(false);
                 norwegianSettingsUI.SetActive(true);
+                editSceneNO.SetActive(false);
+                helpUI_NO.SetActive(false);
             }
 
+            // English UIs:
             englishParent.SetActive(false);
             editScene.SetActive(false);
             helpUI.SetActive(false);
+
             norwegianParent.SetActive(true);
-            editSceneNO.SetActive(false);
-            helpUI_NO.SetActive(false);
+
+            language = "NO";
 
             int optionIndex = languageDropdownEN.options.FindIndex(option => option.text == "Norwegian");
             languageDropdownEN.value = optionIndex;

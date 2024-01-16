@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: LanguageSettings Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: LanguageSettings
+  m_TableCollectionNameGuidString: e28da476c205a094aa5c0c6972e8b512
+  m_Entries:
+  - m_Id: 71900651520
+    m_Key: QuitUIText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 810098155520
+    m_Key: YesButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1529907830784
+    m_Key: NoButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1683452911616
+    m_Key: SizeSliderText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4111476776960
+    m_Key: NumCopiesText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4201775947776
+    m_Key: AnimationDropdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4771563757568
+    m_Key: TriggerVisibilityToggle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5945973071872
+    m_Key: PlatformVisibilityToggle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6261313429504
+    m_Key: WallsVisibility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6563269763072
+    m_Key: RemoveTriggerButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6823853481984
+    m_Key: RemoveAudioButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6991256543232
+    m_Key: ShowModelsButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7143056793600
+    m_Key: Add360MediaButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206843768832
+    m_Key: AddSoundButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7287944830976
+    m_Key: ShowTutorialButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7330156306432
+    m_Key: SettingsButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7771564859392
+    m_Key: UploadFileButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8208108019712
+    m_Key: QuitButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8338701869056
+    m_Key: ResetCameraButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8448424861696
+    m_Key: EndTutorial Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8740780433408
+    m_Key: AskPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8774234202112
+    m_Key: InfoPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455355617280
+    m_Key: ModelHelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9579477655552
+    m_Key: SizeAndPositionHelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11169689296896
+    m_Key: CopiesHelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11444328128512
+    m_Key: AnimationHelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11748029292544
+    m_Key: VisibilityToggleHelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12480287662080
+    m_Key: RemoveTriggerHelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12635883757568
+    m_Key: 360HelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13152349380608
+    m_Key: AddSoundHelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13394914369536
+    m_Key: RemoveSoundHelpPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13500409503744
+    m_Key: ChooseModelTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14295888617472
+    m_Key: BackButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14371985874944
+    m_Key: ChooseFromDeviceButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14508221063168
+    m_Key: SoundTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14989660053504
+    m_Key: SettingsTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15126054625280
+    m_Key: TextSize Dropdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15236012498944
+    m_Key: InvertScrollingMovement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15269063614464
+    m_Key: InvertRotationMovement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15290806886400
+    m_Key: InvertCamMovement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15313657454592
+    m_Key: Language Dropdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18638431903744
+    m_Key: RemoveTrigger
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4795556620519342104
+  references:
+    version: 2
+    RefIds:
+    - rid: 4795556620519342104
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1705400451391

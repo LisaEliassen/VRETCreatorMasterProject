@@ -19,8 +19,18 @@ public class LoadGlb : MonoBehaviour
     List<GameObject> triggerCopies;
     DatabaseService dbService;
     AnimationController animController;
-    public GameObject databaseServiceObject;
+    LanguageManager languageManager;
+    public GameObject databaseServiceObject; 
+
     public UnityEngine.Camera mainCamera;
+    
+    Vector3 position;
+    public GameObject posObject;
+    string triggerName;
+    string pathOfTrigger;
+    int numCopies = 0;
+
+    // English UI elements:
     public Toggle objectVisibility;
     public Toggle interactableToggle;
     public Slider moveSliderX;
@@ -32,14 +42,29 @@ public class LoadGlb : MonoBehaviour
     public Button addCopyButton;
     public Button removeCopyButton;
     public Button removeTriggerButton;
+    public Button yesButton;
+    public Button noButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
+    public GameObject RemovePanel;
     public TextMeshProUGUI numCopiesText;
-    Vector3 position;
-    public GameObject posObject;
-    string triggerName;
-    string pathOfTrigger;
-    int numCopies = 0; 
+
+    // Norwegian UI elements:
+    /*public Toggle objectVisibilityNO;
+    public Toggle interactableToggleNO;
+    public Slider moveSliderXNO;
+    public Slider moveSliderYNO;
+    public Slider sizeSliderNO;
+    public TMP_InputField sizeInputNO;
+    public TMP_Dropdown dropdownNO;
+    public Button chooseFromDeviceButtonNO;
+    public Button addCopyButtonNO;
+    public Button removeCopyButtonNO;
+    public Button removeTriggerButtonNO;
+    public GameObject EditSceneUINO;
+    public GameObject ModelUINO;
+    public TextMeshProUGUI numCopiesTextNO;*/
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +74,7 @@ public class LoadGlb : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
+            languageManager = databaseServiceObject.GetComponent<LanguageManager>();
         }
         else
         {
@@ -74,9 +100,33 @@ public class LoadGlb : MonoBehaviour
         triggerCopies = new List<GameObject>();
 
         chooseFromDeviceButton.onClick.AddListener(ImportModel);
-        removeTriggerButton.onClick.AddListener(RemoveTrigger);
-
+        removeTriggerButton.onClick.AddListener(() =>
+        {
+            RemovePanel.SetActive(true);
+        });
+        yesButton.onClick.AddListener(() =>
+        {
+            RemoveTrigger();
+            RemovePanel.SetActive(false);
+        });
+        noButton.onClick.AddListener(() =>
+        {
+            RemovePanel.SetActive(false);
+        });
         interactableToggle.onValueChanged.AddListener(MakeInteractable);
+
+        /*
+        if (languageManager != null)
+        {
+            if (languageManager.getLanguage() == "NO")
+            {
+
+            }
+            else if (languageManager.getLanguage() == "EN")
+            {
+                
+            }
+        }*/
     }
 
     public void MakeInteractable(bool visible)
@@ -184,6 +234,8 @@ public class LoadGlb : MonoBehaviour
                     sizeSlider.value = 2;
                     ((TextMeshProUGUI)sizeInput.placeholder).text = "2";
 
+                    Debug.Log(sizeSlider.name);
+
                     sizeSlider.interactable = true;
                     sizeInput.interactable = true;
                     moveSliderX.interactable = true;
@@ -283,10 +335,21 @@ public class LoadGlb : MonoBehaviour
         bool success = await LoadGlbFile(trigger, path);
         if (success)
         {
+
+            Debug.Log("Successfully loaded model!");
             animController.FindAnimations(trigger);
             objectVisibility.isOn = true;
             objectVisibility.interactable = true;
             removeTriggerButton.interactable = true;
+
+            Debug.Log(sizeSlider.name);
+
+            sizeSlider.interactable = true;
+            sizeInput.interactable = true;
+            moveSliderX.interactable = true;
+            moveSliderY.interactable = true;
+            addCopyButton.interactable = true;
+
             sizeSlider.value = 2;
             ((TextMeshProUGUI)sizeInput.placeholder).text = "2";
         }
@@ -324,14 +387,9 @@ public class LoadGlb : MonoBehaviour
             {
                 loadedModel.transform.position = position;
                 loadedModel.SetActive(true);
-                //DontDestroyOnLoad(loadedModel);
 
                 // Add a Box Collider to the GameObject
                 BoxCollider boxCollider = loadedModel.AddComponent<BoxCollider>();
-
-                // Set the default size of the collider
-                //Vector3 defaultColliderSize = new Vector3(0.5f, 0.5f, 0.5f);
-                //boxCollider.size = defaultColliderSize;
 
                 // Calculate the bounds of the loaded model
                 Bounds modelBounds = CalculateModelBounds(loadedModel);
@@ -341,10 +399,6 @@ public class LoadGlb : MonoBehaviour
 
                 // Set the default position of the collider to the center of the model
                 boxCollider.center = modelBounds.center - loadedModel.transform.position;
-
-                // Set the default position of the collider (adjust as needed)
-                //Vector3 defaultColliderPosition = new Vector3(0.0f, 0.25f, -0.1f); // Adjust as needed
-                //boxCollider.center = defaultColliderPosition;
 
                 // You can also set various properties of the Box Collider
                 boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
@@ -361,11 +415,11 @@ public class LoadGlb : MonoBehaviour
                 DragObject dragObject = loadedModel.GetComponent<DragObject>();
                 dragObject.SetCamera(mainCamera);
 
-                sizeSlider.interactable = true;
+                /*sizeSlider.interactable = true;
                 sizeInput.interactable = true;
                 moveSliderX.interactable = true;
                 moveSliderY.interactable = true;
-                addCopyButton.interactable = true;
+                addCopyButton.interactable = true;*/
             }
             else
             {

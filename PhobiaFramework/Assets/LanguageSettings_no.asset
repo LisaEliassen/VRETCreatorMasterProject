@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LanguageSettings_no
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: no
+  m_SharedData: {fileID: 11400000, guid: e28da476c205a094aa5c0c6972e8b512, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 71900651520
+    m_Localized: "Er du sikker p\xE5 at du vil avslutte programmet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 810098155520
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1529907830784
+    m_Localized: Nei
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1683452911616
+    m_Localized: "St\xF8rrelse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4111476776960
+    m_Localized: Antall kopier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4201775947776
+    m_Localized: Animasjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4771563757568
+    m_Localized: Trigger synlighet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5945973071872
+    m_Localized: Plattform synlighet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6261313429504
+    m_Localized: Vegger synlighet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6563269763072
+    m_Localized: Fjern trigger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6823853481984
+    m_Localized: Fjern lyd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6991256543232
+    m_Localized: Legg til triggermodell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7143056793600
+    m_Localized: Legg til 360 bakgrunn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7206843768832
+    m_Localized: Legg til lyd til scene
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7287944830976
+    m_Localized: Vis veiledning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7330156306432
+    m_Localized: Innstillinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7771564859392
+    m_Localized: Last opp fil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8208108019712
+    m_Localized: Avslutt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8338701869056
+    m_Localized: Tilbakestill kamera
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8448424861696
+    m_Localized: Avslutt veiledning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8740780433408
+    m_Localized: Vil du ha en veiledning om hvordan du bruker denne applikasjonen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8774234202112
+    m_Localized: "INFO:\r\nHensikten med denne applikasjonen er \xE5 v\xE6re et verkt\xF8y
+      for \xE5 lage scener som kan brukes til angst- og fobieksponeringsterapi.\r\n\r\nDette
+      verkt\xF8yet gj\xF8r det mulig \xE5 velge en 3D-modell som vil representere
+      utl\xF8seren av en fobi. Denne triggermodellen kan deretter skaleres i st\xF8rrelse,
+      flyttes og lages kopier av.\r\n\r\nDet er ogs\xE5 mulig \xE5 legge til 360-medier
+      (bilder eller videoer) til omgivelser i scenen. 360-mediet kan fungere som
+      selve triggeren, eller kobles til triggeren til en pasients angst eller fobi.\r\n\r\nHvis
+      det er \xF8nskelig, er det ogs\xE5 mulig \xE5 ha 4 vegger med noe valgt tekstur,
+      som kan brukes til \xE5 lage et rom."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455355617280
+    m_Localized: "La oss starte med \xE5 legge til en triggermodell ved \xE5 klikke
+      p\xE5 denne knappen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9579477655552
+    m_Localized: "Triggermodellens st\xF8rrelse kan endres med St\xF8rrelse-glidebryteren
+      eller ved \xE5 legge inn et tall mellom 0 og 100 i inntastingsfeltet her! Du
+      kan ogs\xE5 flytte triggermodellen ved \xE5 klikke og dra den!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11169689296896
+    m_Localized: "Bruk + og - knappene for \xE5 legge til/fjerne flere kopier av
+      triggermodellen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11444328128512
+    m_Localized: "Hvis modellen har animasjoner, kan animasjonen endres eller settes
+      p\xE5 pause ved \xE5 bruke rullegardinmenyen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11748029292544
+    m_Localized: "Du kan bruke disse avmerkingsboksene til\r \xE5\n1. Sl\xE5 av eller
+      p\xE5 triggermodellens synlighet\r\n2. Sl\xE5 av eller p\xE5 plattformens sikt\r\n3.
+      Sl\xE5 av eller p\xE5 veggenes synlighet\r\n4. Gj\xF8r triggeren interagerbar
+      (pasienten kan ta den opp) eller ikke interagerbar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12480287662080
+    m_Localized: "Klikk p\xE5 denne knappen hvis du vil fjerne triggermodellen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12635883757568
+    m_Localized: "Ved \xE5 klikke p\xE5 denne knappen kan du legge til 360-medier
+      (bilder eller videoer) til bakgrunnen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13152349380608
+    m_Localized: "Ved \xE5 klikke p\xE5 denne knappen kan du legge til lyd i scenen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13394914369536
+    m_Localized: "Klikk p\xE5 denne knappen hvis du vil fjerne lyd som er lagt til!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13500409503744
+    m_Localized: Modeller
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14295888617472
+    m_Localized: Tilbake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14371985874944
+    m_Localized: Velg fra enhet...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14508221063168
+    m_Localized: Lyd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14989660053504
+    m_Localized: Instillinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15126054625280
+    m_Localized: "Tekst st\xF8rrelse:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15236012498944
+    m_Localized: Inverter scrolling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15269063614464
+    m_Localized: Inverter rotasjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15290806886400
+    m_Localized: Inverter kamera bevegelse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15313657454592
+    m_Localized: "Spr\xE5k:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18638431903744
+    m_Localized: "Er du sikker p\xE5 at du vil fjerne trigger modellen (og dens kopier)?"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

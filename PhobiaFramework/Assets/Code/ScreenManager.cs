@@ -29,6 +29,7 @@ public class ScreenManager : MonoBehaviour
     public GameObject ControlsUI;
     public GameObject SoundUI;
     public GameObject HelpUI;
+    public GameObject QuitUI;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +60,7 @@ public class ScreenManager : MonoBehaviour
         ControlsUI.SetActive(true);
         SoundUI.SetActive(true);
         HelpUI.SetActive(true);
+        QuitUI.SetActive(true);
 
         ModelUI.SetActive(false);
         ChooseMediaUI.SetActive(false);
@@ -67,6 +69,8 @@ public class ScreenManager : MonoBehaviour
         SettingsUI.SetActive(false);
         ControlsUI.SetActive(false);
         SoundUI.SetActive(false);
+        QuitUI.SetActive(false);
+
     }
 
     public void ShowUI(string UIname)
@@ -81,7 +85,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
-            HelpUI.SetActive(false);
+            //HelpUI.SetActive(false);
         }
         else if (UIname == "Upload")
         {
@@ -93,7 +97,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
-            HelpUI.SetActive(false);
+            //HelpUI.SetActive(false);
         }
         else if (UIname == "360Media")
         {
@@ -105,7 +109,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
-            HelpUI.SetActive(false);
+            //HelpUI.SetActive(false);
         }
         else if(UIname == "Delete")
         {
@@ -117,7 +121,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
-            HelpUI.SetActive(false);
+            //HelpUI.SetActive(false);
         }
         else if (UIname == "Sound")
         {
@@ -129,7 +133,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(true);
-            HelpUI.SetActive(false);
+            //HelpUI.SetActive(false);
         }
         else if (UIname == "Models")
         {
@@ -141,7 +145,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
-            HelpUI.SetActive(false);
+            //HelpUI.SetActive(false);
         }
         else if (UIname == "Settings")
         {
@@ -153,7 +157,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(true);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
-            HelpUI.SetActive(false);
+            //HelpUI.SetActive(false);
         }
     }
 
