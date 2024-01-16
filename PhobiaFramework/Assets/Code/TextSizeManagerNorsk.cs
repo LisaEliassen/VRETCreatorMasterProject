@@ -21,7 +21,7 @@ public class TextSizeManagerNorsk : MonoBehaviour
 
             optionsLang.Add(new TMP_Dropdown.OptionData("Standard"));
             optionsLang.Add(new TMP_Dropdown.OptionData("Medium"));
-            optionsLang.Add(new TMP_Dropdown.OptionData("stor"));
+            optionsLang.Add(new TMP_Dropdown.OptionData("Stor"));
 
             dropdownSize.AddOptions(optionsLang);
             // Add a listener to the dropdown's onValueChanged event
