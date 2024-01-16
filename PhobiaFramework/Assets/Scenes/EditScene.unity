@@ -31263,7 +31263,7 @@ MonoBehaviour:
   languageDropdownNO: {fileID: 468226571}
   EnglishButton: {fileID: 2123542047}
   NorwegianButton: {fileID: 640262258}
-  englishSettingsUI: {fileID: 650845633}
+  englishSettingsUI: {fileID: 1467688977}
   norwegianSettingsUI: {fileID: 2123501401}
   englishParent: {fileID: 650845633}
   norwegianParent: {fileID: 840921541}
