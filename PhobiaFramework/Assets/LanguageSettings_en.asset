@@ -59,7 +59,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6823853481984
-    m_Localized: Remove audio
+    m_Localized: Remove sound
     m_Metadata:
       m_Items: []
   - m_Id: 6991256543232
@@ -143,10 +143,7 @@ MonoBehaviour:
       2. Turn the platform''s visibility off or on
 
       3.
-      Turn the walls'' visibility off or on
-
-      4. Make the trigger interactable
-      (the pasient can pick it up) or non-interactable'
+      Turn the walls'' visibility off or on'
     m_Metadata:
       m_Items: []
   - m_Id: 12480287662080
@@ -208,6 +205,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 18638431903744
     m_Localized: Are you sure you want to remove the trigger model (and its copies)?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504338411593728
+    m_Localized: Next tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504362184908800
+    m_Localized: Previous tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 512945769324544
+    m_Localized: End
     m_Metadata:
       m_Items: []
   references:

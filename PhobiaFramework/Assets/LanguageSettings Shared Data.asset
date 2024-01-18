@@ -183,6 +183,18 @@ MonoBehaviour:
     m_Key: RemoveTrigger
     m_Metadata:
       m_Items: []
+  - m_Id: 504338411593728
+    m_Key: NextButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504362184908800
+    m_Key: PreviousButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 512945769324544
+    m_Key: EndButton
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -136,10 +136,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 11748029292544
-    m_Localized: "Du kan bruke disse avmerkingsboksene til\r \xE5\n1. Sl\xE5 av eller
+    m_Localized: "Du kan bruke disse avmerkingsboksene til \xE5\n1. Sl\xE5 av eller
       p\xE5 triggermodellens synlighet\r\n2. Sl\xE5 av eller p\xE5 plattformens sikt\r\n3.
-      Sl\xE5 av eller p\xE5 veggenes synlighet\r\n4. Gj\xF8r triggeren interagerbar
-      (pasienten kan ta den opp) eller ikke interagerbar"
+      Sl\xE5 av eller p\xE5 veggenes synlighet\r"
     m_Metadata:
       m_Items: []
   - m_Id: 12480287662080
@@ -201,6 +200,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 18638431903744
     m_Localized: "Er du sikker p\xE5 at du vil fjerne trigger modellen (og dens kopier)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504338411593728
+    m_Localized: Neste tips
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504362184908800
+    m_Localized: Forrige tips
+    m_Metadata:
+      m_Items: []
+  - m_Id: 512945769324544
+    m_Localized: Avslutt
     m_Metadata:
       m_Items: []
   references:

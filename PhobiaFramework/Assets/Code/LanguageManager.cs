@@ -1,14 +1,17 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class LanguageManager : MonoBehaviour
 {
-
     string language;
-    public TMP_Dropdown languageDropdownEN;
+    
+    public TMP_Dropdown languageDropdown;
     public TMP_Dropdown languageDropdownNO;
 
     public Button EnglishButton;
@@ -29,45 +32,47 @@ public class LanguageManager : MonoBehaviour
     {
         EnglishButton.onClick.AddListener(() =>
         {
+            LocaleSelected(0);
 
             englishParent.SetActive(true);
-            norwegianParent.SetActive(false);
+            //norwegianParent.SetActive(false);
             LanguageUI.SetActive(false);
 
             language = "EN";
 
-            /*int optionIndex = languageDropdownEN.options.FindIndex(option => option.text == "English");
-            languageDropdownEN.value = optionIndex;*/
+            languageDropdown.value = 0;
         });
 
         NorwegianButton.onClick.AddListener(() =>
         {
-            englishParent.SetActive(false);
-            norwegianParent.SetActive(true);
+            LocaleSelected(1);
+
+            englishParent.SetActive(true);
+            //norwegianParent.SetActive(true);
             LanguageUI.SetActive(false);
 
             language = "NO";
 
-            int optionIndex = languageDropdownNO.options.FindIndex(option => option.text == "Norsk");
-            languageDropdownNO.value = optionIndex;
+            languageDropdown.value = 1;
         });
 
 
-        if (languageDropdownEN != null)
+        if (languageDropdown != null)
         {
-            languageDropdownEN.ClearOptions();
+            languageDropdown.ClearOptions();
             List<TMP_Dropdown.OptionData> optionsLang = new List<TMP_Dropdown.OptionData>();
 
-            optionsLang.Add(new TMP_Dropdown.OptionData("English"));
-            optionsLang.Add(new TMP_Dropdown.OptionData("Norwegian"));
+            optionsLang.Add(new TMP_Dropdown.OptionData("English / Engelsk"));
+            optionsLang.Add(new TMP_Dropdown.OptionData("Norwegian / Norsk"));
 
-            languageDropdownEN.AddOptions(optionsLang);
-            // Add a listener to the dropdown's onValueChanged event
-            languageDropdownEN.onValueChanged.AddListener(delegate {
-                DropdownValueChangedEN(languageDropdownEN);
+            languageDropdown.AddOptions(optionsLang);
+            //languageDropdown.onValueChanged.AddListener(LocaleSelected);
+
+            languageDropdown.onValueChanged.AddListener(delegate {
+                DropdownValueChanged(languageDropdown);
             });
         }
-
+        /*
         if (languageDropdownNO != null)
         {
             languageDropdownNO.ClearOptions();
@@ -81,7 +86,16 @@ public class LanguageManager : MonoBehaviour
             languageDropdownNO.onValueChanged.AddListener(delegate {
                 DropdownValueChangedNO(languageDropdownNO);
             });
-        }
+
+            languageDropdownNO.onValueChanged.AddListener(delegate {
+                DropdownValueChangedNO();
+            }
+        }*/
+    }
+
+    static void LocaleSelected(int index)
+    {
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
     }
 
     public string getLanguage()
@@ -89,16 +103,21 @@ public class LanguageManager : MonoBehaviour
         return language;
     }
 
-    void DropdownValueChangedEN(TMP_Dropdown change)
+    void DropdownValueChanged(TMP_Dropdown change)
     {
         string languageChosen = change.options[change.value].text;
         Debug.Log(languageChosen);
 
+        int selectedIndex = change.value;
+        LocaleSelected(selectedIndex);
+
         // You may add logic here to change other settings based on the selected language if needed
 
         // Activate/deactivate UI elements based on the selected language
-        if (languageChosen == "English")
+        if (languageChosen == "English / Engelsk")
         {
+            //LocaleSelected(0);
+            /*
             if (englishSettingsUI.activeSelf)
             {
                 englishSettingsUI.SetActive(true);
@@ -117,11 +136,14 @@ public class LanguageManager : MonoBehaviour
             language = "EN";
 
             int optionIndex = languageDropdownNO.options.FindIndex(option => option.text == "Engelsk");
-            languageDropdownNO.value = optionIndex;
+            languageDropdownNO.value = optionIndex;*/
         }
-        else if (languageChosen == "Norwegian")
+        else if (languageChosen == "Norwegian / Norsk")
         {
-            if (englishSettingsUI.activeSelf)
+
+            //LocaleSelected(1);
+
+            /*if (englishSettingsUI.activeSelf)
             {
                 englishSettingsUI.SetActive(false);
                 norwegianSettingsUI.SetActive(true);
@@ -139,11 +161,11 @@ public class LanguageManager : MonoBehaviour
             language = "NO";
 
             int optionIndex = languageDropdownNO.options.FindIndex(option => option.text == "Norsk");
-            languageDropdownNO.value = optionIndex;
+            languageDropdownNO.value = optionIndex;*/
         }
     }
 
-    void DropdownValueChangedNO(TMP_Dropdown change)
+    /*void DropdownValueChangedNO(TMP_Dropdown change)
     {
         string languageChosen = change.options[change.value].text;
         Debug.Log(languageChosen);
@@ -197,5 +219,5 @@ public class LanguageManager : MonoBehaviour
             languageDropdownEN.value = optionIndex;
             
         }
-    }
+    }*/
 }
