@@ -9,8 +9,10 @@ using UnityEngine.Localization.Settings;
 
 public class LanguageManager : MonoBehaviour
 {
-    string language;
-    
+    TextSizeManager textSizeManager;
+
+    public GameObject databaseServiceObject;
+
     public TMP_Dropdown languageDropdown;
 
     public Button EnglishButton;
@@ -25,14 +27,21 @@ public class LanguageManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (databaseServiceObject != null)
+        {
+            textSizeManager = databaseServiceObject.GetComponent<TextSizeManager>();
+        }
+        else
+        {
+            Debug.LogError("GameObject with DatabaseService not found.");
+        }
+
         EnglishButton.onClick.AddListener(() =>
         {
             LocaleSelected(0);
 
             UIparent.SetActive(true);
             LanguageUI.SetActive(false);
-
-            language = "EN";
 
             languageDropdown.value = 0;
         });
@@ -44,7 +53,7 @@ public class LanguageManager : MonoBehaviour
             UIparent.SetActive(true);
             LanguageUI.SetActive(false);
 
-            language = "NO";
+            textSizeManager.ChangeToNorwegianOptions();
 
             languageDropdown.value = 1;
         });
@@ -73,13 +82,23 @@ public class LanguageManager : MonoBehaviour
 
     public string getLanguage()
     {
-        return language;
+        Debug.Log(languageDropdown.captionText.text);
+        return languageDropdown.captionText.text;
     }
 
     void DropdownValueChanged(TMP_Dropdown change)
     {
         string languageChosen = change.options[change.value].text;
-        Debug.Log(languageChosen);
+        //Debug.Log(languageChosen);
+
+        if (change.value == 0)
+        {
+            textSizeManager.ChangeToEnglishOptions();
+        }
+        else if (change.value == 1)
+        {
+            textSizeManager.ChangeToNorwegianOptions();
+        }
 
         int selectedIndex = change.value;
         LocaleSelected(selectedIndex);

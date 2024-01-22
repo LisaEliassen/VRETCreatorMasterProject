@@ -49,26 +49,13 @@ public class LoadGlb : MonoBehaviour
     public GameObject RemovePanel;
     public TextMeshProUGUI numCopiesText;
 
-    // Norwegian UI elements:
-    /*public Toggle objectVisibilityNO;
-    public Toggle interactableToggleNO;
-    public Slider moveSliderXNO;
-    public Slider moveSliderYNO;
-    public Slider sizeSliderNO;
-    public TMP_InputField sizeInputNO;
-    public TMP_Dropdown dropdownNO;
-    public Button chooseFromDeviceButtonNO;
-    public Button addCopyButtonNO;
-    public Button removeCopyButtonNO;
-    public Button removeTriggerButtonNO;
-    public GameObject EditSceneUINO;
-    public GameObject ModelUINO;
-    public TextMeshProUGUI numCopiesTextNO;*/
-
 
     // Start is called before the first frame update
     void Start()
     {
+        RemovePanel.SetActive(true);
+        RemovePanel.SetActive(false);
+
         // Check if the GameObject was found
         if (databaseServiceObject != null)
         {
@@ -114,19 +101,6 @@ public class LoadGlb : MonoBehaviour
             RemovePanel.SetActive(false);
         });
         interactableToggle.onValueChanged.AddListener(MakeInteractable);
-
-        /*
-        if (languageManager != null)
-        {
-            if (languageManager.getLanguage() == "NO")
-            {
-
-            }
-            else if (languageManager.getLanguage() == "EN")
-            {
-                
-            }
-        }*/
     }
 
     public void MakeInteractable(bool visible)

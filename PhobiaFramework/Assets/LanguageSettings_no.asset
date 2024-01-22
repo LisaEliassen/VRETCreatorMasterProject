@@ -127,7 +127,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 11169689296896
     m_Localized: "Bruk + og - knappene for \xE5 legge til/fjerne flere kopier av
-      triggermodellen!"
+      triggermodellen! (Kopier kan dukke opp under den originale triggermodellen.
+      Klikk og dra modellene for \xE5 se dem!)"
     m_Metadata:
       m_Items: []
   - m_Id: 11444328128512
@@ -203,15 +204,37 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504338411593728
-    m_Localized: Neste tips
+    m_Localized: Neste
     m_Metadata:
       m_Items: []
   - m_Id: 504362184908800
-    m_Localized: Forrige tips
+    m_Localized: Forrige
     m_Metadata:
       m_Items: []
   - m_Id: 512945769324544
     m_Localized: Avslutt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2228086470778880
+    m_Localized: 'Slik beveger du kameraet:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2228183187234816
+    m_Localized: "Bruk rullehjulet for \xE5 bevege deg n\xE6rmere eller lenger fra
+      plattformen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2228242763128832
+    m_Localized: "H\xF8yreklikk og flytt musen samtidig for \xE5 rotere kameraet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2251124390141952
+    m_Localized: "For \xE5 flytte kameraet kan du ogs\xE5 bruke pilknappene eller
+      W, A, S og D."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2297444018593792
+    m_Localized: "Klikk p\xE5 denne knappen for \xE5 tilbakestille kameraposisjonen!"
     m_Metadata:
       m_Items: []
   references:

@@ -30,6 +30,7 @@ public class ScreenManager : MonoBehaviour
     public GameObject SoundUI;
     public GameObject HelpUI;
     public GameObject QuitUI;
+    public GameObject UI_parent;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +53,8 @@ public class ScreenManager : MonoBehaviour
         settingsButton.onClick.AddListener(() => ShowUI("Settings"));
         backFromSettingsButton.onClick.AddListener(() => ShowUI("EditScene"));
 
+        UI_parent.SetActive(true);
+
         ModelUI.SetActive(true);
         ChooseMediaUI.SetActive(true);
         UploadUI.SetActive(true);
@@ -71,6 +74,7 @@ public class ScreenManager : MonoBehaviour
         SoundUI.SetActive(false);
         QuitUI.SetActive(false);
 
+        UI_parent.SetActive(false);
     }
 
     public void ShowUI(string UIname)

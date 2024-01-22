@@ -195,6 +195,30 @@ MonoBehaviour:
     m_Key: EndButton
     m_Metadata:
       m_Items: []
+  - m_Id: 2228086470778880
+    m_Key: CameraControlsPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2228183187234816
+    m_Key: ScrollText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2228242763128832
+    m_Key: RightClickText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2251124390141952
+    m_Key: WASDText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2297388532146176
+    m_Key: New Entry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2297444018593792
+    m_Key: CameraResetPanel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

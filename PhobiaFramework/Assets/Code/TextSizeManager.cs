@@ -7,28 +7,62 @@ using UnityEngine.UI;
 
 public class TextSizeManager : MonoBehaviour
 {
-    public TMP_Dropdown dropdownSize;
+    public TMP_Dropdown dropdown;
 
     private List<TextMeshProUGUI> textObjects = new List<TextMeshProUGUI>();
 
     void Start()
     {
-
-        if (dropdownSize != null) 
+        if (dropdown != null) 
         {
-            dropdownSize.ClearOptions();
+            dropdown.ClearOptions();
             List<TMP_Dropdown.OptionData> optionsLang = new List<TMP_Dropdown.OptionData>();
 
             optionsLang.Add(new TMP_Dropdown.OptionData("Default"));
             optionsLang.Add(new TMP_Dropdown.OptionData("Medium"));
             optionsLang.Add(new TMP_Dropdown.OptionData("Large"));
 
-            dropdownSize.AddOptions(optionsLang);
+            dropdown.AddOptions(optionsLang);
             // Add a listener to the dropdown's onValueChanged event
-            dropdownSize.onValueChanged.AddListener(delegate {
-                DropdownValueChanged(dropdownSize);
+            dropdown.onValueChanged.AddListener(delegate {
+                DropdownValueChanged(dropdown);
             });
+        }
+    }
 
+    public void ChangeToNorwegianOptions()
+    {
+        dropdown.options[0].text = "Standard";
+        dropdown.options[1].text = "Medium";
+        dropdown.options[2].text = "Stor";
+
+        TMP_Text selectedText = dropdown.GetComponentInChildren<TMP_Text>();
+
+        if (selectedText.text == "Default")
+        {
+            selectedText.text = "Standard";
+        }
+        else if (selectedText.text == "Large")
+        {
+            selectedText.text = "Stor";
+        }
+    }
+
+    public void ChangeToEnglishOptions()
+    {
+        dropdown.options[0].text = "Default";
+        dropdown.options[1].text = "Medium";
+        dropdown.options[2].text = "Large";
+
+        TMP_Text selectedText = dropdown.GetComponentInChildren<TMP_Text>();
+
+        if (selectedText.text == "Standard")
+        {
+            selectedText.text = "Default";
+        }
+        else if (selectedText.text == "Stor")
+        {
+            selectedText.text = "Large";
         }
     }
 
@@ -52,21 +86,18 @@ public class TextSizeManager : MonoBehaviour
     void DropdownValueChanged(TMP_Dropdown change)
     {
         string textSizeChosen = change.options[change.value].text;
-        Debug.Log(textSizeChosen);
 
-        Debug.Log(textObjects.Count.ToString());
-
-        if (textSizeChosen == "Default")
+        if (textSizeChosen == "Default" || textSizeChosen == "Standard")
         {
             SetTextSize(24f);
         }
-        else if (textSizeChosen == "Medium")
+        else if (textSizeChosen == "Medium" || textSizeChosen == "Medium")
         {
             SetTextSize(32f);
         }
-        else if (textSizeChosen == "Large")
+        else if (textSizeChosen == "Large" || textSizeChosen == "Stor")
         {
-            SetTextSize(45f);
+            SetTextSize(40f);
         }
     }
 }

@@ -126,7 +126,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 11169689296896
     m_Localized: Use the + and - buttons to add/remove additional instances of the
-      trigger model!
+      trigger model! (Copies may pop up underneath the original trigger model. Clicking
+      and dragging the models can reveal them!)
     m_Metadata:
       m_Items: []
   - m_Id: 11444328128512
@@ -217,6 +218,27 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 512945769324544
     m_Localized: End
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2228086470778880
+    m_Localized: 'The following are the controls to move the camera:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2228183187234816
+    m_Localized: Scroll to move closer to or farther from the platform.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2228242763128832
+    m_Localized: Right click and moving the mouse will rotate the camera.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2251124390141952
+    m_Localized: To move the camera, you can also use the arrow buttons or W, A,
+      S and D.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2297444018593792
+    m_Localized: Click this button to reset the camera position!
     m_Metadata:
       m_Items: []
   references:
