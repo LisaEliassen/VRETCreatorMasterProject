@@ -123,11 +123,9 @@ public class ShowAll360Media : MonoBehaviour
 
         Image fileTypeImage = gridItem.transform.Find("TypeImage").GetComponent<Image>();
 
-        Texture2D texture = null;
 
         if (filetype == "360 image")
         {
-            //texture = Resources.Load<Texture2D>("image-icon.png");
             yield return StartCoroutine(LoadImageFileType("image-icon", fileTypeImage));
 
         }
@@ -135,16 +133,6 @@ public class ShowAll360Media : MonoBehaviour
         {
             //texture = Resources.Load<Texture2D>("video-icon.png");
             yield return StartCoroutine(LoadImageFileType("video-icon", fileTypeImage));
-        }
-
-        if (texture != null)
-        {
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            fileTypeImage.sprite = sprite;
-        }
-        else
-        {
-            Debug.Log("texture is null");
         }
 
         Button button = gridItem.AddComponent<Button>();

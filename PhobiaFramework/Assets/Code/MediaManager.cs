@@ -65,6 +65,8 @@ public class MediaManager : MonoBehaviour
                 // Set the Render Texture as the Skybox material
                 skyboxMaterial.SetTexture("_MainTex", renderTexture);
 
+                videoPlayer.enabled = true;
+
                 // Play the video
                 videoPlayer.Play();
 
@@ -84,6 +86,7 @@ public class MediaManager : MonoBehaviour
                 // Deactivate the VideoPlayer if it's active
                 videoPlayer.Stop();
                 videoPlayer.targetTexture = null;
+                videoPlayer.enabled = false;
 
                 EditSceneUI.SetActive(true);
                 MediaUI.SetActive(false);
@@ -136,6 +139,7 @@ public class MediaManager : MonoBehaviour
             // Deactivate the VideoPlayer if it's active
             videoPlayer.Stop();
             videoPlayer.targetTexture = null;
+            videoPlayer.enabled = false;
         }
 
         return null;
@@ -161,6 +165,8 @@ public class MediaManager : MonoBehaviour
 
             // Set the Render Texture as the Skybox material
             skyboxMaterial.SetTexture("_MainTex", renderTexture);
+
+            videoPlayer.enabled = true;
 
             // Play the video
             videoPlayer.Play();
