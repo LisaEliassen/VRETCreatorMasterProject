@@ -1125,7 +1125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 182, y: -125}
+  m_AnchoredPosition: {x: 182, y: -155}
   m_SizeDelta: {x: 200, y: 52.4844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &36202111
@@ -2598,7 +2598,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -450, y: 88}
+  m_AnchoredPosition: {x: -464, y: 88}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &98036828
@@ -4861,7 +4861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &226480085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4879,7 +4879,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 182, y: -63}
+  m_AnchoredPosition: {x: 182, y: -93}
   m_SizeDelta: {x: 200, y: 52.4844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226480086
@@ -10556,7 +10556,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -11619,11 +11619,7 @@ MonoBehaviour:
 
     2. Turn the platform''s visibility off or on
 
-    3. Turn the
-    walls'' visibility off or on
-
-    4. Make the trigger interactable (the pasient
-    can pick it up) or non-interactable'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13576,7 +13572,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22290,7 +22286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &942079756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24695,8 +24691,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -798.2429, y: 98.26294}
-  m_SizeDelta: {x: -198.4857, y: -238.8988}
+  m_AnchoredPosition: {x: -809, y: 89}
+  m_SizeDelta: {x: -230.9136, y: -166.704}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1047819301
 MonoBehaviour:
@@ -27981,7 +27977,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 182, y: 0}
+  m_AnchoredPosition: {x: 182, y: -30}
   m_SizeDelta: {x: 200, y: 52.4844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1235842546
@@ -28956,7 +28952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1278875456
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34005,8 +34001,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1125.0608, y: -584}
-  m_SizeDelta: {x: 784.958, y: 410.825}
+  m_AnchoredPosition: {x: 1135, y: -542}
+  m_SizeDelta: {x: 816.465, y: 284.7966}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1456654709
 MonoBehaviour:
@@ -39713,7 +39709,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 182, y: 63.797874}
+  m_AnchoredPosition: {x: 182, y: 33.797874}
   m_SizeDelta: {x: 200, y: 52.4844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1696983578
