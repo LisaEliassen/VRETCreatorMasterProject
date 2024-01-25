@@ -141,10 +141,7 @@ MonoBehaviour:
       1. Turn the trigger model''s
       visibility off or on
 
-      2. Turn the platform''s visibility off or on
-
-      3.
-      Turn the walls'' visibility off or on'
+      2. Turn the platform''s visibility off or on'
     m_Metadata:
       m_Items: []
   - m_Id: 12480287662080

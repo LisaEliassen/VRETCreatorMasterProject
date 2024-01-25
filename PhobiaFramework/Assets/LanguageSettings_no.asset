@@ -138,8 +138,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 11748029292544
     m_Localized: "Du kan bruke disse avmerkingsboksene til \xE5\n1. Sl\xE5 av eller
-      p\xE5 triggermodellens synlighet\r\n2. Sl\xE5 av eller p\xE5 plattformens sikt\r\n3.
-      Sl\xE5 av eller p\xE5 veggenes synlighet\r"
+      p\xE5 triggermodellens synlighet\r\n2. Sl\xE5 av eller p\xE5 plattformens synlighet\r"
     m_Metadata:
       m_Items: []
   - m_Id: 12480287662080

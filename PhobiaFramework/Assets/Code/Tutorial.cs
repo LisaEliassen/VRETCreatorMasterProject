@@ -21,6 +21,7 @@ public class Tutorial : MonoBehaviour
     public GameObject AddSoundHelpPanel;
     public GameObject RemoveSoundHelpPanel;
     public GameObject CameraControlsPanel;
+    public GameObject CameraResetPanel;
 
     public GameObject RemovePanel;
 
@@ -159,11 +160,13 @@ public class Tutorial : MonoBehaviour
         {
             RemoveTriggerHelpPanel.SetActive(false);
             CameraControlsPanel.SetActive(true);
+            CameraResetPanel.SetActive(true);
             //Media360HelpPanel.SetActive(true);
         });
         NextButton8.onClick.AddListener(() =>
         {
             CameraControlsPanel.SetActive(false);
+            CameraResetPanel.SetActive(false);
             Media360HelpPanel.SetActive(true);
 
            // AddSoundHelpPanel.SetActive(true);
@@ -223,12 +226,14 @@ public class Tutorial : MonoBehaviour
         {
             RemoveTriggerHelpPanel.SetActive(true);
             CameraControlsPanel.SetActive(false);
+            CameraResetPanel.SetActive(false);
             //Media360HelpPanel.SetActive(false);
         });
         PreviousButton8.onClick.AddListener(() =>
         {
             Media360HelpPanel.SetActive(false);
             CameraControlsPanel.SetActive(true);
+            CameraResetPanel.SetActive(true);
             //AddSoundHelpPanel.SetActive(false);
         });
         PreviousButton9.onClick.AddListener(() =>

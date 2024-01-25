@@ -211,10 +211,6 @@ MonoBehaviour:
     m_Key: WASDText
     m_Metadata:
       m_Items: []
-  - m_Id: 2297388532146176
-    m_Key: New Entry
-    m_Metadata:
-      m_Items: []
   - m_Id: 2297444018593792
     m_Key: CameraResetPanel
     m_Metadata:
