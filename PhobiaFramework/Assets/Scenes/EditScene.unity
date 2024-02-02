@@ -19448,6 +19448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EditScene: {fileID: 927890619}
+  HelpUI: {fileID: 1548666491}
   QuitUI: {fileID: 1718187927}
   quitButton: {fileID: 807937459}
   yesButton: {fileID: 1324672865}
