@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuitApplication : MonoBehaviour
 {
     public GameObject EditScene;
+    public GameObject HelpUI;
     public GameObject QuitUI;
     public Button quitButton;
     public Button yesButton;
@@ -17,12 +19,14 @@ public class QuitApplication : MonoBehaviour
         quitButton.onClick.AddListener(() =>
         {
             EditScene.SetActive(false);
+            HelpUI.SetActive(false);
             QuitUI.SetActive(true);
         });
         yesButton.onClick.AddListener(Quit);
         noButton.onClick.AddListener(() =>
         {
             QuitUI.SetActive(false);
+            HelpUI.SetActive(true);
             EditScene.SetActive(true);
         });
     }
