@@ -13,8 +13,11 @@ public class VisibilityToggles : MonoBehaviour
     public TMP_Dropdown dropdown;
     public Slider moveSliderX;
     public Slider moveSliderY;
-    public Slider sizeSlider;
-    public TMP_InputField sizeInput;
+    public Slider sizeSliderTrigger;
+    //public Slider sizeSliderSphere;
+    public Slider sizeSliderPlatform;
+    public TMP_InputField sizeInputTrigger;
+    public TMP_InputField sizeInputPlatform;
     public Button addCopyButton;
     public Button removeCopyButton;
     public Toggle objectVisibility;
@@ -65,8 +68,8 @@ public class VisibilityToggles : MonoBehaviour
 
             addCopyButton.interactable = true;
             removeCopyButton.interactable = true;
-            sizeSlider.interactable = true;
-            sizeInput.interactable = true;
+            sizeSliderTrigger.interactable = true;
+            sizeInputTrigger.interactable = true;
             moveSliderX.interactable = true;
             moveSliderY.interactable = true;
             dropdown.interactable = true;
@@ -87,8 +90,8 @@ public class VisibilityToggles : MonoBehaviour
 
             addCopyButton.interactable = false;
             removeCopyButton.interactable = false;
-            sizeSlider.interactable = false;
-            sizeInput.interactable = false;
+            sizeSliderTrigger.interactable = false;
+            sizeInputTrigger.interactable = false;
             moveSliderX.interactable = false;
             moveSliderY.interactable = false;
             dropdown.interactable = false;
@@ -100,10 +103,14 @@ public class VisibilityToggles : MonoBehaviour
         if (visible)
         {
             platform.GetComponent<MeshRenderer>().enabled = true;
+            sizeSliderPlatform.interactable = true;
+            sizeInputPlatform.interactable = true;
         }
         else
         {
             platform.GetComponent<MeshRenderer>().enabled = false;
+            sizeSliderPlatform.interactable = false;
+            sizeInputPlatform.interactable = false;
         }
     }
 

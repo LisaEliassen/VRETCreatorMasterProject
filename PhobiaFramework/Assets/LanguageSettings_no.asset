@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1683452911616
-    m_Localized: "St\xF8rrelse"
+    m_Localized: "St\xF8rrelse trigger"
     m_Metadata:
       m_Items: []
   - m_Id: 4111476776960
@@ -234,6 +234,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2297444018593792
     m_Localized: "Klikk p\xE5 denne knappen for \xE5 tilbakestille kameraposisjonen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8038720336736256
+    m_Localized: "St\xF8rrelse sf\xE6re"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8038931515748352
+    m_Localized: "St\xF8rrelse plattform"
     m_Metadata:
       m_Items: []
   references:

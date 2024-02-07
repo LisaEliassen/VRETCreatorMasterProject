@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1683452911616
-    m_Localized: Size
+    m_Localized: Size trigger
     m_Metadata:
       m_Items: []
   - m_Id: 4111476776960
@@ -236,6 +236,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2297444018593792
     m_Localized: Click this button to reset the camera position!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8038720336736256
+    m_Localized: Size sphere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8038931515748352
+    m_Localized: Size platform
     m_Metadata:
       m_Items: []
   references:

@@ -28,7 +28,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1683452911616
-    m_Key: SizeSliderText
+    m_Key: SizeSliderTrigger
     m_Metadata:
       m_Items: []
   - m_Id: 4111476776960
@@ -213,6 +213,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2297444018593792
     m_Key: CameraResetPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8038720336736256
+    m_Key: SizeSliderSphere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8038931515748352
+    m_Key: SizeSliderPlatform
     m_Metadata:
       m_Items: []
   m_Metadata:
