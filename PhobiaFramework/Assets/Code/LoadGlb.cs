@@ -61,7 +61,7 @@ public class LoadGlb : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
-            languageManager = databaseServiceObject.GetComponent<LanguageManager>();
+            //languageManager = databaseServiceObject.GetComponent<LanguageManager>();
         }
         else
         {
@@ -183,6 +183,7 @@ public class LoadGlb : MonoBehaviour
         }
 
         trigger = new GameObject("Trigger");
+        trigger.tag = "Export";
 
         if (paths.Length > 0)
         {
@@ -262,6 +263,7 @@ public class LoadGlb : MonoBehaviour
         if (trigger != null && !string.IsNullOrEmpty(pathOfTrigger)) 
         {
             GameObject copy = new GameObject("Trigger_copy" + GetNumCopies());
+            copy.tag = "Export";
             triggerCopies.Add(copy);
             bool success = await LoadGlbFile(copy, pathOfTrigger);
             if (success)
@@ -304,6 +306,7 @@ public class LoadGlb : MonoBehaviour
             RemoveTrigger();
         }
         trigger = new GameObject("Trigger");
+        trigger.tag = "Export";
 
         pathOfTrigger = path;
         bool success = await LoadGlbFile(trigger, path);

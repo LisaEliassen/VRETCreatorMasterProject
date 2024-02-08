@@ -195,7 +195,7 @@ public class UploadFiles : MonoBehaviour
         }
     }
 
-    IEnumerator uploadSelectedFile()
+    public IEnumerator uploadSelectedFile()
     {
         fileName = fileNameInput.text;
 
