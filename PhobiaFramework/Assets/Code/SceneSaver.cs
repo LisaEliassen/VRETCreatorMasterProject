@@ -10,10 +10,15 @@ using GLTFast;
 public class SceneSaver : MonoBehaviour
 {
     //[SerializeField]
-    string path = "C://Users//Student/Desktop/export.glb";
+    string path;
     UploadFiles uploadFiles;
     DatabaseService dbService;
     public GameObject databaseServiceObject;
+    
+    void Awake()
+    {
+         path = Application.dataPath + "/Assets";
+    }
 
     public async void SimpleExport()
     {
@@ -41,7 +46,7 @@ public class SceneSaver : MonoBehaviour
         export.AddScene(rootLevelNodes);
 
         // Async glTF export
-        bool success = await export.SaveToFileAndDispose(path);
+        bool success = await export.SaveToFileAndDispose(path+"/export.glb");
 
         if (!success)
         {
@@ -51,6 +56,16 @@ public class SceneSaver : MonoBehaviour
 
     public async void AdvancedExport()
     {
+        if (databaseServiceObject != null)
+        {
+            // Get the DatabaseService component from the found GameObject
+            dbService = databaseServiceObject.GetComponent<DatabaseService>();
+        }
+        if (dbService != null)
+        {
+            Debug.Log("Dbservice is null!");
+        }
+
 
         // CollectingLogger lets you programmatically go through
         // errors and warnings the export raised
@@ -91,7 +106,7 @@ public class SceneSaver : MonoBehaviour
         export.AddScene(rootLevelNodes, "My new glTF scene");
 
         // Async glTF export
-        var success = await export.SaveToFileAndDispose(path);
+        var success = await export.SaveToFileAndDispose(path + "/export.glb");
 
         if (!success)
         {
@@ -101,14 +116,14 @@ public class SceneSaver : MonoBehaviour
         }
         else
         {
-            string iconPath = "C://Users//Student/Downloads/crowAnimated_icon.png";
+            string iconPath = path + "/export_test_icon.png";
             string fileName = "export_test";
             string fileType = "Model";
 
-            string fileExtension = Path.GetExtension(path);
+            string fileExtension = Path.GetExtension(path + "/export.glb");
             string iconExtension = Path.GetExtension(iconPath);
 
-            bool exportsuccess = dbService.addFile(path, fileName, "Model", fileExtension);
+            bool exportsuccess = dbService.addFile(path + "/export.glb", fileName, "Model", fileExtension);
             if (exportsuccess)
             {
                 dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
