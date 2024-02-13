@@ -120,9 +120,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9579477655552
-    m_Localized: "Triggermodellens st\xF8rrelse kan endres med St\xF8rrelse-glidebryteren
-      eller ved \xE5 legge inn et tall mellom 0 og 100 i inntastingsfeltet her! Du
-      kan ogs\xE5 flytte triggermodellen ved \xE5 klikke og dra den!"
+    m_Localized: "Juster triggermodellens st\xF8rrelse ved \xE5 bruke St\xF8rrelse-glidebryteren
+      eller skriv inn et tall fra 0 til 100. Flytt den ved \xE5 klikke og dra. P\xE5
+      samme m\xE5te kan du endre st\xF8rrelsen p\xE5 plattformen og sf\xE6ren ved
+      \xE5 bruke glidebrytere eller skrive inn et tall."
     m_Metadata:
       m_Items: []
   - m_Id: 11169689296896
@@ -138,7 +139,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 11748029292544
     m_Localized: "Du kan bruke disse avmerkingsboksene til \xE5\n1. Sl\xE5 av eller
-      p\xE5 triggermodellens synlighet\r\n2. Sl\xE5 av eller p\xE5 plattformens synlighet\r"
+      p\xE5 triggermodellens synlighet\r\n2. Sl\xE5 av eller p\xE5 plattformens synlighet\r\n3.
+      Sl\xE5 av eller p\xE5 triggermodellens interaksjonsevne"
     m_Metadata:
       m_Items: []
   - m_Id: 12480287662080

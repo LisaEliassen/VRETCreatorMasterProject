@@ -119,9 +119,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9579477655552
-    m_Localized: The trigger model's size can be changed with the Size slider or
-      by inputting a number between 0 and 100 in the input field here! You can also
-      move the trigger model by clicking and dragging it!
+    m_Localized: Adjust the trigger model's size using the slider or input a number
+      from 0 to 100. Move it by clicking and dragging. Similarly, resize the platform
+      and sphere using sliders or inputting a number.
     m_Metadata:
       m_Items: []
   - m_Id: 11169689296896
@@ -136,12 +136,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 11748029292544
-    m_Localized: 'You can use these check boxes to
+    m_Localized: 'You can use these toggles to
 
       1. Turn the trigger model''s
       visibility off or on
 
-      2. Turn the platform''s visibility off or on'
+      2. Turn the platform''s visibility off or on
+
+      3.
+      Turn the trigger model''s interactability off or on'
     m_Metadata:
       m_Items: []
   - m_Id: 12480287662080

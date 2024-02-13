@@ -1125,7 +1125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 182, y: -155}
+  m_AnchoredPosition: {x: 170, y: -155}
   m_SizeDelta: {x: 200, y: 52.4844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &36202111
@@ -4973,7 +4973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &226480085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4991,7 +4991,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 182, y: -93}
+  m_AnchoredPosition: {x: 166, y: -63}
   m_SizeDelta: {x: 200, y: 52.4844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226480086
@@ -11653,7 +11653,8 @@ MonoBehaviour:
 
     2. Turn the platform''s visibility off or on
 
-'
+    3. Turn the
+    trigger model''s interactability off or on'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12084,9 +12085,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The trigger model's size can be changed with the Size slider or by inputting
-    a number between 0 and 100 in the input field here! You can also move the trigger
-    model by clicking and dragging it!
+  m_text: Adjust the trigger model's size using the slider or input a number from
+    0 to 100. Move it by clicking and dragging. Similarly, resize the platform and
+    sphere using sliders or inputting a number.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14299,7 +14300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &650845634
 Transform:
   m_ObjectHideFlags: 0
@@ -25801,8 +25802,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -809, y: 89}
-  m_SizeDelta: {x: -230.9136, y: -166.704}
+  m_AnchoredPosition: {x: -816.6241, y: 60.849}
+  m_SizeDelta: {x: -246.162, y: -110.4021}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1047819301
 MonoBehaviour:
@@ -29551,7 +29552,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 182, y: -30}
+  m_AnchoredPosition: {x: 166, y: -4}
   m_SizeDelta: {x: 200, y: 52.4844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1235842546
@@ -41851,7 +41852,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 182, y: 33.797874}
+  m_AnchoredPosition: {x: 166, y: 55}
   m_SizeDelta: {x: 200, y: 52.4844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1696983578
@@ -47886,7 +47887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 381, y: -406}
+  m_AnchoredPosition: {x: 381, y: -532}
   m_SizeDelta: {x: 674.6813, y: 309.2131}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1989489324
