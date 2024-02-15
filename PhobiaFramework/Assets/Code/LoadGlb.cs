@@ -271,7 +271,7 @@ public class LoadGlb : MonoBehaviour
                 copy.transform.localScale = trigger.transform.localScale;
                 Debug.Log("Successfully loaded model!");
 
-                Animation animationComponent = trigger.GetComponent<Animation>();
+                UnityEngine.Animation animationComponent = trigger.GetComponent<UnityEngine.Animation>();
 
                 if (animationComponent != null)
                 {

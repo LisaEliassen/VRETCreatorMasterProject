@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
+using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 
 public class CameraController : MonoBehaviour
 {
@@ -27,13 +30,23 @@ public class CameraController : MonoBehaviour
     private Vector3 defaultPosition;
     private Quaternion defaultRotation;
 
+    Ray ray;
+    RaycastHit hit;
+    bool isRotatingObject = false;
+
+    public GameObject databaseServiceObject;
+    LoadGlb loadGlb;
+
     private void Start()
     {
         float scrollInput = Mouse.current.scroll.y.ReadValue();
         scroll = scrollInput;
+        bool isRotatingObject = false;
 
         defaultPosition = transform.position;
         defaultRotation = transform.rotation;
+
+        loadGlb = databaseServiceObject.GetComponent<LoadGlb>();
     }
 
     private void Update()
@@ -84,35 +97,30 @@ public class CameraController : MonoBehaviour
             // Rotate the camera based on the right mouse button
             if (isRightMouseButtonDown)
             {
-                // Read mouse position for rotation when the right mouse button is held down
-                rotationInput = Mouse.current.delta.ReadValue();
+                GameObject trigger = loadGlb.GetTrigger();
+                List<GameObject> copies = loadGlb.GetCopies();
 
-                if (invertRotationMovement != null && invertRotationMovement.isOn)
+                if (trigger != null)
                 {
-                    // Calculate rotation based on mouse movement
-                    Vector3 eulerRotation = transform.rotation.eulerAngles;
-                    eulerRotation.y += rotationInput.x * rotationSpeed;
-                    rotationX -= rotationInput.y * rotationSpeed;
+                    isRotatingObject = trigger.GetComponent<DragObject>().isRotatingObject;
 
-                    // Clamp vertical rotation to prevent flipping
-                    rotationX = Mathf.Clamp(rotationX, -90, 90);
-
-                    // Apply the rotation
-                    transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
+                    if (!isRotatingObject)
+                    {
+                        foreach (GameObject copy in copies)
+                        {
+                            if (copy.GetComponent<DragObject>().isRotatingObject)
+                            {
+                                isRotatingObject = true;
+                                break;
+                            }
+                        }
+                    }
                 }
-                else
+
+                if (!isRotatingObject)
                 {
-                    
-                    // Calculate rotation based on mouse movement
-                    Vector3 eulerRotation = transform.rotation.eulerAngles;
-                    eulerRotation.y -= rotationInput.x * rotationSpeed;
-                    rotationX += rotationInput.y * rotationSpeed;
+                    rotateCamera();
 
-                    // Clamp vertical rotation to prevent flipping
-                    rotationX = Mathf.Clamp(rotationX, -90, 90);
-
-                    // Apply the rotation
-                    transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
                 }
 
             }
@@ -121,7 +129,6 @@ public class CameraController : MonoBehaviour
                 rotationInput = Vector2.zero;
             }
 
-
             if (scroll != scrollInput)
             {
                 // Update the camera's position based on the scroll input
@@ -129,6 +136,39 @@ public class CameraController : MonoBehaviour
 
                 scroll = scrollInput;
             }
+        }
+    }
+
+    private void rotateCamera()
+    {
+        // Read mouse position for rotation when the right mouse button is held down
+        rotationInput = Mouse.current.delta.ReadValue();
+
+        if (invertRotationMovement != null && invertRotationMovement.isOn)
+        {
+            // Calculate rotation based on mouse movement
+            Vector3 eulerRotation = transform.rotation.eulerAngles;
+            eulerRotation.y += rotationInput.x * rotationSpeed;
+            rotationX -= rotationInput.y * rotationSpeed;
+
+            // Clamp vertical rotation to prevent flipping
+            rotationX = Mathf.Clamp(rotationX, -90, 90);
+
+            // Apply the rotation
+            transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
+        }
+        else
+        {
+            // Calculate rotation based on mouse movement
+            Vector3 eulerRotation = transform.rotation.eulerAngles;
+            eulerRotation.y -= rotationInput.x * rotationSpeed;
+            rotationX += rotationInput.y * rotationSpeed;
+
+            // Clamp vertical rotation to prevent flipping
+            rotationX = Mathf.Clamp(rotationX, -90, 90);
+
+            // Apply the rotation
+            transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
         }
     }
 

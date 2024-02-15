@@ -7,9 +7,10 @@ public class DragObject : MonoBehaviour
     private Vector3 mOffset;
     private float mZCoord;
     public Camera mainCamera;
-    private bool isDragging = false;
-    private bool isRotatingObject = false;
-    private int count = 0;
+    public bool isRotatingObject = false;
+
+    Ray ray;
+    RaycastHit hit;
 
     public void SetCamera(Camera camera)
     {
@@ -26,21 +27,6 @@ public class DragObject : MonoBehaviour
             {
                 mOffset = gameObject.transform.position - GetMouseWorldPos();
             }
-
-            /* This makes rotation possible but only when left clicking on collider, cursed
-            if (Input.GetMouseButtonDown(0)) 
-            {
-                count++;
-                if (count == 1)
-                {
-                    isRotatingObject = true; 
-                }
-                else if (count >= 2)
-                {
-                    count = 0;
-                    isRotatingObject = false;
-                }
-            }*/
         }
         else
         {
@@ -66,21 +52,19 @@ public class DragObject : MonoBehaviour
 
     void Update()
     {
-
-        /* This makes rotation possible whenever the left click is pressed, cursed as well
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
-            count++;
-            if (count == 1)
+
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
             {
-                isRotatingObject = true;
+                print(hit.collider.name);
+                if (hit.collider.name == transform.name)
+                {
+                    isRotatingObject = true;
+                }
             }
-            else if (count >= 2)
-            {
-                count = 0;
-                isRotatingObject = false;
-            }
-        }*/
+        }
 
         if (isRotatingObject)
         {
@@ -102,16 +86,17 @@ public class DragObject : MonoBehaviour
 
     void RotateObject()
     {
-        /*if (Input.GetMouseButtonUp(0)) 
+        if (Input.GetMouseButtonUp(1)) 
         {
             isRotatingObject = false; 
         }
-        else*/
+        else
         {
             // Rotate the object around its y-axis based on mouse movement
             float rotSpeed = 10f;
             float mouseX = Input.GetAxis("Mouse X") * rotSpeed;
             transform.Rotate(Vector3.up, -mouseX);
+            
         }
     }
 }
