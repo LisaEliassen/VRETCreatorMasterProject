@@ -246,6 +246,19 @@ MonoBehaviour:
     m_Localized: "St\xF8rrelse plattform"
     m_Metadata:
       m_Items: []
+  - m_Id: 12706609950011392
+    m_Localized: Kulisser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12708483147149312
+    m_Localized: Legg til kulisser til scene
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12714276412108800
+    m_Localized: "Ved \xE5 klikke p\xE5 denne knappen kan du legge til kulisser i
+      scenen!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

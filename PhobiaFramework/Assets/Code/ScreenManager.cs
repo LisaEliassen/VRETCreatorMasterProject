@@ -18,6 +18,8 @@ public class ScreenManager : MonoBehaviour
     public Button backFromDeleteButton;
     public Button chooseSoundButton;
     public Button backFromSoundButton;
+    public Button chooseSceneryButton;
+    public Button backFromSceneryButton;
     public Button settingsButton;
     public Button backFromSettingsButton;
     public GameObject EditSceneUI;
@@ -28,6 +30,7 @@ public class ScreenManager : MonoBehaviour
     public GameObject SettingsUI;
     public GameObject ControlsUI;
     public GameObject SoundUI;
+    public GameObject SceneryUI;
     public GameObject HelpUI;
     public GameObject QuitUI;
     public GameObject UI_parent;
@@ -53,6 +56,9 @@ public class ScreenManager : MonoBehaviour
         settingsButton.onClick.AddListener(() => ShowUI("Settings"));
         backFromSettingsButton.onClick.AddListener(() => ShowUI("EditScene"));
 
+        chooseSceneryButton.onClick.AddListener(() => ShowUI("Scenery"));
+        backFromSceneryButton.onClick.AddListener(() => ShowUI("EditScene"));
+
         UI_parent.SetActive(true);
 
         ModelUI.SetActive(true);
@@ -64,6 +70,7 @@ public class ScreenManager : MonoBehaviour
         SoundUI.SetActive(true);
         HelpUI.SetActive(true);
         QuitUI.SetActive(true);
+        SceneryUI.SetActive(true);
 
         ModelUI.SetActive(false);
         ChooseMediaUI.SetActive(false);
@@ -73,6 +80,7 @@ public class ScreenManager : MonoBehaviour
         ControlsUI.SetActive(false);
         SoundUI.SetActive(false);
         QuitUI.SetActive(false);
+        SceneryUI.SetActive(false);
 
         UI_parent.SetActive(false);
     }
@@ -89,6 +97,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            SceneryUI.SetActive(false);
             //HelpUI.SetActive(false);
         }
         else if (UIname == "Upload")
@@ -101,6 +110,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            SceneryUI.SetActive(false);
             //HelpUI.SetActive(false);
         }
         else if (UIname == "360Media")
@@ -113,6 +123,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            SceneryUI.SetActive(false);
             //HelpUI.SetActive(false);
         }
         else if(UIname == "Delete")
@@ -125,6 +136,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            SceneryUI.SetActive(false);
             //HelpUI.SetActive(false);
         }
         else if (UIname == "Sound")
@@ -137,6 +149,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(true);
+            SceneryUI.SetActive(false);
             //HelpUI.SetActive(false);
         }
         else if (UIname == "Models")
@@ -149,6 +162,7 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(false);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            SceneryUI.SetActive(false);
             //HelpUI.SetActive(false);
         }
         else if (UIname == "Settings")
@@ -161,6 +175,20 @@ public class ScreenManager : MonoBehaviour
             SettingsUI.SetActive(true);
             ControlsUI.SetActive(false);
             SoundUI.SetActive(false);
+            SceneryUI.SetActive(false);
+            //HelpUI.SetActive(false);
+        }
+        else if (UIname == "Scenery")
+        {
+            EditSceneUI.SetActive(false);
+            ModelUI.SetActive(false);
+            ChooseMediaUI.SetActive(false);
+            UploadUI.SetActive(false);
+            DeleteUI.SetActive(false);
+            SettingsUI.SetActive(false);
+            ControlsUI.SetActive(false);
+            SoundUI.SetActive(false);
+            SceneryUI.SetActive(true);
             //HelpUI.SetActive(false);
         }
     }

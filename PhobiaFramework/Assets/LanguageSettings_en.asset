@@ -249,6 +249,18 @@ MonoBehaviour:
     m_Localized: Size platform
     m_Metadata:
       m_Items: []
+  - m_Id: 12706609950011392
+    m_Localized: Scenery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12708483147149312
+    m_Localized: Add scenery to scene
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12714276412108800
+    m_Localized: Clicking this button lets you add scenery to the environment!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -19,6 +19,7 @@ public class Tutorial : MonoBehaviour
     public GameObject RemoveTriggerHelpPanel;
     public GameObject Media360HelpPanel;
     public GameObject AddSoundHelpPanel;
+    public GameObject AddSceneryHelpPanel;
     public GameObject RemoveSoundHelpPanel;
     public GameObject CameraControlsPanel;
     public GameObject CameraResetPanel;
@@ -41,6 +42,7 @@ public class Tutorial : MonoBehaviour
     public Button NextButton9;
     public Button NextButton10;
     public Button NextButton11;
+    public Button NextButton12;
 
     public Button PreviousButton1;
     public Button PreviousButton2;
@@ -52,6 +54,7 @@ public class Tutorial : MonoBehaviour
     public Button PreviousButton8;
     public Button PreviousButton9;
     public Button PreviousButton10;
+    public Button PreviousButton11;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +72,7 @@ public class Tutorial : MonoBehaviour
             RemoveTriggerHelpPanel.SetActive(false);
             Media360HelpPanel.SetActive(false);
             CameraControlsPanel.SetActive(false);
+            
 
             HelpUI.SetActive(false);
         });
@@ -104,6 +108,7 @@ public class Tutorial : MonoBehaviour
         AddSoundHelpPanel.SetActive(true);
         RemoveSoundHelpPanel.SetActive(true);
         CameraControlsPanel.SetActive(true);
+        AddSceneryHelpPanel.SetActive(true);
 
         InfoPanel.SetActive(false);
         ModelHelpPanel.SetActive(false);
@@ -116,6 +121,7 @@ public class Tutorial : MonoBehaviour
         AddSoundHelpPanel.SetActive(false);
         RemoveSoundHelpPanel.SetActive(false);
         CameraControlsPanel.SetActive(false);
+        AddSceneryHelpPanel.SetActive(false);
 
         UI_parent.SetActive(false);
 
@@ -180,10 +186,17 @@ public class Tutorial : MonoBehaviour
         NextButton10.onClick.AddListener(() =>
         {
             AddSoundHelpPanel.SetActive(false);
-            RemoveSoundHelpPanel.SetActive(true);
+            AddSceneryHelpPanel.SetActive(true);
             //CameraControlsPanel.SetActive(true);
         });
         NextButton11.onClick.AddListener(() =>
+        {
+            //CameraControlsPanel.SetActive(false);
+            AddSceneryHelpPanel.SetActive(false);
+            RemoveSoundHelpPanel.SetActive(true);
+            
+        });
+        NextButton12.onClick.AddListener(() =>
         {
             //CameraControlsPanel.SetActive(false);
             RemoveSoundHelpPanel.SetActive(false);
@@ -244,8 +257,14 @@ public class Tutorial : MonoBehaviour
         });
         PreviousButton10.onClick.AddListener(() =>
         {
-            RemoveSoundHelpPanel.SetActive(false);
+            AddSceneryHelpPanel.SetActive(false);
             AddSoundHelpPanel.SetActive(true);
+            //CameraControlsPanel.SetActive(false);
+        });
+        PreviousButton11.onClick.AddListener(() =>
+        {
+            RemoveSoundHelpPanel.SetActive(false);
+            AddSceneryHelpPanel.SetActive(true);
             //CameraControlsPanel.SetActive(false);
         });
     }

@@ -223,6 +223,20 @@ MonoBehaviour:
     m_Key: SizeSliderPlatform
     m_Metadata:
       m_Items: []
+  - m_Id: 12706609950011392
+    m_Key: SceneryText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12708483147149312
+    m_Key: AddSceneryButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12714276412108800
+    m_Key: 'AddSceneryHelpPanel
+
+'
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

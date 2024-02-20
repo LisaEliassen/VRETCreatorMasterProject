@@ -7,7 +7,6 @@ using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 public class ShowAllSoundMedia : MonoBehaviour
 {
     DatabaseService dbService;
