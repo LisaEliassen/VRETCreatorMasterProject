@@ -336,6 +336,23 @@ public class LoadGlb : MonoBehaviour
         }
     }
 
+    public async void SpawnSceneryObject(string modelName, string path)
+    {
+        GameObject newObject = new GameObject(modelName);
+        newObject.tag = "Scenery";
+
+        bool success = await LoadGlbFile(newObject, path);
+        if (success)
+        {
+            Debug.Log("Successfully loaded model!");
+        }
+        else
+        {
+            Debug.Log("The glb model could not be loaded!");
+        }
+
+    }
+
     //public async void LoadGlbFile(GameObject loadedModel, string path)
     public async Task<bool> LoadGlbFile(GameObject loadedModel, string path)
     {
@@ -380,10 +397,10 @@ public class LoadGlb : MonoBehaviour
                 // You can also set various properties of the Box Collider
                 boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
 
-                Rigidbody rb = trigger.GetComponent<Rigidbody>();
+                Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)
                 {
-                    rb = trigger.AddComponent<Rigidbody>();
+                    rb = loadedModel.AddComponent<Rigidbody>();
                 }
                 rb.isKinematic = true;  // Set to false if you want physics interactions
 
@@ -392,11 +409,6 @@ public class LoadGlb : MonoBehaviour
                 DragObject dragObject = loadedModel.GetComponent<DragObject>();
                 dragObject.SetCamera(mainCamera);
 
-                /*sizeSlider.interactable = true;
-                sizeInput.interactable = true;
-                moveSliderX.interactable = true;
-                moveSliderY.interactable = true;
-                addCopyButton.interactable = true;*/
             }
             else
             {

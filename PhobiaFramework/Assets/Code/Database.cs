@@ -30,6 +30,8 @@ public interface Database
 
     IEnumerator getAllModelFileData(System.Action<List<FileMetaData>> callback);
 
+    IEnumerator getAllSceneryFileData(System.Action<List<FileMetaData>> callback);
+
     IEnumerator getAll360Media(Action<List<FileMetaData>> callback);
 
     IEnumerator getAllSoundMedia(Action<List<FileMetaData>> callback);

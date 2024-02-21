@@ -90,11 +90,20 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public IEnumerator getAllModelFileData(System.Action<List<FileMetaData>> callback)
+    public IEnumerator getAllModelFileData(Action<List<FileMetaData>> callback)
     {
         if (database != null)
         {
             yield return database.getAllModelFileData(callback);
+        }
+    }
+
+    public IEnumerator getAllSceneryFileData(Action<List<FileMetaData>> callback)
+
+    {
+        if (database != null)
+        {
+            yield return database.getAllSceneryFileData(callback);
         }
     }
 

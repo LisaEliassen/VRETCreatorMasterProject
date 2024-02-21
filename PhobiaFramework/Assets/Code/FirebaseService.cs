@@ -146,6 +146,10 @@ public class FirebaseService : Database
         {
             fileRef = storageRef.Child("sound/icons/" + iconFileName + iconExtension);
         }
+        else if (fileType == "Scenery")
+        {
+            fileRef = storageRef.Child("scenery/icons/" + iconFileName + iconExtension);
+        }
 
         if (fileRef != null)
         {
@@ -198,6 +202,11 @@ public class FirebaseService : Database
         {
             fileRef = storageRef.Child("sound/" + fileName + extension);
         }
+        else if (fileType == "Scenery")
+        {
+            fileRef = storageRef.Child("scenery/" + fileName + extension);
+        }
+
 
         if (fileRef != null)
         {
@@ -264,6 +273,12 @@ public class FirebaseService : Database
             pathToIcon = databaseURL + "/sound/icons/" + fileName + "_icon" + iconExtension;
             childStr = "sound";
         }
+        else if (fileType == "Scenery")
+        {
+            path = databaseURL + "/scenery/" + fileName + extension;
+            pathToIcon = databaseURL + "/scenery/icons/" + fileName + "_icon" + iconExtension;
+            childStr = "scenery";
+        }
 
         if (path != null && pathToIcon != null && childStr != null)
         {
@@ -321,6 +336,47 @@ public class FirebaseService : Database
     public IEnumerator getAllModelFileData(Action<List<FileMetaData>> callback)
     {
         var task = dbreference.Child("models").GetValueAsync();
+        yield return new WaitUntil(() => task.IsCompleted);
+
+        if (task.Exception != null)
+        {
+            Debug.LogError("Error retrieving data: " + task.Exception);
+        }
+        else if (task.Result != null)
+        {
+            List<FileMetaData> files = new List<FileMetaData>();
+            DataSnapshot snapshot = task.Result;
+
+            foreach (var child in snapshot.Children)
+            {
+                if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
+                {
+                    Debug.Log("Key: " + child.Key);
+                    Debug.Log("Value: " + child.GetRawJsonValue());
+
+                    string uniqueID = child.Key;
+                    string filename = child.Child("filename").Value.ToString();
+                    string filetype = child.Child("filetype").Value.ToString();
+                    string path = child.Child("path").Value.ToString();
+                    string pathToIcon = child.Child("pathToIcon").Value.ToString();
+
+                    FileMetaData fileData = new FileMetaData(uniqueID, filename, filetype, path, pathToIcon);
+                    files.Add(fileData);
+                }
+                else
+                {
+                    Debug.LogError("One of the child properties is null.");
+                }
+            }
+
+            callback(files);
+
+        }
+    }
+
+    public IEnumerator getAllSceneryFileData(Action<List<FileMetaData>> callback)
+    {
+        var task = dbreference.Child("scenery").GetValueAsync();
         yield return new WaitUntil(() => task.IsCompleted);
 
         if (task.Exception != null)

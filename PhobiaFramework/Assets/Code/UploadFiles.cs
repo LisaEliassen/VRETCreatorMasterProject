@@ -157,6 +157,11 @@ public class UploadFiles : MonoBehaviour
             FileBrowser.SetFilters(true, new FileBrowser.Filter("Sound", ".mp3", ".WAV"));
             FileBrowser.SetDefaultFilter(".mp3");
         }
+        else if (fileType == "Scenery")
+        {
+            FileBrowser.SetFilters(true, new FileBrowser.Filter("Scenery", ".glb"));
+            FileBrowser.SetDefaultFilter(".glb");
+        }
 
         StartCoroutine(ShowLoadDialogCoroutine(PickMode.Files, setFilePath));
     }
