@@ -16,6 +16,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class LoadGlb : MonoBehaviour
 {
     GameObject trigger;
+    GameObject newObject;
+    List<GameObject> newObjects;
     List<GameObject> triggerCopies;
     DatabaseService dbService;
     AnimationController animController;
@@ -53,6 +55,7 @@ public class LoadGlb : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      
         RemovePanel.SetActive(true);
         RemovePanel.SetActive(false);
 
@@ -85,6 +88,7 @@ public class LoadGlb : MonoBehaviour
         position = posObject.transform.position;
 
         triggerCopies = new List<GameObject>();
+        newObjects = new List<GameObject>();
 
         chooseFromDeviceButton.onClick.AddListener(ImportModel);
         removeTriggerButton.onClick.AddListener(() =>
@@ -157,6 +161,12 @@ public class LoadGlb : MonoBehaviour
     {
         return this.trigger;
     }
+
+    public List<GameObject> GetSceneryObjectList()
+    {
+        return this.newObjects;
+    }
+
 
     public void ImportModel()
     {
@@ -338,8 +348,14 @@ public class LoadGlb : MonoBehaviour
 
     public async void SpawnSceneryObject(string modelName, string path)
     {
-        GameObject newObject = new GameObject(modelName);
+        newObject = new GameObject(modelName);
         newObject.tag = "Scenery";
+
+        if (newObject != null)
+        {
+            newObjects.Add(newObject);
+        }
+        
 
         bool success = await LoadGlbFile(newObject, path);
         if (success)

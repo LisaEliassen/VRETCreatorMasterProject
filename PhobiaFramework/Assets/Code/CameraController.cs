@@ -100,6 +100,9 @@ public class CameraController : MonoBehaviour
                 GameObject trigger = loadGlb.GetTrigger();
                 List<GameObject> copies = loadGlb.GetCopies();
 
+                List<GameObject> sceneryObjects = loadGlb.GetSceneryObjectList();
+
+
                 if (trigger != null)
                 {
                     isRotatingObject = trigger.GetComponent<DragObject>().isRotatingObject;
@@ -115,6 +118,18 @@ public class CameraController : MonoBehaviour
                             }
                         }
                     }
+                }
+                if (sceneryObjects != null)
+                {
+                    foreach (GameObject scenery in sceneryObjects)
+                    {
+                        if (scenery.GetComponent<DragObject>().isRotatingObject)
+                        {
+                            isRotatingObject = true;
+                            break;
+                        }
+                    }
+                    
                 }
 
                 if (!isRotatingObject)
