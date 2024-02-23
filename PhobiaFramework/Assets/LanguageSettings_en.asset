@@ -144,7 +144,10 @@ MonoBehaviour:
       2. Turn the platform''s visibility off or on
 
       3.
-      Turn the trigger model''s interactability off or on'
+      Turn the walls'' visiblity off or on
+
+      4. Turn the trigger model''s interactability
+      off or on'
     m_Metadata:
       m_Items: []
   - m_Id: 12480287662080
@@ -259,6 +262,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 12714276412108800
     m_Localized: Clicking this button lets you add scenery to the environment!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13865069270204416
+    m_Localized: Trigger is interactable
     m_Metadata:
       m_Items: []
   references:

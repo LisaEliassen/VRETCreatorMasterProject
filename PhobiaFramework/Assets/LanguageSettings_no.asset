@@ -140,7 +140,8 @@ MonoBehaviour:
   - m_Id: 11748029292544
     m_Localized: "Du kan bruke disse avmerkingsboksene til \xE5\n1. Sl\xE5 av eller
       p\xE5 triggermodellens synlighet\r\n2. Sl\xE5 av eller p\xE5 plattformens synlighet\r\n3.
-      Sl\xE5 av eller p\xE5 triggermodellens interaksjonsevne"
+      Sl\xE5 av eller p\xE5 veggenes synlighet\n4. Sl\xE5 av eller p\xE5 triggermodellens
+      interaksjonsevne"
     m_Metadata:
       m_Items: []
   - m_Id: 12480287662080
@@ -257,6 +258,10 @@ MonoBehaviour:
   - m_Id: 12714276412108800
     m_Localized: "Ved \xE5 klikke p\xE5 denne knappen kan du legge til kulisser i
       scenen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13865069270204416
+    m_Localized: Trigger er interaksjonerbar
     m_Metadata:
       m_Items: []
   references:
