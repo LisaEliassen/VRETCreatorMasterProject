@@ -14,6 +14,7 @@ public class ShowAllScenery : MonoBehaviour
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab;
     public Transform gridParent;
+    public ScrollRect scrollView;
     public Button showSceneryButton;
     public GameObject EditSceneUI;
     public GameObject SceneryUI;
@@ -37,11 +38,13 @@ public class ShowAllScenery : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        showSceneryButton.onClick.AddListener(() =>
+        StartCoroutine(FetchSceneryModels());
+
+        /*showSceneryButton.onClick.AddListener(() =>
         {
 
             StartCoroutine(FetchSceneryModels());
-        });
+        });*/
 
     }
 
@@ -132,6 +135,9 @@ public class ShowAllScenery : MonoBehaviour
             SceneryUI.SetActive(false);
             Debug.Log("Button for model " + modelName + " was clicked!");
         });
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());
+        //scrollView.verticalNormalizedPosition = 0f; // scroll to bottom after adding an item
 
         gridLayoutGroup.gameObject.SetActive(false);
         gridLayoutGroup.gameObject.SetActive(true);

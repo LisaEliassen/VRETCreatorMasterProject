@@ -34,11 +34,13 @@ public class DeleteFiles : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        deleteFilesButton.onClick.AddListener(() =>
+        StartCoroutine(showFiles());
+
+        /*deleteFilesButton.onClick.AddListener(() =>
         {
 
-            StartCoroutine(showFiles());
-        });
+            
+        });*/
     }
 
     public IEnumerator showFiles()
@@ -51,6 +53,16 @@ public class DeleteFiles : MonoBehaviour
         });
 
         yield return dbService.getAll360Media((data) =>
+        {
+            newFilesList.AddRange(data);
+        });
+
+        yield return dbService.getAllSoundMedia((data) =>
+        {
+            newFilesList.AddRange(data);
+        });
+
+        yield return dbService.getAllSceneryFileData((data) =>
         {
             newFilesList.AddRange(data);
         });
@@ -131,6 +143,12 @@ public class DeleteFiles : MonoBehaviour
             dbService.deleteFile(file.filename, file.filetype, file);
             reloadFiles();
         });
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());
+
+        gridLayoutGroup.gameObject.SetActive(false);
+        gridLayoutGroup.gameObject.SetActive(true);
+
     }
 
     public IEnumerator LoadImageFromFirebase(string modelIconPath, Image iconImage)

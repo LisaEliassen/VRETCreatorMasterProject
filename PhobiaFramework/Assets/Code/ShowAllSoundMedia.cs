@@ -38,10 +38,12 @@ public class ShowAllSoundMedia : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        addSoundButton.onClick.AddListener(() =>
+        StartCoroutine(FetchSoundMedia());
+
+        /*addSoundButton.onClick.AddListener(() =>
         {
             StartCoroutine(FetchSoundMedia());
-        });
+        });*/
 
     }
 
@@ -141,6 +143,8 @@ public class ShowAllSoundMedia : MonoBehaviour
             }
             Debug.Log("Button for file " + filename + " was clicked!");
         });
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());
 
         gridLayoutGroup.gameObject.SetActive(false);
         gridLayoutGroup.gameObject.SetActive(true);

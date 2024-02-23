@@ -37,11 +37,13 @@ public class ShowAllModels : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        showModelsButton.onClick.AddListener(() =>
+        StartCoroutine(FetchModels());
+
+        /*showModelsButton.onClick.AddListener(() =>
         {
             
             StartCoroutine(FetchModels());
-        });
+        });*/
     }
 
     public IEnumerator FetchModels()
@@ -131,6 +133,8 @@ public class ShowAllModels : MonoBehaviour
             ModelUI.SetActive(false);
             Debug.Log("Button for model " + modelName + " was clicked!");
         });
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());
 
         gridLayoutGroup.gameObject.SetActive(false);
         gridLayoutGroup.gameObject.SetActive(true);

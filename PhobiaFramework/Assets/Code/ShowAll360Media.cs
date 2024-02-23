@@ -38,10 +38,12 @@ public class ShowAll360Media : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        addMediaButton.onClick.AddListener(() =>
+        StartCoroutine(FetchMedia());
+
+        /*addMediaButton.onClick.AddListener(() =>
         {
             StartCoroutine(FetchMedia());
-        });
+        });*/
     }
 
     public IEnumerator FetchMedia()
@@ -161,6 +163,8 @@ public class ShowAll360Media : MonoBehaviour
             }
             Debug.Log("Button for file " + filename + " was clicked!");
         });
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());
 
         gridLayoutGroup.gameObject.SetActive(false);
         gridLayoutGroup.gameObject.SetActive(true);
