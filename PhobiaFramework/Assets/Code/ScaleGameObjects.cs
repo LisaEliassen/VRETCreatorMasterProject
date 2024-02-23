@@ -7,7 +7,7 @@ using TMPro;
 public class ScaleGameObjects : MonoBehaviour
 {
     public GameObject sphere;
-    public GameObject platform;
+    public GameObject exposureScene;
 
     public Slider sphereSlider;
     public TMP_InputField sizeInputSphere;
@@ -16,8 +16,6 @@ public class ScaleGameObjects : MonoBehaviour
 
     private void Start()
     {
-        // Set initial values for the sliders and objects
-        
         sphereSlider.interactable = true;
         sizeInputSphere.interactable = true;
         platformSlider.interactable = true;
@@ -54,7 +52,7 @@ public class ScaleGameObjects : MonoBehaviour
 
         // Update the scale of the platform based on the value of the platform slider
         float platformScale = platformSlider.value;
-        platform.transform.localScale = new Vector3(platformScale, platform.transform.localScale.y, platformScale);
+        exposureScene.transform.localScale = new Vector3(platformScale, exposureScene.transform.localScale.y, platformScale);
 
         ((TextMeshProUGUI)sizeInputPlatform.placeholder).text = platformScale.ToString();
         sizeInputPlatform.text = platformScale.ToString();
