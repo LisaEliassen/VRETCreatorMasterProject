@@ -52,7 +52,7 @@ public class ScaleGameObjects : MonoBehaviour
 
         // Update the scale of the platform based on the value of the platform slider
         float platformScale = platformSlider.value;
-        exposureScene.transform.localScale = new Vector3(platformScale, exposureScene.transform.localScale.y, platformScale);
+        exposureScene.transform.localScale = new Vector3(platformScale / 10, exposureScene.transform.localScale.y, platformScale / 10);
 
         ((TextMeshProUGUI)sizeInputPlatform.placeholder).text = platformScale.ToString();
         sizeInputPlatform.text = platformScale.ToString();
