@@ -16,9 +16,15 @@ public class ScaleGameObjects : MonoBehaviour
 
     private void Start()
     {
+        // Add listeners to detect changes in the input field values
+        sizeInputSphere.onValueChanged.AddListener(delegate { UpdateSphereFromInputField(); });
+        sizeInputPlatform.onValueChanged.AddListener(delegate { UpdatePlatformFromInputField(); });
+
         sphereSlider.interactable = true;
         sizeInputSphere.interactable = true;
         platformSlider.interactable = true;
+        sizeInputPlatform.interactable = true;
+        sizeInputSphere.interactable = true;
         sizeInputPlatform.interactable = true;
         SetInitialValues();
     }
@@ -29,14 +35,33 @@ public class ScaleGameObjects : MonoBehaviour
         UpdateObjectScales();
     }
 
+    private void UpdateSphereFromInputField()
+    {
+        float value;
+        if (float.TryParse(sizeInputSphere.text, out value))
+        {
+            sphereSlider.value = value;
+            UpdateObjectScales();
+        }
+    }
+
+    private void UpdatePlatformFromInputField()
+    {
+        float value;
+        if (float.TryParse(sizeInputPlatform.text, out value))
+        {
+            platformSlider.value = value;
+            UpdateObjectScales();
+        }
+    }
+
+
     private void SetInitialValues()
     {
 
         sphereSlider.value = 30;
         ((TextMeshProUGUI)sizeInputSphere.placeholder).text = "30";
 
-        // Set initial scale for the platform
-        //platform.transform.localScale = new Vector3(10f, platform.transform.localScale.y, 10f);
         platformSlider.value = 10;
         ((TextMeshProUGUI)sizeInputPlatform.placeholder).text = "10";
     }
@@ -47,14 +72,14 @@ public class ScaleGameObjects : MonoBehaviour
         float sphereScale = sphereSlider.value;
         sphere.transform.localScale = new Vector3(sphereScale, sphereScale, sphereScale);
 
-        ((TextMeshProUGUI)sizeInputSphere.placeholder).text = sphereScale.ToString();
+        //((TextMeshProUGUI)sizeInputSphere.placeholder).text = sphereScale.ToString();
         sizeInputSphere.text = sphereScale.ToString();
 
         // Update the scale of the platform based on the value of the platform slider
         float platformScale = platformSlider.value;
         exposureScene.transform.localScale = new Vector3(platformScale / 10, exposureScene.transform.localScale.y, platformScale / 10);
 
-        ((TextMeshProUGUI)sizeInputPlatform.placeholder).text = platformScale.ToString();
+        //((TextMeshProUGUI)sizeInputPlatform.placeholder).text = platformScale.ToString();
         sizeInputPlatform.text = platformScale.ToString();
     }
 }
