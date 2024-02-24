@@ -418,7 +418,7 @@ public class LoadGlb : MonoBehaviour
                 {
                     rb = loadedModel.AddComponent<Rigidbody>();
                 }
-                rb.isKinematic = true;  // Set to false if you want physics interactions
+                rb.isKinematic = false;  // Set to false if you want physics interactions
 
 
                 loadedModel.AddComponent<DragObject>();
