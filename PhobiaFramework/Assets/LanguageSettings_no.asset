@@ -264,6 +264,14 @@ MonoBehaviour:
     m_Localized: Trigger er interaksjonerbar
     m_Metadata:
       m_Items: []
+  - m_Id: 14912208452648960
+    m_Localized: STOPP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14912272466116608
+    m_Localized: Press knappen om du vil teleportere tilbake til venterommet
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

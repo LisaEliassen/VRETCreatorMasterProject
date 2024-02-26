@@ -268,6 +268,14 @@ MonoBehaviour:
     m_Localized: Trigger is interactable
     m_Metadata:
       m_Items: []
+  - m_Id: 14912208452648960
+    m_Localized: STOP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14912272466116608
+    m_Localized: Press the button if you want to teleport back to waiting room
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -241,6 +241,14 @@ MonoBehaviour:
     m_Key: TriggerInteractableToggle
     m_Metadata:
       m_Items: []
+  - m_Id: 14912208452648960
+    m_Key: StopButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14912272466116608
+    m_Key: StopButtonText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
