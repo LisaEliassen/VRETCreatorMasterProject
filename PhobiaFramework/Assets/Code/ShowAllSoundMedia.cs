@@ -11,6 +11,8 @@ public class ShowAllSoundMedia : MonoBehaviour
 {
     DatabaseService dbService;
     SoundManager soundManager;
+    SceneSaver sceneSaver;
+
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab;
     public Transform gridParent;
@@ -27,8 +29,7 @@ public class ShowAllSoundMedia : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
-
-
+            sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
             soundManager = databaseServiceObject.GetComponent<SoundManager>();
         }
         else
@@ -133,7 +134,9 @@ public class ShowAllSoundMedia : MonoBehaviour
             if (downloadUrl != null)
             {
                 await soundManager.HandleSoundSelected(downloadUrl);
-               
+
+                sceneSaver.SetPathToAudio(storagePath);
+
                 EditSceneUI.SetActive(true);
                 SoundUI.SetActive(false);
             }

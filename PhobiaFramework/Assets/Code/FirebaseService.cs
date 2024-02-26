@@ -12,6 +12,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
+using System.Linq;
 
 public class FirebaseService : Database
 {
@@ -302,6 +303,99 @@ public class FirebaseService : Database
         {
             Debug.Log("This filetype cannot be uploaded to database!");
         }
+    }
+
+    public async void addSceneData(string sceneName, string pathToTrigger, string triggerTransform, string triggerSize, string pathTo360Media, string pathToAudio, string[] pathsToScenery, string[] sceneryLocations, string[] scenerySizes)
+    {
+        string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
+
+        SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToTrigger, triggerTransform, triggerSize, pathTo360Media, pathToAudio, pathsToScenery, sceneryLocations, scenerySizes);
+        bool entryExists = await SceneDataExists(sceneData, "scenes");
+        
+        if (entryExists)
+        {
+            Debug.Log("File already exists, and has been updated!");
+        }
+        else
+        {
+            string json = JsonUtility.ToJson(sceneData);
+            await dbreference.Child("scenes").Child(uniqueID).SetRawJsonValueAsync(json);
+            Debug.Log("After uploading file data");
+        }
+    }
+
+    public IEnumerator getAllScenesFileData(Action<List<SceneMetaData>> callback)
+    {
+        var task = dbreference.Child("scenes").GetValueAsync();
+        yield return new WaitUntil(() => task.IsCompleted);
+
+        if(task.Exception != null)
+        {
+            Debug.LogError("Error retrieving data: " + task.Exception);
+        }
+        else if (task.Result != null)
+        {
+            List<SceneMetaData> files = new List<SceneMetaData>();
+            DataSnapshot snapshot = task.Result;
+
+            foreach (var child in snapshot.Children)
+            {
+                if (child != null && child.Child("sceneName") != null && child.Child("pathToTrigger") != null && child.Child("triggerLocation") != null && child.Child("triggerSize") != null && child.Child("pathTo360Media") != null
+                    && child.Child("pathToAudio") != null && child.Child("pathsToScenery") != null && child.Child("sceneryLocations") != null && child.Child("scenerySizes") != null)
+                {
+                    Debug.Log("Key: " + child.Key);
+                    Debug.Log("Value: " + child.GetRawJsonValue());
+
+                    string uniqueID = child.Key;
+                    string sceneName = child.Child("sceneName").Value.ToString();
+                    string pathToTrigger = child.Child("pathToTrigger").Value.ToString();
+                    string triggerLocation = child.Child("triggerLocation").Value.ToString();
+                    string triggerSize = child.Child("triggerSize").Value.ToString();
+                    string pathTo360Media = child.Child("pathTo360Media").Value.ToString();
+                    string pathToAudio = child.Child("pathToAudio").Value.ToString();
+                    string[] pathsToScenery = child.Child("pathsToScenery").Value.ToString().Split(',');
+                    string[] sceneryLocations = child.Child("sceneryLocations").Value.ToString().Split(',');
+                    string[] scenerySizes = child.Child("scenerySizes").Value.ToString().Split(',');
+
+                    SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToTrigger, triggerLocation, triggerSize, pathTo360Media, pathToAudio, pathsToScenery, sceneryLocations, scenerySizes);
+                    files.Add(sceneData);
+                }
+                else
+                {
+                    Debug.LogError("One of the child properties is null.");
+                }
+            }
+
+            callback(files);
+
+        }
+    }
+
+
+    public async Task<bool> SceneDataExists(SceneMetaData sceneData, string databaseGroup)
+    {
+        var query = dbreference.Child(databaseGroup)
+                               .OrderByChild("sceneName")
+                               .EqualTo(sceneData.GetSceneName());
+
+        var snapshot = await query.GetValueAsync();
+
+        if (!snapshot.Exists)
+        {
+            return false;
+        }
+
+        foreach (var child in snapshot.Children)
+        {
+            // Compare each property except ID
+            if (child.Child("sceneName").Value.ToString() == sceneData.GetSceneName()) 
+            {
+                // All properties match, consider it as a match
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public async Task<bool> FileDataExists(FileMetaData fileData, string databaseGroup)

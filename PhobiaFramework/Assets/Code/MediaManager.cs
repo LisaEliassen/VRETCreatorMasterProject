@@ -24,6 +24,7 @@ public class MediaManager : MonoBehaviour
 
     public GameObject databaseServiceObject;
     DatabaseService dbService;
+    SceneSaver sceneSaver;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class MediaManager : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
+            sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
         }
         else
         {
@@ -72,6 +74,8 @@ public class MediaManager : MonoBehaviour
 
                 EditSceneUI.SetActive(true);
                 MediaUI.SetActive(false);
+
+                sceneSaver.SetPathTo360Media(path);
             }
             else if (IsImageFile(path))
             {
@@ -90,6 +94,8 @@ public class MediaManager : MonoBehaviour
 
                 EditSceneUI.SetActive(true);
                 MediaUI.SetActive(false);
+
+                sceneSaver.SetPathTo360Media(path);
             }
             else
             {
@@ -170,7 +176,6 @@ public class MediaManager : MonoBehaviour
 
             // Play the video
             videoPlayer.Play();
-
         }
         return null;
     }

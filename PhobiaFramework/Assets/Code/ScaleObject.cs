@@ -13,12 +13,14 @@ public class ScaleObject : MonoBehaviour
     public GameObject databaseServiceObject;
     public TMP_InputField sizeInput;
     LoadGlb loadGlb;
+    SceneSaver sceneSaver;
     GameObject trigger;
     List<GameObject> triggerCopies;
 
     void Start()
     {
         loadGlb = databaseServiceObject.GetComponent<LoadGlb>();
+        sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
 
         // Add an event listener to the slider's value changed event
         sizeSlider.onValueChanged.AddListener(ChangeObjectSize);
@@ -49,6 +51,8 @@ public class ScaleObject : MonoBehaviour
         }
         ((TextMeshProUGUI)sizeInput.placeholder).text = scaleValue.ToString();
         sizeInput.text = scaleValue.ToString();
+
+        sceneSaver.SetTriggerSize(scaleValue.ToString());
     }
 
     public void ChangeObjectSizeInput(string text)

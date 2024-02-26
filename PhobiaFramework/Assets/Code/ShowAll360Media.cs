@@ -11,6 +11,8 @@ public class ShowAll360Media : MonoBehaviour
 {
     DatabaseService dbService;
     MediaManager mediaManager;
+    SceneSaver sceneSaver;
+
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab360;
     public Transform gridParent;
@@ -27,8 +29,7 @@ public class ShowAll360Media : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
-
-
+            sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
             mediaManager = databaseServiceObject.GetComponent<MediaManager>();
         }
         else
@@ -148,12 +149,13 @@ public class ShowAll360Media : MonoBehaviour
                 if (filetype == "360 image")
                 {
                     await mediaManager.HandleImageSelected(downloadUrl);
+
                 }
                 else if (filetype == "360 video")
                 {
                     await mediaManager.HandleVideoSelected(downloadUrl);
-                }               
-
+                }
+                sceneSaver.SetPathTo360Media(storagePath);
                 EditSceneUI.SetActive(true);
                 MediaUI.SetActive(false);
             }

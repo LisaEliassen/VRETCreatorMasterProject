@@ -21,7 +21,7 @@ public class LoadGlb : MonoBehaviour
     List<GameObject> triggerCopies;
     DatabaseService dbService;
     AnimationController animController;
-    LanguageManager languageManager;
+    SceneSaver sceneSaver;
     public GameObject databaseServiceObject; 
 
     public UnityEngine.Camera mainCamera;
@@ -64,7 +64,7 @@ public class LoadGlb : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
-            //languageManager = databaseServiceObject.GetComponent<LanguageManager>();
+            sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
         }
         else
         {
@@ -199,6 +199,7 @@ public class LoadGlb : MonoBehaviour
         {
             string path = paths[0];
             pathOfTrigger = path;
+            
             var gltf = new GltfImport();
             byte[] data = File.ReadAllBytes(path);
             bool success = await gltf.LoadGltfBinary(
@@ -211,6 +212,7 @@ public class LoadGlb : MonoBehaviour
                 success = await gltf.InstantiateMainSceneAsync(trigger.transform);
                 if (success)
                 {
+                    sceneSaver.SetPathToTrigger(pathOfTrigger);
                     trigger.transform.position = position;
                     trigger.SetActive(true);
 
@@ -266,6 +268,8 @@ public class LoadGlb : MonoBehaviour
         dropdown.ClearOptions();
         addCopyButton.interactable = false;
         removeCopyButton.interactable = false;
+
+        sceneSaver.SetPathToTrigger("");
     }
 
     public async void MakeCopy()
@@ -322,6 +326,7 @@ public class LoadGlb : MonoBehaviour
         bool success = await LoadGlbFile(trigger, path);
         if (success)
         {
+            sceneSaver.SetPathToTrigger(pathOfTrigger);
 
             Debug.Log("Successfully loaded model!");
             animController.FindAnimations(trigger);
@@ -487,4 +492,11 @@ public class LoadGlb : MonoBehaviour
         trigger = obj;
     }
 
+    void Update()
+    {
+        if (GetTrigger() != null)
+        {
+            sceneSaver.SetTriggerTransform(GetTrigger().transform.position.ToString() + "," + GetTrigger().transform.rotation.ToString() + "," + GetTrigger().transform.localScale.ToString());
+        }
+    }
 }

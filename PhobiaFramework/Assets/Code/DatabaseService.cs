@@ -90,6 +90,15 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
+    public void addSceneData(string pathToTrigger, string sceneName, string triggerTransform, string triggerSize, string pathTo360Media, string pathToAudio, string[] pathsToScenery, string[] sceneryLocations, string[] scenerySizes)
+    {
+        if (database != null)
+        {
+            database.addSceneData(sceneName, pathToTrigger, triggerTransform, triggerSize, pathTo360Media, pathToAudio, pathsToScenery, sceneryLocations, scenerySizes);
+        }
+    }
+
+
     public IEnumerator getAllModelFileData(Action<List<FileMetaData>> callback)
     {
         if (database != null)

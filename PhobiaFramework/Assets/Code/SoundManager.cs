@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour
 
     public GameObject databaseServiceObject;
     DatabaseService dbService;
+    SceneSaver sceneSaver;
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class SoundManager : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
+            sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
         }
         else
         {
@@ -48,6 +50,8 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = audioClip;
 
         removeSoundButton.interactable = false;
+
+        sceneSaver.SetPathToAudio("");
     }
 
     private void ImportMedia()
@@ -65,6 +69,7 @@ public class SoundManager : MonoBehaviour
             if (IsSoundFile(path))
             {
                 StartCoroutine((IEnumerator)HandleSoundSelected(path));
+                sceneSaver.SetPathToAudio(path);
             }
             else
             {

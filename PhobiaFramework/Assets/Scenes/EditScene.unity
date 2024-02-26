@@ -35772,7 +35772,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 846055974}
         m_TargetAssemblyTypeName: SceneSaver, MyAssembly
-        m_MethodName: AdvancedExport
+        m_MethodName: ExportScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

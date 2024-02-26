@@ -14,10 +14,94 @@ public class SceneSaver : MonoBehaviour
     UploadFiles uploadFiles;
     DatabaseService dbService;
     public GameObject databaseServiceObject;
-    
+
+    private string sceneName;
+    private string pathToTrigger;
+    private string triggerTransform;
+    private string triggerSize;
+    private string pathTo360Media;
+    private string pathToAudio;
+    private string[] pathsToScenery;
+    private string[] sceneryLocations;
+    private string[] scenerySizes;
+
     void Awake()
     {
          path = Application.dataPath + "/Assets";
+    }
+
+    void Start()
+    {
+        if (databaseServiceObject != null)
+        {
+            // Get the DatabaseService component from the found GameObject
+            dbService = databaseServiceObject.GetComponent<DatabaseService>();
+        }
+        else
+        {
+            Debug.LogError("GameObject with DatabaseService not found.");
+        }
+    }
+
+    //public void ExportScene(string sceneName, string pathToTrigger, string triggerTransform, string triggerSize, string pathTo360Media, string pathToAudio, string[] pathsToScenery, string[] sceneryLocations, string[] scenerySizes)
+    public void ExportScene()
+    {
+        Debug.Log(this.sceneName);
+        Debug.Log(this.pathToTrigger);
+        Debug.Log(this.triggerTransform);
+        Debug.Log(this.triggerSize);
+        Debug.Log(this.pathTo360Media);
+        Debug.Log(this.pathToAudio);
+        Debug.Log(this.pathsToScenery);
+        Debug.Log(this.sceneryLocations);
+        Debug.Log(this.scenerySizes);
+
+        //dbService.addSceneData(sceneName, pathToTrigger, triggerTransform, triggerSize, pathTo360Media, pathToAudio, pathsToScenery, sceneryLocations, scenerySizes);
+    }
+
+    public void SetSceneName(string sceneName)
+    {
+        this.sceneName = sceneName;
+    }
+
+    public void SetPathToTrigger(string pathToTrigger)
+    {
+        this.pathToTrigger = pathToTrigger;
+    }
+
+    public void SetTriggerTransform(string triggerTransform)
+    {
+        this.triggerTransform = triggerTransform;
+    }
+
+    public void SetTriggerSize(string triggerSize)
+    {
+        this.triggerSize = triggerSize;
+    }
+
+    public void SetPathTo360Media(string pathTo360Media)
+    {
+        this.pathTo360Media = pathTo360Media;
+    }
+
+    public void SetPathToAudio(string pathToAudio)
+    {
+        this.pathToAudio = pathToAudio;
+    }
+
+    public void SetPathsToScenery(string[] pathsToScenery)
+    {
+        this.pathsToScenery = pathsToScenery;
+    }
+
+    public void SetSceneryLocations(string[] sceneryLocations)
+    {
+        this.sceneryLocations = sceneryLocations;
+    }
+
+    public void SetScenerySizes(string[] scenerySizes)
+    {
+        this.scenerySizes = scenerySizes;
     }
 
     public async void SimpleExport()
