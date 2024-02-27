@@ -11264,7 +11264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4754073856193944, guid: 3865dab15f85624439f27d11cc132971, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4754073856193944, guid: 3865dab15f85624439f27d11cc132971, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11272,7 +11272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4754073856193944, guid: 3865dab15f85624439f27d11cc132971, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.07
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 4754073856193944, guid: 3865dab15f85624439f27d11cc132971, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22732,6 +22732,7 @@ GameObject:
   - component: {fileID: 846055974}
   - component: {fileID: 846055975}
   - component: {fileID: 846055976}
+  - component: {fileID: 846055977}
   m_Layer: 0
   m_Name: DatabaseService
   m_TagString: Untagged
@@ -23278,6 +23279,22 @@ MonoBehaviour:
   stopButton: {fileID: 662015158}
   xrRig: {fileID: 1221299226}
   xrRigCamera: {fileID: 1044138172}
+--- !u!114 &846055977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846055952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f41214f65f1c5f478dcc66baa961b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitingRoom: {fileID: 121386408}
+  xrRig: {fileID: 1221299226}
+  door1: {fileID: 1142775968}
+  door2: {fileID: 482545234}
 --- !u!1 &850786195
 GameObject:
   m_ObjectHideFlags: 0
@@ -31642,7 +31659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4754073856193944, guid: 3865dab15f85624439f27d11cc132971, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.07
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 4754073856193944, guid: 3865dab15f85624439f27d11cc132971, type: 3}
       propertyPath: m_LocalPosition.z
@@ -31917,7 +31934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1154576468
 Transform:
   m_ObjectHideFlags: 0
@@ -34922,7 +34939,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!1 &1282786889
 GameObject:
   m_ObjectHideFlags: 0
