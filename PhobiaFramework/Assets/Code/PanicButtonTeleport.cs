@@ -18,6 +18,6 @@ public class PanicButtonTeleport : MonoBehaviour
     private void TeleportPlayer()
     {
         // Vector is the position which the person will be teleported to
-        xrRig.transform.position = new Vector3(0, 0, 0);
+        xrRig.transform.position = new Vector3(0, 0.89f, 2.93f);
     }
 }
