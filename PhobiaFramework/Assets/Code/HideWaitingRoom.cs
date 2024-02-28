@@ -20,7 +20,6 @@ public class HideWaitingRoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(door2.transform.rotation.eulerAngles);
         // Check if the XR rig is past Z value 5 and the door is closed
         if (xrRig.transform.position.z < 5f && IsDoorClosed())
         {

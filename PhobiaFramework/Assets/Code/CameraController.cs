@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
-using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
+//using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 
 public class CameraController : MonoBehaviour
 {
