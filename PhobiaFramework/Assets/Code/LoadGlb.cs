@@ -366,6 +366,8 @@ public class LoadGlb : MonoBehaviour
         if (success)
         {
             Debug.Log("Successfully loaded model!");
+            SceneryObject obj = new SceneryObject(path, newObject.transform.position.ToString() + "," + newObject.transform.rotation.ToString() + "," + newObject.transform.localScale.ToString(), "2");
+            sceneSaver.AddSceneryObject(obj);
         }
         else
         {

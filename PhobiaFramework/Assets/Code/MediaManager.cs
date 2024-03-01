@@ -114,7 +114,7 @@ public class MediaManager : MonoBehaviour
     private bool IsImageFile(string path)
     {
         string extension = Path.GetExtension(path);
-        return extension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) || extension.Equals(".png", StringComparison.OrdinalIgnoreCase);
+        return extension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) || extension.Equals(".png", StringComparison.OrdinalIgnoreCase) || extension.Equals(".jpeg", StringComparison.OrdinalIgnoreCase);
     }
 
     IEnumerator ShowLoadDialogCoroutine(PickMode pickMode, Action<string[]> callback)

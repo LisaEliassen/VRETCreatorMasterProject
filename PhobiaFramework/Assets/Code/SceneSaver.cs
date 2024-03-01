@@ -21,9 +21,11 @@ public class SceneSaver : MonoBehaviour
     private string triggerSize;
     private string pathTo360Media;
     private string pathToAudio;
+    private List<SceneryObject> sceneryObjects = new List<SceneryObject>();
     private string[] pathsToScenery;
     private string[] sceneryLocations;
     private string[] scenerySizes;
+    List<string> test = new List<string>();
 
     void Awake()
     {
@@ -56,7 +58,9 @@ public class SceneSaver : MonoBehaviour
         Debug.Log(this.sceneryLocations);
         Debug.Log(this.scenerySizes);
 
-        //dbService.addSceneData(sceneName, pathToTrigger, triggerTransform, triggerSize, pathTo360Media, pathToAudio, pathsToScenery, sceneryLocations, scenerySizes);
+        Trigger trigger = new Trigger(this.pathToTrigger, this.triggerTransform, this.triggerSize);
+
+        dbService.addSceneData(this.sceneName, trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
     }
 
     public void SetSceneName(string sceneName)
@@ -89,9 +93,19 @@ public class SceneSaver : MonoBehaviour
         this.pathToAudio = pathToAudio;
     }
 
+    public void AddSceneryObject(SceneryObject sceneryObject)
+    {
+        this.sceneryObjects.Add(sceneryObject);
+    }
+
     public void SetPathsToScenery(string[] pathsToScenery)
     {
         this.pathsToScenery = pathsToScenery;
+    }
+
+    public void AddPathToScenery(string path)
+    {
+        this.pathsToScenery[this.pathsToScenery.Length] = path;
     }
 
     public void SetSceneryLocations(string[] sceneryLocations)

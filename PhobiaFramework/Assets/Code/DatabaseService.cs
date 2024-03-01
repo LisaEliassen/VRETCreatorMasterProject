@@ -90,11 +90,11 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public void addSceneData(string pathToTrigger, string sceneName, string triggerTransform, string triggerSize, string pathTo360Media, string pathToAudio, string[] pathsToScenery, string[] sceneryLocations, string[] scenerySizes)
+    public void addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
     {
         if (database != null)
         {
-            database.addSceneData(sceneName, pathToTrigger, triggerTransform, triggerSize, pathTo360Media, pathToAudio, pathsToScenery, sceneryLocations, scenerySizes);
+            database.addSceneData(sceneName, trigger, pathTo360Media, pathToAudio, scenery);
         }
     }
 
