@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 using GLTFast.Export;
 using System.Threading.Tasks;
 using GLTFast.Logging;
@@ -9,13 +11,20 @@ using GLTFast;
 
 public class SceneSaver : MonoBehaviour
 {
-    //[SerializeField]
     string path;
     UploadFiles uploadFiles;
     DatabaseService dbService;
     public GameObject databaseServiceObject;
+    public Button confirmButton;
+    public Button saveSceneButton;
+    public Button cancelButton;
+    public TMP_InputField sceneNameInput;
+    public TextMeshProUGUI message;
+    public TextMeshProUGUI warningOrErrorMessage;
 
-    private string sceneName;
+    public GameObject SceneNameUI;
+
+    private string sceneName = string.Empty;
     private string pathToTrigger;
     private string triggerTransform;
     private string triggerSize;
@@ -43,24 +52,62 @@ public class SceneSaver : MonoBehaviour
         {
             Debug.LogError("GameObject with DatabaseService not found.");
         }
+
+        confirmButton.onClick.AddListener(ExportScene);
+
+        saveSceneButton.onClick.AddListener(() =>
+        {
+            SceneNameUI.SetActive(true);
+        });
+
+        cancelButton.onClick.AddListener(() =>
+        {
+            SceneNameUI.SetActive(false);
+        });
+
+        sceneNameInput.onValueChanged.AddListener((x) => checkInput(sceneNameInput.text));
+    }
+
+    public void checkInput(string input)
+    {
+        if (!string.IsNullOrEmpty(input))
+        {
+            warningOrErrorMessage.text = "";
+            confirmButton.interactable = true;
+            this.sceneName = input;
+        }
     }
 
     //public void ExportScene(string sceneName, string pathToTrigger, string triggerTransform, string triggerSize, string pathTo360Media, string pathToAudio, string[] pathsToScenery, string[] sceneryLocations, string[] scenerySizes)
     public void ExportScene()
     {
-        Debug.Log(this.sceneName);
-        Debug.Log(this.pathToTrigger);
-        Debug.Log(this.triggerTransform);
-        Debug.Log(this.triggerSize);
-        Debug.Log(this.pathTo360Media);
-        Debug.Log(this.pathToAudio);
-        Debug.Log(this.pathsToScenery);
-        Debug.Log(this.sceneryLocations);
-        Debug.Log(this.scenerySizes);
 
-        Trigger trigger = new Trigger(this.pathToTrigger, this.triggerTransform, this.triggerSize);
+        if (!string.IsNullOrEmpty(sceneNameInput.text))
+        {
+            warningOrErrorMessage.text = "";
 
-        dbService.addSceneData(this.sceneName, trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
+            Debug.Log(this.sceneName);
+            Debug.Log(this.pathToTrigger);
+            Debug.Log(this.triggerTransform);
+            Debug.Log(this.triggerSize);
+            Debug.Log(this.pathTo360Media);
+            Debug.Log(this.pathToAudio);
+            Debug.Log(this.pathsToScenery);
+            Debug.Log(this.sceneryLocations);
+            Debug.Log(this.scenerySizes);
+
+            Trigger trigger = new Trigger(this.pathToTrigger, this.triggerTransform, this.triggerSize);
+
+            dbService.addSceneData(sceneNameInput.text, trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
+
+            SceneNameUI.SetActive(false);
+        }
+        else
+        {
+            warningOrErrorMessage.text = "Name cannot be empty!";
+        }
+
+        
     }
 
     public void SetSceneName(string sceneName)

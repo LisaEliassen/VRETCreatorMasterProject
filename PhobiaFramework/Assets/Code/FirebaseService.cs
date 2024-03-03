@@ -309,7 +309,7 @@ public class FirebaseService : Database
     {
         string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
 
-        SceneMetaData sceneData = new SceneMetaData(uniqueID, "test", trigger, pathTo360Media, pathToAudio, scenery);
+        SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, trigger, pathTo360Media, pathToAudio, scenery);
         bool entryExists = await SceneDataExists(sceneData, "scenes");
         
         if (entryExists)
