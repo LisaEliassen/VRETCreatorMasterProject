@@ -20,8 +20,10 @@ public class HideWaitingRoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log(xrRig.gameObject.transform.position);
         // Check if the XR rig is past Z value 5 and the door is closed
-        if (xrRig.transform.position.z < 5f && IsDoorClosed())
+        if (xrRig.transform.position.z > -5f && IsDoorClosed())
         {
             Debug.Log("Door is closed");
             // Hide the waiting room
@@ -37,7 +39,7 @@ public class HideWaitingRoom : MonoBehaviour
     // Method to check if the door is closed
     bool IsDoorClosed()
     {
-        if (door1.transform.rotation.eulerAngles.y <= 185 && door2.transform.rotation.eulerAngles.y <= 5)
+        if (door1.transform.rotation.eulerAngles.y <= 5 && door2.transform.rotation.eulerAngles.y <= 185)
         {
             return true;
         }

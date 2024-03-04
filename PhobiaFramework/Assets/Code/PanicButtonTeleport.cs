@@ -9,6 +9,7 @@ public class PanicButtonTeleport : MonoBehaviour
     public Button stopButton;
     public GameObject xrRig;
     public GameObject xrRigCamera;
+    public GameObject position;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,7 @@ public class PanicButtonTeleport : MonoBehaviour
     private void TeleportPlayer()
     {
         // Vector is the position which the person will be teleported to
-        xrRig.transform.position = new Vector3(0, 0, 12.37f);
+        xrRig.transform.position = position.transform.position;
         xrRigCamera.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }

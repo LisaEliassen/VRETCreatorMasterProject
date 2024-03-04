@@ -8,7 +8,9 @@ using System.Collections.Specialized;
 public class ScaleGameObjects : MonoBehaviour
 {
     public GameObject sphere;
-    public GameObject exposureAndWaitingScene;
+    public GameObject exposureScene;
+    public GameObject waitingRoom;
+    public GameObject doorWay;
 
     public Slider sphereSlider;
     public TMP_InputField sizeInputSphere;
@@ -28,6 +30,9 @@ public class ScaleGameObjects : MonoBehaviour
         sizeInputSphere.interactable = true;
         sizeInputPlatform.interactable = true;
         SetInitialValues();
+
+
+
     }
 
     private void Update()
@@ -77,7 +82,7 @@ public class ScaleGameObjects : MonoBehaviour
 
         // Update the scale of the platform based on the value of the platform slider
         float platformScale = platformSlider.value;
-        exposureAndWaitingScene.transform.localScale = new Vector3(platformScale / 10, exposureAndWaitingScene.transform.localScale.y, platformScale / 10);
+        exposureScene.transform.localScale = new Vector3(platformScale / 10, exposureScene.transform.localScale.y, platformScale / 10);
 
         sizeInputPlatform.text = platformScale.ToString();
     }
