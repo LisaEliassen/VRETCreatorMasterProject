@@ -276,6 +276,14 @@ MonoBehaviour:
     m_Localized: Press the button if you want to teleport back to waiting room
     m_Metadata:
       m_Items: []
+  - m_Id: 17889129054248960
+    m_Localized: Save scene
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17889222197157888
+    m_Localized: Load scene
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

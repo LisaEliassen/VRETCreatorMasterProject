@@ -9,6 +9,7 @@ public class SceneMetaData
 {
     public string ID;
     public string sceneName;
+    public string pathToSceneIcon;
     public Trigger trigger;
     /*private string pathToTrigger;
     private string triggerLocation;
@@ -23,10 +24,11 @@ public class SceneMetaData
     public SceneMetaData() { 
     }
 
-    public SceneMetaData(string ID, string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
+    public SceneMetaData(string ID, string sceneName, string pathToSceneIcon, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
     {
         this.ID = ID;
         this.sceneName = sceneName;
+        this.pathToSceneIcon = pathToSceneIcon;
         this.trigger = trigger;
         /*this.pathToTrigger = pathToTrigger;
         this.triggerSize = triggerSize;

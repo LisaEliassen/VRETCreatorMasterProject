@@ -151,17 +151,19 @@ public class FirebaseService : Database
         {
             fileRef = storageRef.Child("scenery/icons/" + iconFileName + iconExtension);
         }
+        else if (fileType == "Scene")
+        {
+            fileRef = storageRef.Child("scenes/icons/" + iconFileName + iconExtension);
+        }
 
         if (fileRef != null)
         {
-            // Upload the file to the path "images/rivers.jpg"
             fileRef.PutFileAsync(filePath)
                 .ContinueWith((Task<StorageMetadata> task) =>
                 {
                     if (task.IsFaulted || task.IsCanceled)
                     {
                         Debug.Log(task.Exception.ToString());
-                        // Uh-oh, an error occurred!
                     }
                     else
                     {
@@ -308,8 +310,10 @@ public class FirebaseService : Database
     public async void addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
     {
         string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
+        string iconExtension = Path.GetExtension("screenshot.png");
+        string pathToSceneIcon = databaseURL + "scenes/icons/" + sceneName + "_icon" + iconExtension;
 
-        SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, trigger, pathTo360Media, pathToAudio, scenery);
+        SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, trigger, pathTo360Media, pathToAudio, scenery);
         bool entryExists = await SceneDataExists(sceneData, "scenes");
         
         if (entryExists)
@@ -360,6 +364,7 @@ public class FirebaseService : Database
 
                     string uniqueID = child.Key;
                     string sceneName = child.Child("sceneName").Value.ToString();
+                    string pathToSceneIcon = child.Child("pathToSceneIcon").Value.ToString();
                     Trigger trigger = (Trigger) child.Child("trigger").Value;
                     /*string pathToTrigger = child.Child("pathToTrigger").Value.ToString();
                     string triggerLocation = child.Child("triggerLocation").Value.ToString();
@@ -371,7 +376,7 @@ public class FirebaseService : Database
                     string[] scenerySizes = child.Child("scenerySizes").Value.ToString().Split(',');*/
                     SceneryObject[] scenery = (SceneryObject[])child.Child("scenery").Value;
 
-                    SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, trigger, pathTo360Media, pathToAudio, scenery);
+                    SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, trigger, pathTo360Media, pathToAudio, scenery);
                     files.Add(sceneData);
                 }
                 else

@@ -116,6 +116,15 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
+    public IEnumerator getAllScenesFileData(Action<List<SceneMetaData>> callback)
+
+    {
+        if (database != null)
+        {
+            yield return database.getAllScenesFileData(callback);
+        }
+    }
+
     public IEnumerator getAll360Media(Action<List<FileMetaData>> callback)
     {
         if (database != null)

@@ -34,6 +34,8 @@ public interface Database
 
     IEnumerator getAllSceneryFileData(System.Action<List<FileMetaData>> callback);
 
+    IEnumerator getAllScenesFileData(Action<List<SceneMetaData>> callback);
+
     IEnumerator getAll360Media(Action<List<FileMetaData>> callback);
 
     IEnumerator getAllSoundMedia(Action<List<FileMetaData>> callback);

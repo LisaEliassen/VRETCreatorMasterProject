@@ -18,7 +18,7 @@ public class ShowAllScenes : MonoBehaviour
     public Button showScenesButton;
     public GameObject EditSceneUI;
     public GameObject ScenesUI;
-    List<FileMetaData> files;
+    List<SceneMetaData> files;
 
     // Start is called before the first frame update
     void Start()
@@ -36,16 +36,16 @@ public class ShowAllScenes : MonoBehaviour
             Debug.LogError("GameObject with DatabaseService not found.");
         }
 
-        files = new List<FileMetaData>();
+        files = new List<SceneMetaData>();
 
         StartCoroutine(FetchScenesModels());
     }
 
     public IEnumerator FetchScenesModels()
     {
-        List<FileMetaData> newFilesList = new List<FileMetaData>();
+        List<SceneMetaData> newFilesList = new List<SceneMetaData>();
 
-        yield return dbService.getAllSceneryFileData((data) =>
+        yield return dbService.getAllScenesFileData((data) =>
         {
             newFilesList = data;
         });
@@ -55,7 +55,7 @@ public class ShowAllScenes : MonoBehaviour
             int index = 1;
             foreach (var file in newFilesList)
             {
-                yield return StartCoroutine(CreateGridItem(file.filename, file.filetype, file.pathToIcon, file.path, index));
+                //yield return StartCoroutine(CreateGridItem(file.filename, file.filetype, file.pathToIcon, file.path, index));
                 index++;
             }
             files = newFilesList;
@@ -77,13 +77,13 @@ public class ShowAllScenes : MonoBehaviour
             // Destroy the child grid item
             Destroy(child.gameObject);
         }
-        files = new List<FileMetaData>();
+        files = new List<SceneMetaData>();
         StartCoroutine(FetchScenesModels());
     }
 
-    public IEnumerator CreateGridItem(string sceneName, string filetype, string sceneIconPath, string sceneStoragePath, int index)
+    public IEnumerator CreateGridItem(string sceneName, string pathToSceneIcon, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery, int index)
     {
-        if (files.Any(x => x.filetype == filetype && x.pathToIcon == sceneIconPath && x.path == sceneStoragePath))
+        if (files.Any(x => x.sceneName == sceneName && x.pathToSceneIcon == pathToSceneIcon))
         {
             Debug.Log("Grid item already exists for file: " + sceneName);
             yield break; // Exit the function early if the grid item already exists
@@ -99,7 +99,7 @@ public class ShowAllScenes : MonoBehaviour
         gridItem.name = "GridItem" + index;
 
         Image iconImage = gridItem.transform.Find("IconImage").GetComponent<Image>();
-        yield return StartCoroutine(LoadImageFromFirebase(sceneIconPath, iconImage));
+        yield return StartCoroutine(LoadImageFromFirebase(pathToSceneIcon, iconImage));
 
         TextMeshProUGUI nameText = gridItem.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
         nameText.text = sceneName;
@@ -123,7 +123,7 @@ public class ShowAllScenes : MonoBehaviour
         // Add an onclick listener for the grid item to load the model from Firebase Storage
         button.onClick.AddListener(() =>
         {
-            loadGlbScript.SpawnSceneryObject(sceneName, sceneStoragePath);
+            //loadGlbScript.SpawnSceneryObject(sceneName, sceneStoragePath);
             EditSceneUI.SetActive(true);
             ScenesUI.SetActive(false);
             Debug.Log("Button for scene " + sceneName + " was clicked!");
