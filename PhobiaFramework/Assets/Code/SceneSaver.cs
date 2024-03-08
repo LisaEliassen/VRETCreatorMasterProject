@@ -21,6 +21,7 @@ public class SceneSaver : MonoBehaviour
     public TMP_InputField sceneNameInput;
     public TextMeshProUGUI message;
     public TextMeshProUGUI warningOrErrorMessage;
+    public Camera captureCamera;
 
     public GameObject SceneNameUI;
 
@@ -57,11 +58,13 @@ public class SceneSaver : MonoBehaviour
 
         saveSceneButton.onClick.AddListener(() =>
         {
+            TakeScreenShotAndSave();
             SceneNameUI.SetActive(true);
         });
 
         cancelButton.onClick.AddListener(() =>
         {
+            DeleteScreenshotFile("screenshot.png");
             SceneNameUI.SetActive(false);
         });
 
@@ -79,26 +82,27 @@ public class SceneSaver : MonoBehaviour
     }
 
     //public void ExportScene(string sceneName, string pathToTrigger, string triggerTransform, string triggerSize, string pathTo360Media, string pathToAudio, string[] pathsToScenery, string[] sceneryLocations, string[] scenerySizes)
-    public void ExportScene()
+    public async void ExportScene()
     {
-
         if (!string.IsNullOrEmpty(sceneNameInput.text))
         {
             warningOrErrorMessage.text = "";
 
-            Debug.Log(this.sceneName);
-            Debug.Log(this.pathToTrigger);
-            Debug.Log(this.triggerTransform);
-            Debug.Log(this.triggerSize);
-            Debug.Log(this.pathTo360Media);
-            Debug.Log(this.pathToAudio);
-            Debug.Log(this.pathsToScenery);
-            Debug.Log(this.sceneryLocations);
-            Debug.Log(this.scenerySizes);
-
             Trigger trigger = new Trigger(this.pathToTrigger, this.triggerTransform, this.triggerSize);
+            
+            await dbService.addIcon(Path.Combine(Application.persistentDataPath, "screenshot.png"), sceneName + "_icon", "Scene", Path.GetExtension("screenshot.png"));
+            bool success = await dbService.addSceneData(sceneNameInput.text, trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
 
-            dbService.addSceneData(sceneNameInput.text, trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
+            if (success)
+            {
+                Debug.Log("Scene exported!");
+                DeleteScreenshotFile("screenshot.png");
+            }
+            else
+            {
+                Debug.Log("Scene could not be exported!");
+                DeleteScreenshotFile("screenshot.png");
+            }
 
             SceneNameUI.SetActive(false);
         }
@@ -106,8 +110,63 @@ public class SceneSaver : MonoBehaviour
         {
             warningOrErrorMessage.text = "Name cannot be empty!";
         }
+    }
 
-        
+    public void TakeScreenShotAndSave()
+    {
+        // Remember the original target texture of the camera
+        RenderTexture originalTargetTexture = captureCamera.targetTexture;
+
+        // Create a RenderTexture with the dimensions of the screen
+        RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+
+        // Set the camera's target texture to the RenderTexture
+        captureCamera.targetTexture = renderTexture;
+
+        // Render the entire screen to the RenderTexture
+        captureCamera.Render();
+
+        // Create a Texture2D to read the RenderTexture data
+        Texture2D screenshotTexture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+
+        // Read the RenderTexture data into the Texture2D
+        RenderTexture.active = renderTexture;
+        screenshotTexture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        screenshotTexture.Apply();
+
+        // Clean up
+        RenderTexture.active = null;
+        captureCamera.targetTexture = originalTargetTexture; // Restore original target texture
+        Destroy(renderTexture);
+
+        // Save the screenshot texture to a file
+        SaveTextureToFile(screenshotTexture, "screenshot.png");
+
+        // Destroy the screenshot texture
+        Destroy(screenshotTexture);
+    }
+
+    // Method to save a Texture2D as a PNG file
+    private void SaveTextureToFile(Texture2D texture, string fileName)
+    {
+        byte[] bytes = texture.EncodeToPNG();
+        string filePath = Path.Combine(Application.persistentDataPath, fileName);
+        File.WriteAllBytes(filePath, bytes);
+        Debug.Log("Screenshot saved as: " + filePath);
+    }
+
+    private void DeleteScreenshotFile(string fileName)
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, fileName);
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            Debug.Log("Screenshot file deleted: " + filePath);
+        }
+        else
+        {
+            Debug.LogWarning("Screenshot file not found: " + filePath);
+        }
     }
 
     public void SetSceneName(string sceneName)
@@ -271,7 +330,7 @@ public class SceneSaver : MonoBehaviour
             bool exportsuccess = dbService.addFile(path + "/export.glb", fileName, "Model", fileExtension);
             if (exportsuccess)
             {
-                dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
+                //dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
                 dbService.addFileData(fileName, fileType, fileExtension, iconExtension);
                 Debug.Log("File exported to Firebase!");
             }

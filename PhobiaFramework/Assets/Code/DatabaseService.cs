@@ -65,12 +65,13 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public void addIcon(string filePath, string iconFileName, string fileType, string iconExtension)
+    public async Task<bool> addIcon(string filePath, string iconFileName, string fileType, string iconExtension)
     {
         if (database != null)
         {
-            database.addIcon(filePath, iconFileName, fileType, iconExtension);
+            return await database.addIcon(filePath, iconFileName, fileType, iconExtension);
         }
+        return false;
     }
 
     public bool addFile(string filePath, string fileName, string fileType, string extension)
@@ -90,12 +91,13 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public void addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
+    public async Task<bool> addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
     {
         if (database != null)
         {
-            database.addSceneData(sceneName, trigger, pathTo360Media, pathToAudio, scenery);
+            return await database.addSceneData(sceneName, trigger, pathTo360Media, pathToAudio, scenery);
         }
+        return false;
     }
 
 
@@ -108,7 +110,6 @@ public class DatabaseService : MonoBehaviour
     }
 
     public IEnumerator getAllSceneryFileData(Action<List<FileMetaData>> callback)
-
     {
         if (database != null)
         {
@@ -117,7 +118,6 @@ public class DatabaseService : MonoBehaviour
     }
 
     public IEnumerator getAllScenesFileData(Action<List<SceneMetaData>> callback)
-
     {
         if (database != null)
         {

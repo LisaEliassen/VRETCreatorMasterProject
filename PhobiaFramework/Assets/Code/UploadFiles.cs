@@ -5,6 +5,7 @@ using static SimpleFileBrowser.FileBrowser;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 using TMPro;
 using System;
 using System.Linq;
@@ -185,9 +186,9 @@ public class UploadFiles : MonoBehaviour
         }
     }
 
-    public void uploadFile()
+    public async void uploadFile()
     {
-        StartCoroutine(uploadSelectedFile());
+        bool success = await uploadSelectedFile();
     }
 
     IEnumerator ShowLoadDialogCoroutine(PickMode pickMode, Action<string[]> callback)
@@ -200,8 +201,9 @@ public class UploadFiles : MonoBehaviour
         }
     }
 
-    public IEnumerator uploadSelectedFile()
+    public async Task<bool> uploadSelectedFile()
     {
+        bool uploaded = false;
         fileName = fileNameInput.text;
 
         if ((fileChosen && iconChosen) && (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(iconPath)))
@@ -225,10 +227,11 @@ public class UploadFiles : MonoBehaviour
                 
                 if (success)
                 {
-                    dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
+                    await dbService.addIcon(iconPath, fileName + "_icon", fileType, iconExtension);
                     dbService.addFileData(fileName, fileType, fileExtension, iconExtension);
                     warningOrErrorMessage.text = "";
                     message.text = "File has been uploaded!";
+                    uploaded = true;
                 }
                 else
                 {
@@ -244,7 +247,7 @@ public class UploadFiles : MonoBehaviour
                 fileChosen = false;
                 iconChosen = false;
 
-                yield return null;
+                return uploaded;
             }
         }
 
@@ -259,6 +262,8 @@ public class UploadFiles : MonoBehaviour
             message.text = "";
             warningOrErrorMessage.text = "You need to choose both a file and an icon!";
         }
+
+        return uploaded;
     }
 
 }

@@ -11,6 +11,8 @@ public class ShowAllModels : MonoBehaviour
 {
     DatabaseService dbService;
     LoadGlb loadGlbScript;
+    public Button yesButton;
+    public Button noButton;
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab;
     public Transform gridParent;
@@ -37,13 +39,14 @@ public class ShowAllModels : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        StartCoroutine(FetchModels());
-
-        /*showModelsButton.onClick.AddListener(() =>
+        yesButton.onClick.AddListener(() =>
         {
-            
             StartCoroutine(FetchModels());
-        });*/
+        });
+        noButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(FetchModels());
+        });
     }
 
     public IEnumerator FetchModels()

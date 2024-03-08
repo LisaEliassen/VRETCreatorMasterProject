@@ -123,8 +123,9 @@ public class FirebaseService : Database
         }
     }
 
-    public void addIcon(string filePath, string iconFileName, string fileType, string iconExtension)
+    public async Task<bool> addIcon(string filePath, string iconFileName, string fileType, string iconExtension)
     {
+        bool success = false;
         StorageReference fileRef = null;
 
         if (fileType == "Model")
@@ -158,27 +159,30 @@ public class FirebaseService : Database
 
         if (fileRef != null)
         {
-            fileRef.PutFileAsync(filePath)
+            await fileRef.PutFileAsync(filePath)
                 .ContinueWith((Task<StorageMetadata> task) =>
                 {
-                    if (task.IsFaulted || task.IsCanceled)
+                    if (task.IsFaulted)
                     {
                         Debug.Log(task.Exception.ToString());
+                        success = false;
                     }
-                    else
+                    else if (task.IsCanceled)
                     {
-                        // Metadata contains file metadata such as size, content-type, and download URL.
-                        StorageMetadata metadata = task.Result;
-                        string md5Hash = metadata.Md5Hash;
-                        Debug.Log("Finished uploading...");
-                        Debug.Log("md5 hash = " + md5Hash);
+                        success = true;
                     }
+                    // Metadata contains file metadata such as size, content-type, and download URL.
+                    StorageMetadata metadata = task.Result;
+                    string md5Hash = metadata.Md5Hash;
+                    Debug.Log("Finished uploading...");
+                    Debug.Log("md5 hash = " + md5Hash);
                 });
         }
         else
         {
             Debug.Log("Failed to set StorageReference for file!");
         }
+        return success;
     }
 
     public bool addFile(string filePath, string fileName, string fileType, string extension)
@@ -307,11 +311,12 @@ public class FirebaseService : Database
         }
     }
 
-    public async void addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
+    public async Task<bool> addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
     {
+        bool success = false;
         string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
         string iconExtension = Path.GetExtension("screenshot.png");
-        string pathToSceneIcon = databaseURL + "scenes/icons/" + sceneName + "_icon" + iconExtension;
+        string pathToSceneIcon = databaseURL + "/scenes/icons/" + sceneName + "_icon" + iconExtension;
 
         SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, trigger, pathTo360Media, pathToAudio, scenery);
         bool entryExists = await SceneDataExists(sceneData, "scenes");
@@ -329,15 +334,18 @@ public class FirebaseService : Database
                 {
                     // There was an error while setting the data
                     Debug.LogError("Error setting data: " + task.Exception);
+                    success = false;
                 }
                 else if (task.IsCompleted)
                 {
                     // Data setting succeeded
                     Debug.Log("Data set successfully");
+                    success = true;
                 }
             });
             Debug.Log("After uploading file data");
         }
+        return success;
     }
 
     public IEnumerator getAllScenesFileData(Action<List<SceneMetaData>> callback)
@@ -353,7 +361,7 @@ public class FirebaseService : Database
         {
             List<SceneMetaData> files = new List<SceneMetaData>();
             DataSnapshot snapshot = task.Result;
-
+            
             foreach (var child in snapshot.Children)
             {
                 if (child != null && child.Child("sceneName") != null && child.Child("pathToTrigger") != null && child.Child("triggerLocation") != null && child.Child("triggerSize") != null && child.Child("pathTo360Media") != null
@@ -365,18 +373,28 @@ public class FirebaseService : Database
                     string uniqueID = child.Key;
                     string sceneName = child.Child("sceneName").Value.ToString();
                     string pathToSceneIcon = child.Child("pathToSceneIcon").Value.ToString();
-                    Trigger trigger = (Trigger) child.Child("trigger").Value;
-                    /*string pathToTrigger = child.Child("pathToTrigger").Value.ToString();
-                    string triggerLocation = child.Child("triggerLocation").Value.ToString();
-                    string triggerSize = child.Child("triggerSize").Value.ToString();*/
+
+                    string triggerPath = child.Child("trigger").Child("path").Value.ToString();
+                    string triggerSize = child.Child("trigger").Child("size").Value.ToString();
+                    string triggerTransform = child.Child("trigger").Child("transform").Value.ToString();
+                    Trigger trigger = new Trigger(triggerPath, triggerTransform, triggerSize);
+
                     string pathTo360Media = child.Child("pathTo360Media").Value.ToString();
                     string pathToAudio = child.Child("pathToAudio").Value.ToString();
-                    /*string[] pathsToScenery = child.Child("pathsToScenery").Value.ToString().Split(',');
-                    string[] sceneryLocations = child.Child("sceneryLocations").Value.ToString().Split(',');
-                    string[] scenerySizes = child.Child("scenerySizes").Value.ToString().Split(',');*/
-                    SceneryObject[] scenery = (SceneryObject[])child.Child("scenery").Value;
 
-                    SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, trigger, pathTo360Media, pathToAudio, scenery);
+                    List<SceneryObject> sceneryObjects = new List<SceneryObject>();
+                    var sceneryArray = child.Child("scenery");
+                    foreach (var sceneryChild in sceneryArray.Children)
+                    {
+                        string sceneryPath = sceneryChild.Child("path").Value.ToString();
+                        string sceneryTransform = sceneryChild.Child("transform").Value.ToString();
+                        string scenerySize = sceneryChild.Child("size").Value.ToString();
+
+                        SceneryObject sceneryObject = new SceneryObject(sceneryPath, sceneryTransform, scenerySize);
+                        sceneryObjects.Add(sceneryObject);
+                    }
+
+                    SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, trigger, pathTo360Media, pathToAudio, sceneryObjects.ToArray());
                     files.Add(sceneData);
                 }
                 else
@@ -386,7 +404,10 @@ public class FirebaseService : Database
             }
 
             callback(files);
-
+        }
+        else if (task.Result == null)
+        {
+            Debug.Log("Error retrieving scenes!");
         }
     }
 

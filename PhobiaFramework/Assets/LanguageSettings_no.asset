@@ -269,7 +269,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14912272466116608
-    m_Localized: Press knappen om du vil teleportere tilbake til venterommet
+    m_Localized: "Trykk p\xE5 knappen om du vil teleportere tilbake til venterommet"
     m_Metadata:
       m_Items: []
   - m_Id: 17889129054248960

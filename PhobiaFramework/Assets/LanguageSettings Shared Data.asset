@@ -84,7 +84,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8208108019712
-    m_Key: LoadSceneButton
+    m_Key: 'QuitButton
+
+'
     m_Metadata:
       m_Items: []
   - m_Id: 8338701869056

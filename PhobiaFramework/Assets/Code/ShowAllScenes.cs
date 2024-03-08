@@ -11,6 +11,8 @@ public class ShowAllScenes : MonoBehaviour
 {
     DatabaseService dbService;
     LoadGlb loadGlbScript;
+    public Button yesButton;
+    public Button noButton;
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab;
     public Transform gridParent;
@@ -38,39 +40,77 @@ public class ShowAllScenes : MonoBehaviour
 
         files = new List<SceneMetaData>();
 
-        StartCoroutine(FetchScenesModels());
+        yesButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(FetchScenes());
+        });
+        noButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(FetchScenes());
+        });
     }
 
-    public IEnumerator FetchScenesModels()
+    public IEnumerator FetchScenes()
     {
         List<SceneMetaData> newFilesList = new List<SceneMetaData>();
 
-        yield return dbService.getAllScenesFileData((data) =>
+        Debug.Log("before getting scenes");
+
+        yield return StartCoroutine(dbService.getAllScenesFileData((data) =>
         {
             newFilesList = data;
-        });
+        }));
+        Debug.Log("Number of scenes: " + newFilesList.Count);
 
         if (files.Count < newFilesList.Count)
         {
             int index = 1;
             foreach (var file in newFilesList)
             {
-                //yield return StartCoroutine(CreateGridItem(file.filename, file.filetype, file.pathToIcon, file.path, index));
+                StartCoroutine(CreateGridItem(file.sceneName, file.pathToSceneIcon, file.trigger, file.pathTo360Media, file.pathToAudio, file.scenery, index));
                 index++;
             }
             files = newFilesList;
         }
         else if (files.Count > newFilesList.Count)
         {
-            reloadModels();
+            reload();
         }
         else
         {
-            Debug.Log("No more scenery models found in the database.");
+            Debug.Log("No more scenes found in the database.");
         }
+
+        /*yield return dbService.getAllScenesFileData((data) =>
+        {
+            Debug.Log("test");
+
+            newFilesList = data;
+        });
+
+        Debug.Log(newFilesList.Count);
+
+        if (files.Count < newFilesList.Count)
+        {
+            int index = 1;
+            foreach (var file in newFilesList)
+            {
+                yield return StartCoroutine(CreateGridItem(file.sceneName, file.pathToSceneIcon, file.trigger, file.pathTo360Media, file.pathToAudio, file.scenery, index));
+                index++;
+            }
+            files = newFilesList;
+        }
+        else if (files.Count > newFilesList.Count)
+        {
+            reload();
+        }
+        else
+        {
+            Debug.Log("No more scenes found in the database.");
+        }*/
     }
 
-    public void reloadModels()
+    public void reload()
     {
         foreach (Transform child in gridParent.transform)
         {
@@ -78,7 +118,7 @@ public class ShowAllScenes : MonoBehaviour
             Destroy(child.gameObject);
         }
         files = new List<SceneMetaData>();
-        StartCoroutine(FetchScenesModels());
+        FetchScenes();
     }
 
     public IEnumerator CreateGridItem(string sceneName, string pathToSceneIcon, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery, int index)
@@ -155,9 +195,9 @@ public class ShowAllScenes : MonoBehaviour
         }
     }
 
-    private async Task<Texture2D> LoadTextureAsync(string modelIconPath)
+    private async Task<Texture2D> LoadTextureAsync(string iconPath)
     {
-        string downloadUrl = await dbService.GetDownloadURL(modelIconPath);
+        string downloadUrl = await dbService.GetDownloadURL(iconPath);
         if (!string.IsNullOrEmpty(downloadUrl))
         {
             byte[] imageData = await dbService.getFile(downloadUrl);

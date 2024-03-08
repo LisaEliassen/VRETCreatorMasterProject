@@ -11,6 +11,8 @@ public class ShowAllScenery : MonoBehaviour
 {
     DatabaseService dbService;
     LoadGlb loadGlbScript;
+    public Button yesButton;
+    public Button noButton;
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab;
     public Transform gridParent;
@@ -38,13 +40,14 @@ public class ShowAllScenery : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        StartCoroutine(FetchSceneryModels());
-
-        /*showSceneryButton.onClick.AddListener(() =>
+        yesButton.onClick.AddListener(() =>
         {
-
             StartCoroutine(FetchSceneryModels());
-        });*/
+        });
+        noButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(FetchSceneryModels());
+        });
 
     }
 

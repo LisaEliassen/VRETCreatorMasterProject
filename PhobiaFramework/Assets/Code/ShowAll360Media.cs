@@ -12,7 +12,8 @@ public class ShowAll360Media : MonoBehaviour
     DatabaseService dbService;
     MediaManager mediaManager;
     SceneSaver sceneSaver;
-
+    public Button yesButton;
+    public Button noButton;
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab360;
     public Transform gridParent;
@@ -39,12 +40,14 @@ public class ShowAll360Media : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        StartCoroutine(FetchMedia());
-
-        /*addMediaButton.onClick.AddListener(() =>
+        yesButton.onClick.AddListener(() =>
         {
             StartCoroutine(FetchMedia());
-        });*/
+        });
+        noButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(FetchMedia());
+        });
     }
 
     public IEnumerator FetchMedia()

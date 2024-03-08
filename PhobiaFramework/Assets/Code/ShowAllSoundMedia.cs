@@ -12,7 +12,8 @@ public class ShowAllSoundMedia : MonoBehaviour
     DatabaseService dbService;
     SoundManager soundManager;
     SceneSaver sceneSaver;
-
+    public Button yesButton;
+    public Button noButton;
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab;
     public Transform gridParent;
@@ -39,12 +40,14 @@ public class ShowAllSoundMedia : MonoBehaviour
 
         files = new List<FileMetaData>();
 
-        StartCoroutine(FetchSoundMedia());
-
-        /*addSoundButton.onClick.AddListener(() =>
+        yesButton.onClick.AddListener(() =>
         {
             StartCoroutine(FetchSoundMedia());
-        });*/
+        });
+        noButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(FetchSoundMedia());
+        });
 
     }
 
