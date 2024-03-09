@@ -412,10 +412,11 @@ public class LoadGlb : MonoBehaviour
                 Bounds modelBounds = CalculateModelBounds(loadedModel);
 
                 // Set the default size of the collider based on the model's bounds
-                boxCollider.size = modelBounds.size;
+                boxCollider.size = new Vector3(modelBounds.size.x, 0.001f, modelBounds.size.z);
+
 
                 // Set the default position of the collider to the center of the model
-                boxCollider.center = modelBounds.center - loadedModel.transform.position;
+                boxCollider.center = new Vector3(modelBounds.center.x - loadedModel.transform.position.x, 0, modelBounds.center.z - loadedModel.transform.position.z);
 
                 // You can also set various properties of the Box Collider
                 boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
