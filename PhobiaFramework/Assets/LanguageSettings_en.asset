@@ -284,6 +284,14 @@ MonoBehaviour:
     m_Localized: Load scene
     m_Metadata:
       m_Items: []
+  - m_Id: 19199668183281664
+    m_Localized: Waiting Room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19200614623784960
+    m_Localized: "Exposure Room\t"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -280,6 +280,14 @@ MonoBehaviour:
     m_Localized: Last scene
     m_Metadata:
       m_Items: []
+  - m_Id: 19199668183281664
+    m_Localized: Venterom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19200614623784960
+    m_Localized: Eksponeringsrom
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

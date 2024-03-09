@@ -259,6 +259,14 @@ MonoBehaviour:
     m_Key: "LoadSceneButton\t"
     m_Metadata:
       m_Items: []
+  - m_Id: 19199668183281664
+    m_Key: WaitingRoomSign
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19200614623784960
+    m_Key: ExposureRoomSign
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
