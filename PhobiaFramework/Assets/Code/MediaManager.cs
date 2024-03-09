@@ -105,13 +105,13 @@ public class MediaManager : MonoBehaviour
         }
     }
 
-    private bool IsVideoFile(string path)
+    public bool IsVideoFile(string path)
     {
         string extension = Path.GetExtension(path);
         return extension.Equals(".mp4", StringComparison.OrdinalIgnoreCase) || extension.Equals(".mov", StringComparison.OrdinalIgnoreCase);
     }
 
-    private bool IsImageFile(string path)
+    public bool IsImageFile(string path)
     {
         string extension = Path.GetExtension(path);
         return extension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) || extension.Equals(".png", StringComparison.OrdinalIgnoreCase) || extension.Equals(".jpeg", StringComparison.OrdinalIgnoreCase);

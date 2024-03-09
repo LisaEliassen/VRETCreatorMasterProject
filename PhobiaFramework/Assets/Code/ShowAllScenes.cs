@@ -11,6 +11,8 @@ public class ShowAllScenes : MonoBehaviour
 {
     DatabaseService dbService;
     LoadGlb loadGlbScript;
+    MediaManager mediaManager;
+    SoundManager soundManager;
     public Button yesButton;
     public Button noButton;
     public GameObject databaseServiceObject;
@@ -32,6 +34,8 @@ public class ShowAllScenes : MonoBehaviour
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
 
             loadGlbScript = databaseServiceObject.GetComponent<LoadGlb>();
+            mediaManager = databaseServiceObject.GetComponent<MediaManager>();
+            soundManager = databaseServiceObject.GetComponent<SoundManager>();
         }
         else
         {
@@ -161,9 +165,70 @@ public class ShowAllScenes : MonoBehaviour
         Button button = gridItem.AddComponent<Button>();
 
         // Add an onclick listener for the grid item to load the model from Firebase Storage
-        button.onClick.AddListener(() =>
+        button.onClick.AddListener(async () =>
         {
-            //loadGlbScript.SpawnSceneryObject(sceneName, sceneStoragePath);
+            if (!System.String.IsNullOrEmpty(trigger.path))
+            {
+                Vector3 position;
+                Quaternion rotation;
+                Vector3 scale;
+
+                if (TransformParser.TryParseTransformString(trigger.transform, out position, out rotation, out scale))
+                {
+                    // Now you have position, rotation, and scale
+                    Debug.Log("Position: " + position);
+                    Debug.Log("Rotation: " + rotation.eulerAngles);
+                    Debug.Log("Scale: " + scale);
+                }
+                else
+                {
+                    Debug.LogError("Failed to parse transform string");
+                }
+
+                loadGlbScript.SpawnSceneryObject("Trigger", trigger.path, position, rotation, scale);
+            }
+
+            if (!System.String.IsNullOrEmpty(pathTo360Media))
+            {
+                string mediaDownloadUrl = await dbService.GetDownloadURL(pathTo360Media);
+
+                if (mediaManager.IsVideoFile(pathTo360Media))
+                {
+                    await mediaManager.HandleImageSelected(mediaDownloadUrl);
+                }
+                else if (mediaManager.IsImageFile(pathTo360Media))
+                {
+                    await mediaManager.HandleImageSelected(mediaDownloadUrl);
+                }
+            }
+
+            if (!System.String.IsNullOrEmpty(pathToAudio))
+            {
+                string audioDownloadUrl = await dbService.GetDownloadURL(pathToAudio);
+                await soundManager.HandleSoundSelected(audioDownloadUrl);
+            }
+
+            foreach (SceneryObject sceneryObj in scenery)
+            {
+                Vector3 position;
+                Quaternion rotation;
+                Vector3 scale;
+
+                if (TransformParser.TryParseTransformString(sceneryObj.transform, out position, out rotation, out scale))
+                {
+                    // Now you have position, rotation, and scale
+                    Debug.Log("Position: " + position);
+                    Debug.Log("Rotation: " + rotation.eulerAngles);
+                    Debug.Log("Scale: " + scale);
+                }
+                else
+                {
+                    Debug.LogError("Failed to parse transform string");
+                }
+
+                loadGlbScript.SpawnSceneryObject(sceneryObj.name, sceneryObj.path, position, rotation, scale);
+            }
+
             EditSceneUI.SetActive(true);
             ScenesUI.SetActive(false);
             Debug.Log("Button for scene " + sceneName + " was clicked!");
@@ -175,6 +240,8 @@ public class ShowAllScenes : MonoBehaviour
         gridLayoutGroup.gameObject.SetActive(false);
         gridLayoutGroup.gameObject.SetActive(true);
     }
+
+
 
     public IEnumerator LoadImageFromFirebase(string modelIconPath, Image iconImage)
     {

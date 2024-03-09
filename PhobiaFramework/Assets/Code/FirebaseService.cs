@@ -386,12 +386,16 @@ public class FirebaseService : Database
                     var sceneryArray = child.Child("scenery");
                     foreach (var sceneryChild in sceneryArray.Children)
                     {
-                        string sceneryPath = sceneryChild.Child("path").Value.ToString();
-                        string sceneryTransform = sceneryChild.Child("transform").Value.ToString();
-                        string scenerySize = sceneryChild.Child("size").Value.ToString();
+                        if (sceneryChild != null) 
+                        {
+                            string sceneryName = sceneryChild.Child("name").Value.ToString();
+                            string sceneryPath = sceneryChild.Child("path").Value.ToString();
+                            string sceneryTransform = sceneryChild.Child("transform").Value.ToString();
+                            string scenerySize = sceneryChild.Child("size").Value.ToString();
 
-                        SceneryObject sceneryObject = new SceneryObject(sceneryPath, sceneryTransform, scenerySize);
-                        sceneryObjects.Add(sceneryObject);
+                            SceneryObject sceneryObject = new SceneryObject(sceneryName, sceneryPath, sceneryTransform, scenerySize);
+                            sceneryObjects.Add(sceneryObject);
+                        }
                     }
 
                     SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, trigger, pathTo360Media, pathToAudio, sceneryObjects.ToArray());

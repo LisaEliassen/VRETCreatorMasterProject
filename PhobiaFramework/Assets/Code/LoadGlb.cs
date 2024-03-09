@@ -26,7 +26,7 @@ public class LoadGlb : MonoBehaviour
 
     public UnityEngine.Camera mainCamera;
     
-    Vector3 position;
+    Vector3 defaultPosition;
     public GameObject posObject;
     string triggerName;
     string pathOfTrigger;
@@ -85,7 +85,7 @@ public class LoadGlb : MonoBehaviour
             Debug.LogError("GameObject with AnimationController not found.");
         }
 
-        position = posObject.transform.position;
+        defaultPosition = posObject.transform.position;
 
         triggerCopies = new List<GameObject>();
         newObjects = new List<GameObject>();
@@ -213,7 +213,8 @@ public class LoadGlb : MonoBehaviour
                 if (success)
                 {
                     sceneSaver.SetPathToTrigger(pathOfTrigger);
-                    trigger.transform.position = position;
+                    Vector3 pos = new Vector3(0.0f,0.0f, 0.0f);
+                    trigger.transform.position = defaultPosition;
                     trigger.SetActive(true);
 
                     animController.FindAnimations(trigger);
@@ -277,9 +278,12 @@ public class LoadGlb : MonoBehaviour
         if (trigger != null && !string.IsNullOrEmpty(pathOfTrigger)) 
         {
             GameObject copy = new GameObject("Trigger_copy" + GetNumCopies());
-            copy.tag = "Export";
+            //copy.tag = "Export";
             triggerCopies.Add(copy);
-            bool success = await LoadGlbFile(copy, pathOfTrigger);
+            Vector3 position = new Vector3(GetNumCopies(), 0.0f, 0.0f);
+            Quaternion rotation = Quaternion.identity;
+            Vector3 scale = Vector3.one;
+            bool success = await LoadGlbFile(copy, pathOfTrigger, position, rotation, scale);
             if (success)
             {
                 copy.transform.localScale = trigger.transform.localScale;
@@ -313,7 +317,7 @@ public class LoadGlb : MonoBehaviour
         }
     }
 
-    public async void SpawnObject(string modelName, string path)
+    public async void SpawnObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
     {
         if (trigger != null)
         {
@@ -322,8 +326,10 @@ public class LoadGlb : MonoBehaviour
         trigger = new GameObject("Trigger");
         trigger.tag = "Export";
 
+        //position = posObject.transform.position;
+
         pathOfTrigger = path;
-        bool success = await LoadGlbFile(trigger, path);
+        bool success = await LoadGlbFile(trigger, path, position, rotation, scale);
         if (success)
         {
             sceneSaver.SetPathToTrigger(pathOfTrigger);
@@ -351,7 +357,7 @@ public class LoadGlb : MonoBehaviour
         }
     }
 
-    public async void SpawnSceneryObject(string modelName, string path)
+    public async void SpawnSceneryObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
     {
         newObject = new GameObject(modelName);
         newObject.tag = "Scenery";
@@ -361,12 +367,11 @@ public class LoadGlb : MonoBehaviour
             newObjects.Add(newObject);
         }
         
-
-        bool success = await LoadGlbFile(newObject, path);
+        bool success = await LoadGlbFile(newObject, path, position, rotation, scale);
         if (success)
         {
             Debug.Log("Successfully loaded model!");
-            SceneryObject obj = new SceneryObject(path, newObject.transform.position.ToString() + "," + newObject.transform.rotation.ToString() + "," + newObject.transform.localScale.ToString(), "2");
+            SceneryObject obj = new SceneryObject(modelName, path, newObject.transform.position.ToString() + "," + newObject.transform.rotation.ToString() + "," + newObject.transform.localScale.ToString(), "2");
             sceneSaver.AddSceneryObject(obj);
         }
         else
@@ -377,7 +382,7 @@ public class LoadGlb : MonoBehaviour
     }
 
     //public async void LoadGlbFile(GameObject loadedModel, string path)
-    public async Task<bool> LoadGlbFile(GameObject loadedModel, string path)
+    public async Task<bool> LoadGlbFile(GameObject loadedModel, string path, Vector3 position, Quaternion rotation, Vector3 scale)
     {
         var gltFastImport = new GLTFast.GltfImport();
         string downloadUrl = await dbService.GetDownloadURL(path);
@@ -403,6 +408,8 @@ public class LoadGlb : MonoBehaviour
             if (success)
             {
                 loadedModel.transform.position = position;
+                //loadedModel.transform.rotation = rotation;
+                //loadedModel.transform.scale = scale;
                 loadedModel.SetActive(true);
 
                 // Add a Box Collider to the GameObject

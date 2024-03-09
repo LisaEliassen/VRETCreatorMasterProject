@@ -131,7 +131,11 @@ public class ShowAllModels : MonoBehaviour
         // Add an onclick listener for the grid item to load the model from Firebase Storage
         button.onClick.AddListener(() =>
         {
-            loadGlbScript.SpawnObject(modelName, modelStoragePath);
+            Vector3 position = Vector3.zero;
+            Quaternion rotation = Quaternion.identity;
+            Vector3 scale = Vector3.one;
+
+            loadGlbScript.SpawnObject(modelName, modelStoragePath, position, rotation, scale);
             EditSceneUI.SetActive(true);
             ModelUI.SetActive(false);
             Debug.Log("Button for model " + modelName + " was clicked!");
