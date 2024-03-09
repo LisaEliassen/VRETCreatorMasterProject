@@ -31,14 +31,14 @@ public class ScaleGameObjects : MonoBehaviour
         sizeInputPlatform.interactable = true;
         SetInitialValues();
 
-
-
     }
 
     private void Update()
     {
         // Call the method to update the scale of the objects
-        UpdateObjectScales();
+        UpdateSphereScale();
+        // implement here to disable the hinge joint of the doors and activate it after scaling is finished to fix the issue?
+        UpdatePlatformScale();
     }
 
     private void UpdateSphereFromInputField()
@@ -47,7 +47,7 @@ public class ScaleGameObjects : MonoBehaviour
         if (float.TryParse(sizeInputSphere.text, out value))
         {
             sphereSlider.value = value;
-            UpdateObjectScales();
+            UpdateSphereScale();
         }
     }
 
@@ -57,14 +57,13 @@ public class ScaleGameObjects : MonoBehaviour
         if (float.TryParse(sizeInputPlatform.text, out value))
         {
             platformSlider.value = value;
-            UpdateObjectScales();
+            UpdatePlatformScale();
         }
     }
 
 
     private void SetInitialValues()
     {
-
         sphereSlider.value = 30;
         ((TextMeshProUGUI)sizeInputSphere.placeholder).text = "30";
 
@@ -72,18 +71,22 @@ public class ScaleGameObjects : MonoBehaviour
         ((TextMeshProUGUI)sizeInputPlatform.placeholder).text = "10";
     }
 
-    private void UpdateObjectScales()
+    private void UpdatePlatformScale()
     {
-        // Update the scale of the sphere based on the value of the sphere slider
-        float sphereScale = sphereSlider.value;
-        sphere.transform.localScale = new Vector3(sphereScale, sphereScale, sphereScale);
-
-        sizeInputSphere.text = sphereScale.ToString();
-
         // Update the scale of the platform based on the value of the platform slider
         float platformScale = platformSlider.value;
         exposureScene.transform.localScale = new Vector3(platformScale / 10, exposureScene.transform.localScale.y, platformScale / 10);
 
         sizeInputPlatform.text = platformScale.ToString();
     }
+
+    private void UpdateSphereScale()
+    {
+        // Update the scale of the sphere based on the value of the sphere slider
+        float sphereScale = sphereSlider.value;
+        sphere.transform.localScale = new Vector3(sphereScale, sphereScale, sphereScale);
+
+        sizeInputSphere.text = sphereScale.ToString();
+    }
+
 }
