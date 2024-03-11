@@ -37,6 +37,8 @@ public class SceneSaver : MonoBehaviour
     private string[] scenerySizes;
     List<string> test = new List<string>();
 
+    Dictionary<string, GameObject> objects;
+
     void Awake()
     {
          path = Application.dataPath + "/Assets";
@@ -69,6 +71,8 @@ public class SceneSaver : MonoBehaviour
         });
 
         sceneNameInput.onValueChanged.AddListener((x) => checkInput(sceneNameInput.text));
+
+        objects = new Dictionary<string, GameObject>();
     }
 
     public void checkInput(string input)
@@ -199,9 +203,21 @@ public class SceneSaver : MonoBehaviour
         this.pathToAudio = pathToAudio;
     }
 
-    public void AddSceneryObject(SceneryObject sceneryObject)
+    public void AddSceneryObject(GameObject obj, SceneryObject sceneryObject)
     {
         this.sceneryObjects.Add(sceneryObject);
+        this.objects[sceneryObject.path] = obj;
+    }
+
+    public void RemoveObject(GameObject obj)
+    {
+        foreach (KeyValuePair<string, GameObject> pair in this.objects)
+        {
+            if (pair.Value == obj)
+            {
+                objects.Remove(pair.Key);
+            }
+        }
     }
 
     public void SetPathsToScenery(string[] pathsToScenery)

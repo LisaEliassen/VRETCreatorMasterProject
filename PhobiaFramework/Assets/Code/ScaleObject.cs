@@ -14,11 +14,15 @@ public class ScaleObject : MonoBehaviour
     public TMP_InputField sizeInput;
     LoadGlb loadGlb;
     SceneSaver sceneSaver;
+    ObjectDropdownManager objDropdownManager;
     GameObject trigger;
     List<GameObject> triggerCopies;
 
+    GameObject objectToScale;
+
     void Start()
     {
+        objDropdownManager = databaseServiceObject.GetComponent<ObjectDropdownManager>();
         loadGlb = databaseServiceObject.GetComponent<LoadGlb>();
         sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
 
@@ -27,7 +31,41 @@ public class ScaleObject : MonoBehaviour
         sizeInput.onValueChanged.AddListener((x) => ChangeObjectSizeInput(sizeInput.text));
         sizeSlider.interactable = false;
         sizeInput.interactable = false;
-}
+
+        triggerCopies = new List<GameObject>();
+    }
+
+    public void SetObjectToScale(GameObject gameObject)
+    {
+        objectToScale = gameObject;
+    }
+
+    private void ChangeSize(float scaleValue)
+    {
+        if (objectToScale != null)
+        {
+            float scaledValue = scaleValue / 3;
+            Vector3 newScale = new Vector3(scaledValue, scaledValue, scaledValue);
+            objectToScale.transform.localScale = newScale;
+
+            if (objectToScale.name == "Trigger")
+            {
+                triggerCopies = loadGlb.GetCopies();
+                if (triggerCopies.Count > 0)
+                {
+                    foreach (GameObject copy in triggerCopies)
+                    {
+                        copy.transform.localScale = newScale;
+                    }
+                }
+            }
+            
+            ((TextMeshProUGUI)sizeInput.placeholder).text = scaleValue.ToString();
+            sizeInput.text = scaleValue.ToString();
+
+            sceneSaver.SetTriggerSize(scaleValue.ToString());
+        }
+    }
 
     // Callback method to adjust object size based on the slider's value
     private void ChangeObjectSize(float scaleValue)

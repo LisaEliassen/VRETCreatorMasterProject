@@ -51,6 +51,7 @@ public class LoadGlb : MonoBehaviour
     public GameObject RemovePanel;
     public TextMeshProUGUI numCopiesText;
 
+    ObjectDropdownManager objDropdownManager;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +66,7 @@ public class LoadGlb : MonoBehaviour
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
             sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
+            objDropdownManager = databaseServiceObject.GetComponent<ObjectDropdownManager>();
         }
         else
         {
@@ -213,6 +215,7 @@ public class LoadGlb : MonoBehaviour
                 if (success)
                 {
                     sceneSaver.SetPathToTrigger(pathOfTrigger);
+                    objDropdownManager.addDropdownOption(trigger, "Trigger");
                     Vector3 pos = new Vector3(0.0f,0.0f, 0.0f);
                     trigger.transform.position = defaultPosition;
                     trigger.SetActive(true);
@@ -243,6 +246,12 @@ public class LoadGlb : MonoBehaviour
                 }
             }
         }     
+    }
+
+    public void RemoveObject(GameObject obj)
+    {
+        DestroyImmediate(obj);
+        sceneSaver.RemoveObject(obj);
     }
 
     public void RemoveTrigger()
@@ -372,7 +381,7 @@ public class LoadGlb : MonoBehaviour
         {
             Debug.Log("Successfully loaded model!");
             SceneryObject obj = new SceneryObject(modelName, path, newObject.transform.position.ToString() + "," + newObject.transform.rotation.ToString() + "," + newObject.transform.localScale.ToString(), "2");
-            sceneSaver.AddSceneryObject(obj);
+            sceneSaver.AddSceneryObject(newObject, obj);
         }
         else
         {
