@@ -25,6 +25,8 @@ public class VisibilityToggles : MonoBehaviour
     public Toggle wallsVisibility;
     public GameObject platform;
     public GameObject walls;
+    public GameObject extraWall1;
+    public GameObject extraWall2;
 
     // Start is called before the first frame update
     void Start()
@@ -119,10 +121,14 @@ public class VisibilityToggles : MonoBehaviour
         if (visible)
         {
             walls.SetActive(true);
+            extraWall1.SetActive(true);
+            extraWall2.SetActive(true);
         }
         else
         {
             walls.SetActive(false);
+            extraWall1.SetActive(false);
+            extraWall2.SetActive(false);
         }
     }
 }

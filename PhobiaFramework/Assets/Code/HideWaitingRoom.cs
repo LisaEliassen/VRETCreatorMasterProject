@@ -9,6 +9,8 @@ public class HideWaitingRoom : MonoBehaviour
     public GameObject xrRig;
     public GameObject door1;
     public GameObject door2;
+    public GameObject extraWall1;
+    public GameObject extraWall2;
 
 
     // Start is called before the first frame update
@@ -27,11 +29,15 @@ public class HideWaitingRoom : MonoBehaviour
             Debug.Log("Door is closed");
             // Hide the waiting room
             waitingRoom.SetActive(false);
+            extraWall1.SetActive(false);
+            extraWall2.SetActive(false);
         }
         else
         {
             // Show the waiting room
             waitingRoom.SetActive(true);
+            extraWall1.SetActive(true);
+            extraWall2.SetActive(true);
         }
     }
 
