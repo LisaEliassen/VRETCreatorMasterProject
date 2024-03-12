@@ -218,10 +218,12 @@ public class SceneSaver : MonoBehaviour
             if (pair.Value.Contains(obj) && pair.Value.Count == 1)
             {
                 objects.Remove(pair.Key);
+                break;
             }
             else if (pair.Value.Contains(obj) && pair.Value.Count < 1)
             {
                 objects[pair.Key].Remove(obj);
+                break;
             }
         }
     }

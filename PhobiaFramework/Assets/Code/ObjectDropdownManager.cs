@@ -63,6 +63,12 @@ public class ObjectDropdownManager : MonoBehaviour
 
         objects = new Dictionary<string, GameObject>();
         dropdown.ClearOptions();
+        scenery = new List<GameObject>();
+    }
+
+    public GameObject GetCurrentObject()
+    {
+        return this.currentObject;
     }
 
     void DropdownValueChanged(TMP_Dropdown change)
@@ -86,7 +92,7 @@ public class ObjectDropdownManager : MonoBehaviour
         }
         else
         {
-            AddSceneryObject(obj);
+            //AddSceneryObject(obj);
             objects[option] = obj;
             dropdown.options.Add(new TMP_Dropdown.OptionData(option));
             int index = dropdown.options.FindIndex((i) => { return i.text.Equals(option); });
@@ -128,9 +134,15 @@ public class ObjectDropdownManager : MonoBehaviour
                     objects.Remove(pair.Key);
                     TMP_Dropdown.OptionData option = dropdown.options.Find(s => string.Equals(s.text, pair.Key));
                     dropdown.options.Remove(option);
+                    break;
                 }
             }
         }
+    }
+
+    public void RemoveObject(GameObject obj)
+    {
+        removeDropdownOption(obj);
     }
 
     public void setCurrentObject(string option)
@@ -163,9 +175,10 @@ public class ObjectDropdownManager : MonoBehaviour
         this.scenery.Add(obj);
     }
 
-    public void RemoveTrigger(GameObject obj)
+    public void RemoveTrigger()
     {
-        removeDropdownOption(obj);
+        removeDropdownOption(this.trigger);
+        this.trigger = null;
 
         //currentObject =
     }

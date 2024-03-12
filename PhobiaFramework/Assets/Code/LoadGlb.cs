@@ -99,7 +99,7 @@ public class LoadGlb : MonoBehaviour
         });
         yesButton.onClick.AddListener(() =>
         {
-            RemoveTrigger();
+            RemoveObject();
             RemovePanel.SetActive(false);
         });
         noButton.onClick.AddListener(() =>
@@ -249,14 +249,28 @@ public class LoadGlb : MonoBehaviour
         }     
     }
 
-    public void RemoveObject(GameObject obj)
+    public void RemoveObject()
     {
-        DestroyImmediate(obj);
-        sceneSaver.RemoveObject(obj);
+        GameObject currentObject = objDropdownManager.GetCurrentObject();
+        if (currentObject.name == "Trigger")
+        {
+            RemoveTrigger();
+        }
+        else
+        {
+            sceneSaver.RemoveObject(currentObject);
+            objDropdownManager.RemoveObject(currentObject);
+            DestroyImmediate(currentObject);
+        }
+
     }
 
     public void RemoveTrigger()
     {
+        sceneSaver.SetPathToTrigger("");
+        objDropdownManager.RemoveTrigger();
+        sceneSaver.SetTrigger(null);
+
         DestroyImmediate(trigger);
         trigger = null;
         if (triggerCopies != null && GetNumCopies() > 0)
@@ -279,8 +293,6 @@ public class LoadGlb : MonoBehaviour
         dropdown.ClearOptions();
         addCopyButton.interactable = false;
         removeCopyButton.interactable = false;
-
-        sceneSaver.SetPathToTrigger("");
     }
 
     public async void MakeCopy()
@@ -369,9 +381,11 @@ public class LoadGlb : MonoBehaviour
 
     public async void SpawnSceneryObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
     {
+        string name = modelName;
         if (sceneSaver.objects.ContainsKey(path))
         {
             int count = sceneSaver.objects[path].Count;
+            name = modelName + count;
             newObject = new GameObject(modelName + count);
         }
         else
@@ -392,7 +406,7 @@ public class LoadGlb : MonoBehaviour
             Debug.Log("Successfully loaded model!");
             SceneryObject obj = new SceneryObject(modelName, path, newObject.transform.position.ToString() + "," + newObject.transform.rotation.ToString() + "," + newObject.transform.localScale.ToString(), "2");
             sceneSaver.AddSceneryObject(newObject, obj);
-            objDropdownManager.addDropdownOption(newObject, modelName);
+            objDropdownManager.addDropdownOption(newObject, name);
         }
         else
         {
