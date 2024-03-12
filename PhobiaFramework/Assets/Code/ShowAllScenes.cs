@@ -13,6 +13,7 @@ public class ShowAllScenes : MonoBehaviour
     LoadGlb loadGlbScript;
     MediaManager mediaManager;
     SoundManager soundManager;
+    SceneSaver sceneSaver;
     public Button yesButton;
     public Button noButton;
     public GameObject databaseServiceObject;
@@ -36,6 +37,7 @@ public class ShowAllScenes : MonoBehaviour
             loadGlbScript = databaseServiceObject.GetComponent<LoadGlb>();
             mediaManager = databaseServiceObject.GetComponent<MediaManager>();
             soundManager = databaseServiceObject.GetComponent<SoundManager>();
+            sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
         }
         else
         {
@@ -185,7 +187,7 @@ public class ShowAllScenes : MonoBehaviour
                     Debug.LogError("Failed to parse transform string");
                 }
 
-                loadGlbScript.SpawnSceneryObject("Trigger", trigger.path, position, rotation, scale);
+                loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, scale);
             }
 
             if (!System.String.IsNullOrEmpty(pathTo360Media))

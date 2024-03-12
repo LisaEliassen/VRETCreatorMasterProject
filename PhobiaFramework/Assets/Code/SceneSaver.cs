@@ -25,19 +25,13 @@ public class SceneSaver : MonoBehaviour
 
     public GameObject SceneNameUI;
 
+    private Trigger trigger;
     private string sceneName = string.Empty;
-    private string pathToTrigger;
-    private string triggerTransform;
-    private string triggerSize;
     private string pathTo360Media;
     private string pathToAudio;
     private List<SceneryObject> sceneryObjects = new List<SceneryObject>();
-    private string[] pathsToScenery;
-    private string[] sceneryLocations;
-    private string[] scenerySizes;
-    List<string> test = new List<string>();
 
-    Dictionary<string, GameObject> objects;
+    public Dictionary<string, List<GameObject>> objects;
 
     void Awake()
     {
@@ -72,7 +66,8 @@ public class SceneSaver : MonoBehaviour
 
         sceneNameInput.onValueChanged.AddListener((x) => checkInput(sceneNameInput.text));
 
-        objects = new Dictionary<string, GameObject>();
+        objects = new Dictionary<string, List<GameObject>>();
+        trigger = new Trigger("", "", "");
     }
 
     public void checkInput(string input)
@@ -91,11 +86,9 @@ public class SceneSaver : MonoBehaviour
         if (!string.IsNullOrEmpty(sceneNameInput.text))
         {
             warningOrErrorMessage.text = "";
-
-            Trigger trigger = new Trigger(this.pathToTrigger, this.triggerTransform, this.triggerSize);
             
             await dbService.addIcon(Path.Combine(Application.persistentDataPath, "screenshot.png"), sceneName + "_icon", "Scene", Path.GetExtension("screenshot.png"));
-            bool success = await dbService.addSceneData(sceneNameInput.text, trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
+            bool success = await dbService.addSceneData(sceneNameInput.text, this.trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
 
             if (success)
             {
@@ -178,19 +171,24 @@ public class SceneSaver : MonoBehaviour
         this.sceneName = sceneName;
     }
 
+    public void SetTrigger(Trigger trigger) 
+    { 
+        this.trigger = trigger; 
+    }
+
     public void SetPathToTrigger(string pathToTrigger)
     {
-        this.pathToTrigger = pathToTrigger;
+        this.trigger.SetPath(pathToTrigger);
     }
 
     public void SetTriggerTransform(string triggerTransform)
     {
-        this.triggerTransform = triggerTransform;
+        this.trigger.SetPosition(triggerTransform);
     }
 
     public void SetTriggerSize(string triggerSize)
     {
-        this.triggerSize = triggerSize;
+        this.trigger.SetSize(triggerSize);
     }
 
     public void SetPathTo360Media(string pathTo360Media)
@@ -206,38 +204,26 @@ public class SceneSaver : MonoBehaviour
     public void AddSceneryObject(GameObject obj, SceneryObject sceneryObject)
     {
         this.sceneryObjects.Add(sceneryObject);
-        this.objects[sceneryObject.path] = obj;
+        if (!this.objects.ContainsKey(sceneryObject.path))
+        {
+            this.objects[sceneryObject.path] = new List<GameObject>();
+        }
+        this.objects[sceneryObject.path].Add(obj);
     }
 
     public void RemoveObject(GameObject obj)
     {
-        foreach (KeyValuePair<string, GameObject> pair in this.objects)
+        foreach (KeyValuePair<string, List<GameObject>> pair in this.objects)
         {
-            if (pair.Value == obj)
+            if (pair.Value.Contains(obj) && pair.Value.Count == 1)
             {
                 objects.Remove(pair.Key);
             }
+            else if (pair.Value.Contains(obj) && pair.Value.Count < 1)
+            {
+                objects[pair.Key].Remove(obj);
+            }
         }
-    }
-
-    public void SetPathsToScenery(string[] pathsToScenery)
-    {
-        this.pathsToScenery = pathsToScenery;
-    }
-
-    public void AddPathToScenery(string path)
-    {
-        this.pathsToScenery[this.pathsToScenery.Length] = path;
-    }
-
-    public void SetSceneryLocations(string[] sceneryLocations)
-    {
-        this.sceneryLocations = sceneryLocations;
-    }
-
-    public void SetScenerySizes(string[] scenerySizes)
-    {
-        this.scenerySizes = scenerySizes;
     }
 
     public async void SimpleExport()

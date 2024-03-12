@@ -78,6 +78,9 @@ public class ScaleGameObjects : MonoBehaviour
         exposureScene.transform.localScale = new Vector3(platformScale / 10, exposureScene.transform.localScale.y, platformScale / 10);
 
         sizeInputPlatform.text = platformScale.ToString();
+
+        //exp_pos = wait_pos - 5 - exposureScene.transform.localScale * 5
+        // door walls: pos_x +- (scale * size_x - size_x) / 2
     }
 
     private void UpdateSphereScale()

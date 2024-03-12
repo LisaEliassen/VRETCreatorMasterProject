@@ -216,6 +216,7 @@ public class LoadGlb : MonoBehaviour
                 {
                     sceneSaver.SetPathToTrigger(pathOfTrigger);
                     objDropdownManager.addDropdownOption(trigger, "Trigger");
+                    objDropdownManager.SetTrigger(trigger);
                     Vector3 pos = new Vector3(0.0f,0.0f, 0.0f);
                     trigger.transform.position = defaultPosition;
                     trigger.SetActive(true);
@@ -335,13 +336,13 @@ public class LoadGlb : MonoBehaviour
         trigger = new GameObject("Trigger");
         trigger.tag = "Export";
 
-        //position = posObject.transform.position;
-
         pathOfTrigger = path;
         bool success = await LoadGlbFile(trigger, path, position, rotation, scale);
         if (success)
         {
             sceneSaver.SetPathToTrigger(pathOfTrigger);
+            objDropdownManager.addDropdownOption(trigger, "Trigger");
+            objDropdownManager.SetTrigger(trigger);
 
             Debug.Log("Successfully loaded model!");
             animController.FindAnimations(trigger);
@@ -368,7 +369,16 @@ public class LoadGlb : MonoBehaviour
 
     public async void SpawnSceneryObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
     {
-        newObject = new GameObject(modelName);
+        if (sceneSaver.objects.ContainsKey(path))
+        {
+            int count = sceneSaver.objects[path].Count;
+            newObject = new GameObject(modelName + count);
+        }
+        else
+        {
+            newObject = new GameObject(modelName);
+        }
+
         newObject.tag = "Scenery";
 
         if (newObject != null)
@@ -382,6 +392,7 @@ public class LoadGlb : MonoBehaviour
             Debug.Log("Successfully loaded model!");
             SceneryObject obj = new SceneryObject(modelName, path, newObject.transform.position.ToString() + "," + newObject.transform.rotation.ToString() + "," + newObject.transform.localScale.ToString(), "2");
             sceneSaver.AddSceneryObject(newObject, obj);
+            objDropdownManager.addDropdownOption(newObject, modelName);
         }
         else
         {

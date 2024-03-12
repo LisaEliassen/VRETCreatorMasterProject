@@ -26,4 +26,8 @@ public class Trigger {
     //public string GetName() { return this.name; }
     public string GetPosition() { return this.transform; }
     public string GetSize() { return this.size; }
+
+    public void SetPath(string path) { this.path = path; }
+    public void SetPosition(string positon) { this.transform = positon;}
+    public void SetSize(string size) {  this.size = size; }
 }
