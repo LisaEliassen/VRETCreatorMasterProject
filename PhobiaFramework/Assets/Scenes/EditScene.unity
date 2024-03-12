@@ -12711,6 +12711,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!1 &463150052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1015707552984288, guid: 3865dab15f85624439f27d11cc132971, type: 3}
+  m_PrefabInstance: {fileID: 482545231}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &464734031
 GameObject:
   m_ObjectHideFlags: 0
@@ -26679,8 +26684,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sphere: {fileID: 762048115}
   exposureScene: {fileID: 1678994630}
-  waitingRoom: {fileID: 0}
-  doorWay: {fileID: 0}
+  waitingRoom: {fileID: 121386408}
+  doors: {fileID: 1295946567}
+  door1: {fileID: 1948838279295708}
+  door2: {fileID: 463150052}
   sphereSlider: {fileID: 1291443613}
   sizeInputSphere: {fileID: 596267252}
   platformSlider: {fileID: 1059690250}
@@ -36056,7 +36063,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 1, y: 45, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -1.0064, y: 1.004, z: 4.9399}
+  m_ConnectedAnchor: {x: 1.030685, y: 1.004, z: -4.9399004}
   m_UseSpring: 0
   m_Spring:
     spring: 0
