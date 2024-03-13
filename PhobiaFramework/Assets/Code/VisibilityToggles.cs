@@ -20,6 +20,7 @@ public class VisibilityToggles : MonoBehaviour
     public TMP_InputField sizeInputPlatform;
     public Button addCopyButton;
     public Button removeCopyButton;
+    public Toggle interactableToggle;
     public Toggle objectVisibility;
     public Toggle platformVisibility;
     public Toggle wallsVisibility;
@@ -75,6 +76,7 @@ public class VisibilityToggles : MonoBehaviour
             moveSliderX.interactable = true;
             moveSliderY.interactable = true;
             dropdown.interactable = true;
+            interactableToggle.interactable = true;
         }
         else if (trigger != null && !visible)
         {
@@ -97,6 +99,7 @@ public class VisibilityToggles : MonoBehaviour
             moveSliderX.interactable = false;
             moveSliderY.interactable = false;
             dropdown.interactable = false;
+            interactableToggle.interactable = false;
         }
     }
 

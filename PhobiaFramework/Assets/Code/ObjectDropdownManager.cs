@@ -129,6 +129,7 @@ public class ObjectDropdownManager : MonoBehaviour
             TMP_Dropdown.OptionData option = dropdown.options.Find(s => string.Equals(s.text, "Trigger"));
             dropdown.options.Remove(option);
             dropdown.RefreshShownValue();
+            interactableToggle.interactable = false;
         }
 
         else 
@@ -144,6 +145,19 @@ public class ObjectDropdownManager : MonoBehaviour
                     break;
                 }
             }
+        }
+
+        if (dropdown.options.Count > 0)
+        {
+            dropdown.value = 0;
+            dropdown.RefreshShownValue();
+            setCurrentObject(dropdown.options[0].text);
+        }
+        else
+        {
+            sizeSlider.interactable = false;
+            objectVisibility.interactable = false;
+            removeTriggerButton.interactable = false;
         }
     }
 
@@ -162,6 +176,8 @@ public class ObjectDropdownManager : MonoBehaviour
             interactableToggle.gameObject.SetActive(true);
             interactableToggle.interactable = true;
             animationDropdown.SetActive(true);
+            objectVisibility.interactable = true;
+            objectVisibility.gameObject.SetActive(true);
         }
         else
         {
@@ -169,9 +185,9 @@ public class ObjectDropdownManager : MonoBehaviour
             copies.SetActive(false);
             interactableToggle.gameObject.SetActive(false);
             animationDropdown.SetActive(false);
+            objectVisibility.gameObject.SetActive(false);
         }
 
-        objectVisibility.interactable = true;
         removeTriggerButton.interactable = true;
         sizeSlider.interactable = true;
         sizeInput.interactable = true;
@@ -191,8 +207,6 @@ public class ObjectDropdownManager : MonoBehaviour
     {
         removeDropdownOption(this.trigger);
         this.trigger = null;
-
-        //currentObject =
     }
 
     // Update is called once per frame

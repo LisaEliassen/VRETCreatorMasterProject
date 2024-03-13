@@ -13,6 +13,7 @@ public class SceneSaver : MonoBehaviour
 {
     string path;
     UploadFiles uploadFiles;
+    LoadGlb loadGlb;
     DatabaseService dbService;
     public GameObject databaseServiceObject;
     public Button confirmButton;
@@ -44,6 +45,7 @@ public class SceneSaver : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
+            loadGlb = databaseServiceObject.GetComponent<LoadGlb>();
         }
         else
         {
@@ -86,7 +88,14 @@ public class SceneSaver : MonoBehaviour
         if (!string.IsNullOrEmpty(sceneNameInput.text))
         {
             warningOrErrorMessage.text = "";
-            
+
+            GameObject triggerObject = loadGlb.GetTrigger();
+
+            if (triggerObject != null)
+            {
+                SetTriggerTransform(triggerObject.transform.position.ToString() + "," + triggerObject.transform.rotation.ToString() + "," + triggerObject.transform.localScale.ToString());
+            }
+
             await dbService.addIcon(Path.Combine(Application.persistentDataPath, "screenshot.png"), sceneName + "_icon", "Scene", Path.GetExtension("screenshot.png"));
             bool success = await dbService.addSceneData(sceneNameInput.text, this.trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
 
@@ -111,39 +120,26 @@ public class SceneSaver : MonoBehaviour
 
     public void TakeScreenShotAndSave()
     {
-        // Remember the original target texture of the camera
         RenderTexture originalTargetTexture = captureCamera.targetTexture;
-
-        // Create a RenderTexture with the dimensions of the screen
         RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
 
-        // Set the camera's target texture to the RenderTexture
         captureCamera.targetTexture = renderTexture;
-
-        // Render the entire screen to the RenderTexture
         captureCamera.Render();
 
-        // Create a Texture2D to read the RenderTexture data
         Texture2D screenshotTexture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-
-        // Read the RenderTexture data into the Texture2D
         RenderTexture.active = renderTexture;
         screenshotTexture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         screenshotTexture.Apply();
 
-        // Clean up
         RenderTexture.active = null;
         captureCamera.targetTexture = originalTargetTexture; // Restore original target texture
         Destroy(renderTexture);
 
-        // Save the screenshot texture to a file
         SaveTextureToFile(screenshotTexture, "screenshot.png");
 
-        // Destroy the screenshot texture
         Destroy(screenshotTexture);
     }
 
-    // Method to save a Texture2D as a PNG file
     private void SaveTextureToFile(Texture2D texture, string fileName)
     {
         byte[] bytes = texture.EncodeToPNG();

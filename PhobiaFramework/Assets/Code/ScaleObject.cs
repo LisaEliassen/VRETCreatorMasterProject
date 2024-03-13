@@ -60,7 +60,10 @@ public class ScaleObject : MonoBehaviour
             ((TextMeshProUGUI)sizeInput.placeholder).text = scaleValue.ToString();
             sizeInput.text = scaleValue.ToString();
 
-            sceneSaver.SetTriggerSize(scaleValue.ToString());
+            if (objectToScale.name == "Trigger")
+            {
+                sceneSaver.SetTriggerSize(scaleValue.ToString());
+            }
         }
     }
 

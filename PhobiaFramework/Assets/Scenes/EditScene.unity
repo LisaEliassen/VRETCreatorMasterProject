@@ -13656,7 +13656,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Visibility On/Off
+  m_text: Trigger visibility
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -26421,6 +26421,7 @@ MonoBehaviour:
   sizeInputPlatform: {fileID: 1991677663}
   addCopyButton: {fileID: 442401786}
   removeCopyButton: {fileID: 1546442842}
+  interactableToggle: {fileID: 93576065}
   objectVisibility: {fileID: 193288566}
   platformVisibility: {fileID: 1368287614}
   wallsVisibility: {fileID: 1278875457}
@@ -38949,7 +38950,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 250, y: 250}
-  m_Spacing: {x: 100, y: 100}
+  m_Spacing: {x: 300, y: 120}
   m_Constraint: 0
   m_ConstraintCount: 5
 --- !u!1 &1253534062

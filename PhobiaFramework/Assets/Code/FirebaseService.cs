@@ -530,8 +530,8 @@ public class FirebaseService : Database
             {
                 if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
                 {
-                    Debug.Log("Key: " + child.Key);
-                    Debug.Log("Value: " + child.GetRawJsonValue());
+                    //Debug.Log("Key: " + child.Key);
+                    //Debug.Log("Value: " + child.GetRawJsonValue());
 
                     string uniqueID = child.Key;
                     string filename = child.Child("filename").Value.ToString();
@@ -646,8 +646,8 @@ public class FirebaseService : Database
             {
                 if (child != null && child.Child("filename") != null && child.Child("filetype") != null && child.Child("path") != null && child.Child("pathToIcon") != null)
                 {
-                    Debug.Log("Key: " + child.Key);
-                    Debug.Log("Value: " + child.GetRawJsonValue());
+                    //Debug.Log("Key: " + child.Key);
+                    //Debug.Log("Value: " + child.GetRawJsonValue());
 
                     string uniqueID = child.Key;
                     string filename = child.Child("filename").Value.ToString();

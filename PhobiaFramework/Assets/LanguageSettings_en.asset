@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4771563757568
-    m_Localized: Visibility On/Off
+    m_Localized: Trigger visibility
     m_Metadata:
       m_Items: []
   - m_Id: 5945973071872

@@ -283,16 +283,19 @@ public class LoadGlb : MonoBehaviour
             }
         }
         objectVisibility.interactable = false;
-        removeTriggerButton.interactable = false;
+        //removeTriggerButton.interactable = false;
 
-        sizeSlider.interactable = false;
-        sizeInput.interactable = false;
-        moveSliderX.interactable = false;
-        moveSliderY.interactable = false;
-        dropdown.interactable = false;
         dropdown.ClearOptions();
+        dropdown.interactable = false;
         addCopyButton.interactable = false;
         removeCopyButton.interactable = false;
+        sizeInput.interactable = false;
+
+        /*sizeSlider.interactable = false;
+        moveSliderX.interactable = false;
+        moveSliderY.interactable = false;
+        dropdown.ClearOptions();
+        */
     }
 
     public async void MakeCopy()
@@ -339,7 +342,7 @@ public class LoadGlb : MonoBehaviour
         }
     }
 
-    public async void SpawnObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
+    public async Task<bool> SpawnObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
     {
         if (trigger != null)
         {
@@ -372,14 +375,18 @@ public class LoadGlb : MonoBehaviour
 
             sizeSlider.value = 2;
             ((TextMeshProUGUI)sizeInput.placeholder).text = "2";
+
+            return true;
         }
         else
         {
             Debug.Log("The glb model could not be loaded!");
+
+            return false;
         }
     }
 
-    public async void SpawnSceneryObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
+    public async Task<bool> SpawnSceneryObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
     {
         string name = modelName;
         if (sceneSaver.objects.ContainsKey(path))
@@ -407,10 +414,12 @@ public class LoadGlb : MonoBehaviour
             SceneryObject obj = new SceneryObject(modelName, path, newObject.transform.position.ToString() + "," + newObject.transform.rotation.ToString() + "," + newObject.transform.localScale.ToString(), "2");
             sceneSaver.AddSceneryObject(newObject, obj);
             objDropdownManager.addDropdownOption(newObject, name);
+            return true;
         }
         else
         {
             Debug.Log("The glb model could not be loaded!");
+            return false;
         }
 
     }
@@ -538,9 +547,6 @@ public class LoadGlb : MonoBehaviour
 
     void Update()
     {
-        if (GetTrigger() != null)
-        {
-            sceneSaver.SetTriggerTransform(GetTrigger().transform.position.ToString() + "," + GetTrigger().transform.rotation.ToString() + "," + GetTrigger().transform.localScale.ToString());
-        }
+
     }
 }

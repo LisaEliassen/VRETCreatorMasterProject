@@ -187,7 +187,7 @@ public class ShowAllScenes : MonoBehaviour
                     Debug.LogError("Failed to parse transform string");
                 }
 
-                loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, scale);
+                await loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, scale);
             }
 
             if (!System.String.IsNullOrEmpty(pathTo360Media))
@@ -228,7 +228,7 @@ public class ShowAllScenes : MonoBehaviour
                     Debug.LogError("Failed to parse transform string");
                 }
 
-                loadGlbScript.SpawnSceneryObject(sceneryObj.name, sceneryObj.path, position, rotation, scale);
+                await loadGlbScript.SpawnSceneryObject(sceneryObj.name, sceneryObj.path, position, rotation, scale);
             }
 
             EditSceneUI.SetActive(true);
