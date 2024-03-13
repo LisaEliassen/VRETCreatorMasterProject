@@ -27,7 +27,7 @@ public class ScaleObject : MonoBehaviour
         sceneSaver = databaseServiceObject.GetComponent<SceneSaver>();
 
         // Add an event listener to the slider's value changed event
-        sizeSlider.onValueChanged.AddListener(ChangeObjectSize);
+        sizeSlider.onValueChanged.AddListener(ChangeSize);
         sizeInput.onValueChanged.AddListener((x) => ChangeObjectSizeInput(sizeInput.text));
         sizeSlider.interactable = false;
         sizeInput.interactable = false;
@@ -35,13 +35,10 @@ public class ScaleObject : MonoBehaviour
         triggerCopies = new List<GameObject>();
     }
 
-    public void SetObjectToScale(GameObject gameObject)
-    {
-        objectToScale = gameObject;
-    }
 
     private void ChangeSize(float scaleValue)
     {
+        GameObject objectToScale = objDropdownManager.GetCurrentObject();
         if (objectToScale != null)
         {
             float scaledValue = scaleValue / 3;

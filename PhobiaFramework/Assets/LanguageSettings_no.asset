@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1683452911616
-    m_Localized: "St\xF8rrelse trigger"
+    m_Localized: "St\xF8rrelse"
     m_Metadata:
       m_Items: []
   - m_Id: 4111476776960
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4771563757568
-    m_Localized: Trigger synlighet
+    m_Localized: "Synlighet P\xE5/Av"
     m_Metadata:
       m_Items: []
   - m_Id: 5945973071872
@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6563269763072
-    m_Localized: Fjern trigger
+    m_Localized: Fjern modell
     m_Metadata:
       m_Items: []
   - m_Id: 6823853481984
@@ -202,7 +202,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18638431903744
-    m_Localized: "Er du sikker p\xE5 at du vil fjerne trigger modellen (og dens kopier)?"
+    m_Localized: "Er du sikker p\xE5 at du vil fjerne modellen?"
     m_Metadata:
       m_Items: []
   - m_Id: 504338411593728

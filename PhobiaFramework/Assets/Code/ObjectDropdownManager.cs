@@ -9,6 +9,7 @@ public class ObjectDropdownManager : MonoBehaviour
     DatabaseService dbService;
     public GameObject databaseServiceObject;
     public TMP_Dropdown dropdown;
+    public GameObject animationDropdown;
     public Toggle objectVisibility;
     public Toggle interactableToggle;
     public Slider sizeSlider;
@@ -64,7 +65,9 @@ public class ObjectDropdownManager : MonoBehaviour
         objects = new Dictionary<string, GameObject>();
         dropdown.ClearOptions();
         scenery = new List<GameObject>();
+        interactableToggle.interactable = false;
     }
+
 
     public GameObject GetCurrentObject()
     {
@@ -87,6 +90,7 @@ public class ObjectDropdownManager : MonoBehaviour
             if (index != -1)
             {
                 dropdown.value = index;
+                dropdown.RefreshShownValue();
             }
             setCurrentObject(option);
         }
@@ -100,6 +104,7 @@ public class ObjectDropdownManager : MonoBehaviour
             if (index != -1)
             {
                 dropdown.value = index;
+                dropdown.RefreshShownValue();
             }
             setCurrentObject(option);
         }
@@ -123,6 +128,7 @@ public class ObjectDropdownManager : MonoBehaviour
         {
             TMP_Dropdown.OptionData option = dropdown.options.Find(s => string.Equals(s.text, "Trigger"));
             dropdown.options.Remove(option);
+            dropdown.RefreshShownValue();
         }
 
         else 
@@ -134,6 +140,7 @@ public class ObjectDropdownManager : MonoBehaviour
                     objects.Remove(pair.Key);
                     TMP_Dropdown.OptionData option = dropdown.options.Find(s => string.Equals(s.text, pair.Key));
                     dropdown.options.Remove(option);
+                    dropdown.RefreshShownValue();
                     break;
                 }
             }
@@ -149,14 +156,19 @@ public class ObjectDropdownManager : MonoBehaviour
     {
         if (option == "Trigger")
         {
-            currentObject = this.trigger;
+            this.currentObject = this.trigger;
             copies.SetActive(true);
             addCopyButton.interactable = true;
+            interactableToggle.gameObject.SetActive(true);
+            interactableToggle.interactable = true;
+            animationDropdown.SetActive(true);
         }
         else
         {
-            currentObject = objects[option];
+            this.currentObject = objects[option];
             copies.SetActive(false);
+            interactableToggle.gameObject.SetActive(false);
+            animationDropdown.SetActive(false);
         }
 
         objectVisibility.interactable = true;

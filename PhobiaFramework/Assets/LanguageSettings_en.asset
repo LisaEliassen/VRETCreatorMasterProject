@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1683452911616
-    m_Localized: Size trigger
+    m_Localized: Size
     m_Metadata:
       m_Items: []
   - m_Id: 4111476776960
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4771563757568
-    m_Localized: Trigger object visibility
+    m_Localized: Visibility On/Off
     m_Metadata:
       m_Items: []
   - m_Id: 5945973071872
@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6563269763072
-    m_Localized: Remove trigger
+    m_Localized: Remove model
     m_Metadata:
       m_Items: []
   - m_Id: 6823853481984
@@ -208,7 +208,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18638431903744
-    m_Localized: Are you sure you want to remove the trigger model (and its copies)?
+    m_Localized: Are you sure you want to remove the model?
     m_Metadata:
       m_Items: []
   - m_Id: 504338411593728
