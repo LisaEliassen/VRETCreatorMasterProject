@@ -22,11 +22,13 @@ public class ScaleGameObjects : MonoBehaviour
     public Slider platformSlider;
     public TMP_InputField sizeInputPlatform;
 
+    public double previousScaleValue;
+    public double currentScaleValue;
+
     private void Start()
     {
         //hingeJoint1 = door1.GetComponent<HingeJoint>();
         //hingeJoint2 = door2.GetComponent<HingeJoint>();
-
 
         // Add listeners to detect changes in the input field values
         sizeInputSphere.onValueChanged.AddListener(delegate { UpdateSphereFromInputField(); });
@@ -44,6 +46,8 @@ public class ScaleGameObjects : MonoBehaviour
 
     private void Update()
     {
+        UpdateSphereScale();
+        UpdatePlatformScale();
         /*
         hingeJoint1 = door1.GetComponent<HingeJoint>();
         hingeJoint2 = door2.GetComponent<HingeJoint>();
@@ -61,8 +65,8 @@ public class ScaleGameObjects : MonoBehaviour
         door1.AddComponent<HingeJoint>();
         door2.AddComponent<HingeJoint>();
 
-        hingeJoint1 = door1.AddComponent<HingeJoint>();
-        hingeJoint2 = door2.AddComponent<HingeJoint>();
+        hingeJoint1 = door1.GetComponent<HingeJoint>();
+        hingeJoint2 = door2.GetComponent<HingeJoint>();
 
         // Set the limits
         JointLimits limits = hingeJoint1.limits;
@@ -71,14 +75,15 @@ public class ScaleGameObjects : MonoBehaviour
         hingeJoint1.limits = limits;
         hingeJoint2.limits = limits;
 
+        /*
         // Set connected anchor
         Vector3 anchor1 = new Vector3(1.030685f, 1.004f, -4.9399f);
         hingeJoint1.connectedAnchor = anchor1;
         Vector3 anchor2 = new Vector3(-1.0064f, 1.004f, -5.078898f);
         hingeJoint2.connectedAnchor = anchor2;
         */
-        UpdateSphereScale();
-        UpdatePlatformScale();
+        
+        
     }
 
     private void UpdateSphereFromInputField()
@@ -109,6 +114,7 @@ public class ScaleGameObjects : MonoBehaviour
 
         platformSlider.value = 10;
         ((TextMeshProUGUI)sizeInputPlatform.placeholder).text = "10";
+        previousScaleValue = 10;
     }
 
     private void UpdatePlatformScale()
@@ -120,12 +126,30 @@ public class ScaleGameObjects : MonoBehaviour
 
         sizeInputPlatform.text = platformScale.ToString();
 
-        //Vector3 newPosition = doors.transform.position - new Vector3(0, 0, platformScale*0.2f);
-        //doors.transform.position = newPosition;
+        /*
+        if(previousScaleValue < platformScale)
+        {
+            previousScaleValue = platformScale;
+            Vector3 newPosition = doors.transform.position - new Vector3(0, 0, ((platformScale / 10) * 2.2f - 2.2f) / 2f);
+            doors.transform.position = newPosition;
+
+            Vector3 waitingRoomNewPosition = waitingRoom.transform.position - new Vector3(0,0,5) - new Vector3(0, 0, exposureScene.transform.localScale.z * 5);
+            waitingRoom.transform.position = waitingRoomNewPosition;
+        }
+
+        if (previousScaleValue > platformScale)
+        {
+            previousScaleValue = platformScale;
+            Vector3 newPosition = doors.transform.position + new Vector3(0, 0, ((platformScale / 10) * 2.2f - 2.2f) / 2f);
+            doors.transform.position = newPosition;
+
+            Vector3 waitingRoomNewPosition = waitingRoom.transform.position + new Vector3(0, 0, 5) + new Vector3(0, 0, exposureScene.transform.localScale.z * 5);
+            waitingRoom.transform.position = waitingRoomNewPosition;
+        }*/
+
         //exp_pos = wait_pos - 5 - exposureScene.transform.localScale * 5
         // door walls: pos_x +- (scale * size_x - size_x) / 2
-   
-        
+
     }
 
     private void UpdateSphereScale()
