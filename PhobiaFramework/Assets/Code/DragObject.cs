@@ -76,11 +76,12 @@ public class DragObject : MonoBehaviour
     {
         // Get the current position of the object
         Vector3 currentPos = GetMouseWorldPos() + mOffset;
-
+        currentPos.y = transform.position.y;
+        /*
         // Restrict movement along the y-axis
         if (currentPos.y <= transform.position.y) {
             currentPos.y = transform.position.y;
-        }
+        }*/
 
         // Update the position of the object
         transform.position = currentPos;
