@@ -285,11 +285,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 19199668183281664
-    m_Localized: Waiting Room
+    m_Localized: "\u2193 Waiting Room \u2193"
     m_Metadata:
       m_Items: []
   - m_Id: 19200614623784960
-    m_Localized: "Exposure Room\t"
+    m_Localized: "\u2193 Exposure Room \u2193"
     m_Metadata:
       m_Items: []
   references:

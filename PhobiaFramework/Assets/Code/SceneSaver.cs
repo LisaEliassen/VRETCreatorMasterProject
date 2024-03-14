@@ -179,7 +179,10 @@ public class SceneSaver : MonoBehaviour
 
     public void SetTriggerTransform(string triggerTransform)
     {
-        this.trigger.SetPosition(triggerTransform);
+        if (trigger != null)
+        {
+            this.trigger.SetPosition(triggerTransform);
+        }
     }
 
     public void SetTriggerSize(string triggerSize)

@@ -281,11 +281,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 19199668183281664
-    m_Localized: Venterom
+    m_Localized: "\u2193 Venterom \u2193"
     m_Metadata:
       m_Items: []
   - m_Id: 19200614623784960
-    m_Localized: Eksponeringsrom
+    m_Localized: "\u2193 Eksponeringsrom \u2193"
     m_Metadata:
       m_Items: []
   references:

@@ -268,8 +268,8 @@ public class LoadGlb : MonoBehaviour
     public void RemoveTrigger()
     {
         sceneSaver.SetPathToTrigger("");
+        //remove positon
         objDropdownManager.RemoveTrigger();
-        sceneSaver.SetTrigger(null);
 
         DestroyImmediate(trigger);
         trigger = null;

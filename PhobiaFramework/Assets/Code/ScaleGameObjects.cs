@@ -9,6 +9,7 @@ public class ScaleGameObjects : MonoBehaviour
 {
     public GameObject sphere;
     public GameObject exposureScene;
+    public GameObject exposureRoom;
     public GameObject waitingRoom;
     public GameObject doors;
 
@@ -34,6 +35,9 @@ public class ScaleGameObjects : MonoBehaviour
         sizeInputSphere.onValueChanged.AddListener(delegate { UpdateSphereFromInputField(); });
         sizeInputPlatform.onValueChanged.AddListener(delegate { UpdatePlatformFromInputField(); });
 
+        sphereSlider.onValueChanged.AddListener(UpdateSphereScale);
+        platformSlider.onValueChanged.AddListener(UpdatePlatformScale);
+
         sphereSlider.interactable = true;
         sizeInputSphere.interactable = true;
         platformSlider.interactable = true;
@@ -46,8 +50,8 @@ public class ScaleGameObjects : MonoBehaviour
 
     private void Update()
     {
-        UpdateSphereScale();
-        UpdatePlatformScale();
+        //UpdateSphereScale();
+        //UpdatePlatformScale();
         /*
         hingeJoint1 = door1.GetComponent<HingeJoint>();
         hingeJoint2 = door2.GetComponent<HingeJoint>();
@@ -92,7 +96,6 @@ public class ScaleGameObjects : MonoBehaviour
         if (float.TryParse(sizeInputSphere.text, out value))
         {
             sphereSlider.value = value;
-            UpdateSphereScale();
         }
     }
 
@@ -102,7 +105,6 @@ public class ScaleGameObjects : MonoBehaviour
         if (float.TryParse(sizeInputPlatform.text, out value))
         {
             platformSlider.value = value;
-            UpdatePlatformScale();
         }
     }
 
@@ -117,14 +119,16 @@ public class ScaleGameObjects : MonoBehaviour
         previousScaleValue = 10;
     }
 
-    private void UpdatePlatformScale()
+    private void UpdatePlatformScale(float scaleValue)
     {
+        UpdatePlatformFromInputField();
+
         float platformScale = platformSlider.value;
         // Update the scale of the platform based on the value of the platform slider
-        
-        exposureScene.transform.localScale = new Vector3(platformScale / 10, exposureScene.transform.localScale.y, platformScale / 10);
 
-        sizeInputPlatform.text = platformScale.ToString();
+        exposureRoom.transform.localScale = new Vector3(scaleValue/10, exposureRoom.transform.localScale.y, scaleValue/10);
+
+        sizeInputPlatform.text = scaleValue.ToString();
 
         /*
         if(previousScaleValue < platformScale)
@@ -147,18 +151,29 @@ public class ScaleGameObjects : MonoBehaviour
             waitingRoom.transform.position = waitingRoomNewPosition;
         }*/
 
+
+        /*float new_z = (5/10) * (exposureRoom.transform.localScale.z / 10) - 5;
+        Vector3 newPos = new Vector3(exposureScene.transform.position.x, exposureScene.transform.position.y, exposureScene.transform.position.z + new_z);
+
+        exposureScene.transform.position = newPos;*/
+
+        float zOffset = (exposureRoom.transform.localScale.z - 1f) * 0.5f * exposureRoom.transform.localScale.z;
+        exposureScene.transform.position += new Vector3(0f, 0f, zOffset);
+
         //exp_pos = wait_pos - 5 - exposureScene.transform.localScale * 5
         // door walls: pos_x +- (scale * size_x - size_x) / 2
 
     }
 
-    private void UpdateSphereScale()
+    private void UpdateSphereScale(float scaleValue)
     {
-        // Update the scale of the sphere based on the value of the sphere slider
-        float sphereScale = sphereSlider.value;
-        sphere.transform.localScale = new Vector3(sphereScale, sphereScale, sphereScale);
+        UpdateSphereFromInputField();
 
-        sizeInputSphere.text = sphereScale.ToString();
+        // Update the scale of the sphere based on the value of the sphere slider
+        //float sphereScale = sphereSlider.value;
+        sphere.transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
+
+        sizeInputSphere.text = scaleValue.ToString();
     }
 
 }
