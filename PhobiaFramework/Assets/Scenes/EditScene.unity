@@ -3662,7 +3662,7 @@ Transform:
   - {fileID: 2098444626}
   - {fileID: 1295946568}
   m_Father: {fileID: 1899679961}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &130927228
 GameObject:
@@ -22608,7 +22608,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1678994631}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!328 &762048121
 VideoPlayer:
@@ -53451,11 +53451,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 543450651890570954}
   - {fileID: 1988856143}
   - {fileID: 762048119}
   m_Father: {fileID: 1899679961}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1684272594
 GameObject:
@@ -59563,6 +59562,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 543450651890570954}
   - {fileID: 1678994631}
   - {fileID: 121386409}
   m_Father: {fileID: 0}
@@ -61605,7 +61605,7 @@ Transform:
   - {fileID: 1122798307}
   - {fileID: 1764916159}
   m_Father: {fileID: 1678994631}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1989489322
 GameObject:
@@ -65787,7 +65787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: af97c415420825445a57471706e6a18c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.47
+      value: -11.47352
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: af97c415420825445a57471706e6a18c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66244,12 +66244,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147616582768}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.001876831, y: 4.529875, z: 4.968322}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.7234081, y: 3.2297015, z: -11.433521}
   m_LocalScale: {x: 1e-12, y: 2.5, z: 1.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1678994631}
+  m_Father: {fileID: 1899679961}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &919132147616582768
@@ -66265,7 +66265,7 @@ GameObject:
   - component: {fileID: 1711813855303937445}
   - component: {fileID: 1817784612}
   m_Layer: 2
-  m_Name: DoorWall3
+  m_Name: wallOverDoorsExposureScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
