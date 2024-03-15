@@ -17,11 +17,6 @@ public class ScaleGameObjects : MonoBehaviour
     public Slider platformSlider;
     public TMP_InputField sizeInputPlatform;
 
-    public GameObject door1;
-    public GameObject door2;
-    public GameObject door3;
-    public GameObject door4;
-
     private Vector3 initialScale;   // Initial scale of the room to scale
     private float initialZPosition; // Initial Z position of the room to scale
 
@@ -75,6 +70,11 @@ public class ScaleGameObjects : MonoBehaviour
 
         platformSlider.value = 10;
         ((TextMeshProUGUI)sizeInputPlatform.placeholder).text = "10";
+
+        //scaling from 5-20, but default value is 10
+        exposureRoom.transform.localScale = new Vector3(2, exposureRoom.transform.localScale.y, 2);
+        float newPositionZ = initialZPosition + (5 * (10 / 5) - 5) / 2; 
+        exposureScene.transform.position = new Vector3(exposureScene.transform.position.x, exposureScene.transform.position.y, newPositionZ+0.5f);
     }
 
     private void UpdatePlatformScale(float scaleValue)
@@ -82,37 +82,16 @@ public class ScaleGameObjects : MonoBehaviour
         UpdatePlatformFromInputField();
 
         // Update the scale of the platform based on the value of the platform slider
-        exposureRoom.transform.localScale = new Vector3(scaleValue/10, exposureRoom.transform.localScale.y, scaleValue/10);
+        exposureRoom.transform.localScale = new Vector3(scaleValue/5, exposureRoom.transform.localScale.y, scaleValue/5);
 
         sizeInputPlatform.text = scaleValue.ToString();
 
-        // Calculate the distance between the centers of the two rooms
-        float distanceBetweenRooms = Mathf.Abs(exposureScene.transform.position.z + waitingRoom.transform.position.z);
-        Debug.Log(distanceBetweenRooms);
-
-        // Calculate the offset
-        float offset = (exposureRoom.transform.localScale.z - initialScale.z) / 2f;
-
         // Adjust the position of the scaled room to prevent intersection
-        float newPositionZ = initialZPosition + (10 * (scaleValue / 10) - 10) / 2; 
+        float newPositionZ = initialZPosition + (5 * (scaleValue / 5) - 5) / 2; 
 
         // Apply the new position
         exposureScene.transform.position = new Vector3(exposureScene.transform.position.x, exposureScene.transform.position.y, newPositionZ);
-        
-        if(scaleValue < 10)
-        {
-            door1.SetActive(false);
-            door2.SetActive(false);
-            door3.SetActive(false);
-            door4.SetActive(false);
-        }
-        else
-        {
-            door1.SetActive(true);
-            door2.SetActive(true);
-            door3.SetActive(true);
-            door4.SetActive(true);
-        }
+    
 
     }
 
