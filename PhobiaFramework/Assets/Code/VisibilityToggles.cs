@@ -28,6 +28,7 @@ public class VisibilityToggles : MonoBehaviour
     public GameObject walls;
     public GameObject extraWall1;
     public GameObject extraWall2;
+    public GameObject extraWall3;
     public GameObject exposureRoomSign;
 
     // Start is called before the first frame update
@@ -128,6 +129,7 @@ public class VisibilityToggles : MonoBehaviour
             extraWall1.SetActive(true);
             extraWall2.SetActive(true);
             exposureRoomSign.SetActive(true);
+            extraWall3.SetActive(true);
         }
         else
         {
@@ -135,6 +137,7 @@ public class VisibilityToggles : MonoBehaviour
             extraWall1.SetActive(false);
             extraWall2.SetActive(false);
             exposureRoomSign.SetActive(false);
+            extraWall3.SetActive(false);
         }
     }
 }
