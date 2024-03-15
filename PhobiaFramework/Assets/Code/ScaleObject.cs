@@ -63,6 +63,12 @@ public class ScaleObject : MonoBehaviour
             if (objectToScale.name == "Trigger")
             {
                 sceneSaver.SetTriggerSize(scaleValue.ToString());
+                loadGlb.UpdateObjectSize(objectToScale, (int) scaleValue);
+            }
+            else
+            {
+                sceneSaver.SetSceneryObjectSize(objectToScale, scaleValue.ToString());
+                loadGlb.UpdateObjectSize(objectToScale, (int) scaleValue);
             }
         }
     }

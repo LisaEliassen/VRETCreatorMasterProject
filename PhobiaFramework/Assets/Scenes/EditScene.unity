@@ -26877,6 +26877,7 @@ MonoBehaviour:
   warningOrErrorMessage: {fileID: 1052895217}
   captureCamera: {fileID: 2144952988}
   SceneNameUI: {fileID: 701270044}
+  scenery: []
 --- !u!114 &846055979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37313,11 +37314,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EditUI: {fileID: 927890619}
+  camera: {fileID: 2144952986}
   resetCam: {fileID: 2020408422}
   moveSpeed: 5
   rotationSpeed: 0.1
   scrollSpeed: 2
-  minZoomDistance: 2
+  minZoomDistance: 0
   maxZoomDistance: 20
   invertCameraMovement: {fileID: 946710680}
   invertRotationMovement: {fileID: 65141029}
@@ -47044,10 +47046,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 631446700}
   m_HandleRect: {fileID: 502245688}
   m_Direction: 0
-  m_MinValue: 10
-  m_MaxValue: 40
+  m_MinValue: 1
+  m_MaxValue: 50
   m_WholeNumbers: 1
-  m_Value: 10
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

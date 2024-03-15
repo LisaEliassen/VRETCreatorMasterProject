@@ -169,25 +169,31 @@ public class ShowAllScenes : MonoBehaviour
         // Add an onclick listener for the grid item to load the model from Firebase Storage
         button.onClick.AddListener(async () =>
         {
+            loadGlbScript.ResetScene();
+
             if (!System.String.IsNullOrEmpty(trigger.path))
             {
                 Vector3 position;
                 Quaternion rotation;
-                Vector3 scale;
 
-                if (TransformParser.TryParseTransformString(trigger.transform, out position, out rotation, out scale))
+                string[] positionComponents = trigger.position.Split(',');
+
+                if (trigger == null)
                 {
-                    // Now you have position, rotation, and scale
-                    Debug.Log("Position: " + position);
-                    Debug.Log("Rotation: " + rotation.eulerAngles);
-                    Debug.Log("Scale: " + scale);
-                }
-                else
-                {
-                    Debug.LogError("Failed to parse transform string");
+                    Debug.Log("trigger is null");
                 }
 
-                await loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, scale);
+                if (trigger.rotation == null)
+                {
+                    Debug.Log("trigger.rotation is null");
+                }
+
+                string[] rotationComponents = trigger.rotation.Split(',');
+
+                position = ParseVector3(positionComponents[0], positionComponents[1], positionComponents[2]);
+                rotation = ParseQuaternion(rotationComponents[0], rotationComponents[1], rotationComponents[2], rotationComponents[3]);
+
+                await loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, int.Parse(trigger.size));
             }
 
             if (!System.String.IsNullOrEmpty(pathTo360Media))
@@ -214,21 +220,14 @@ public class ShowAllScenes : MonoBehaviour
             {
                 Vector3 position;
                 Quaternion rotation;
-                Vector3 scale;
 
-                if (TransformParser.TryParseTransformString(sceneryObj.transform, out position, out rotation, out scale))
-                {
-                    // Now you have position, rotation, and scale
-                    Debug.Log("Position: " + position);
-                    Debug.Log("Rotation: " + rotation.eulerAngles);
-                    Debug.Log("Scale: " + scale);
-                }
-                else
-                {
-                    Debug.LogError("Failed to parse transform string");
-                }
+                string[] positionComponents = sceneryObj.position.Split(',');
+                string[] rotationComponents = sceneryObj.rotation.Split(',');
 
-                await loadGlbScript.SpawnSceneryObject(sceneryObj.name, sceneryObj.path, position, rotation, scale);
+                position = ParseVector3(positionComponents[0], positionComponents[1], positionComponents[2]);
+                rotation = ParseQuaternion(rotationComponents[0], rotationComponents[1], rotationComponents[2], rotationComponents[3]);
+
+                await loadGlbScript.SpawnSceneryObject(sceneryObj.name, sceneryObj.path, position, rotation, int.Parse(sceneryObj.size));
             }
 
             EditSceneUI.SetActive(true);
@@ -243,7 +242,24 @@ public class ShowAllScenes : MonoBehaviour
         gridLayoutGroup.gameObject.SetActive(true);
     }
 
+    private static Vector3 ParseVector3(string xStr, string yStr, string zStr)
+    {
+        float x = float.Parse(xStr.Trim('('));
+        float y = float.Parse(yStr.Trim());
+        float z = float.Parse(zStr.Trim(')'));
 
+        return new Vector3(x, y, z);
+    }
+
+    private static Quaternion ParseQuaternion(string xStr, string yStr, string zStr, string wStr)
+    {
+        float x = float.Parse(xStr.Trim('('));
+        float y = float.Parse(yStr.Trim());
+        float z = float.Parse(zStr.Trim());
+        float w = float.Parse(wStr.Trim(')'));
+
+        return new Quaternion(x, y, z, w);
+    }
 
     public IEnumerator LoadImageFromFirebase(string modelIconPath, Image iconImage)
     {

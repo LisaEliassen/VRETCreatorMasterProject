@@ -8,12 +8,13 @@ using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
     public GameObject EditUI;
+    public GameObject camera;
     public Button resetCam;
 
     public float moveSpeed = 1.0f;
     public float rotationSpeed = 0.5f;
     public float scrollSpeed = 5.0f;
-    public float minZoomDistance = 2.0f;
+    public float minZoomDistance = 0f;
     public float maxZoomDistance = 20.0f;
 
     private Vector2 movementInput;
@@ -185,6 +186,32 @@ public class CameraController : MonoBehaviour
             // Apply the rotation
             transform.rotation = Quaternion.Euler(rotationX, eulerRotation.y, 0);
         }
+
+        /*
+        // ANOTHER METHOD:
+        // Read mouse position for rotation when the right mouse button is held down
+        rotationInput = Mouse.current.delta.ReadValue();
+
+        if (invertRotationMovement != null && invertRotationMovement.isOn)
+        {
+            // Calculate rotation based on mouse movement
+            float rotationDeltaX = rotationInput.x * rotationSpeed;
+            float rotationDeltaY = -rotationInput.y * rotationSpeed; // Invert vertical rotation
+
+            // Apply rotation to the Camera object
+            camera.transform.Rotate(Vector3.up, rotationDeltaX, Space.World);
+            camera.transform.Rotate(Vector3.right, rotationDeltaY, Space.Self);
+        }
+        else
+        {
+            // Calculate rotation based on mouse movement
+            float rotationDeltaX = -rotationInput.x * rotationSpeed;
+            float rotationDeltaY = rotationInput.y * rotationSpeed; // Invert vertical rotation
+
+            // Apply rotation to the Camera object
+            camera.transform.Rotate(Vector3.up, rotationDeltaX, Space.World);
+            camera.transform.Rotate(Vector3.right, rotationDeltaY, Space.Self);
+        }*/
     }
 
     private void resetCameraToDefaultPos()

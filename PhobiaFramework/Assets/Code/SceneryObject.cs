@@ -9,20 +9,23 @@ public class SceneryObject {
 
     public string name;
     public string path;
-    public string transform;
+    public string position;
+    public string rotation;
     public string size;
 
-    public SceneryObject(string name, string path, string postion, string size)
+    public SceneryObject(string name, string path, string postion, string rotation, string size)
     {
         this.name = name;
         this.path = path;
-        this.transform = postion;
+        this.position = postion;
+        this.rotation = rotation;
         this.size = size;
     }
 
     public string GetPath() { return this.path; }
     public string GetName() { return this.name; }
-    public string GetPosition() { return this.transform; }
+    public string GetPosition() { return this.position; }
+    public string GetRotation() { return this.rotation; }
     public string GetSize() { return this.size; }
 
 }

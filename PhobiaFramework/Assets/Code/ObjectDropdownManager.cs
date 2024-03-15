@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class ObjectDropdownManager : MonoBehaviour
 {
     DatabaseService dbService;
+    LoadGlb loadGlb;
     public GameObject databaseServiceObject;
     public TMP_Dropdown dropdown;
     public GameObject animationDropdown;
@@ -45,6 +47,7 @@ public class ObjectDropdownManager : MonoBehaviour
         {
             // Get the DatabaseService component from the found GameObject
             dbService = databaseServiceObject.GetComponent<DatabaseService>();
+            loadGlb = databaseServiceObject.GetComponent<LoadGlb>();
         }
         else
         {
@@ -178,6 +181,10 @@ public class ObjectDropdownManager : MonoBehaviour
             animationDropdown.SetActive(true);
             objectVisibility.interactable = true;
             objectVisibility.gameObject.SetActive(true);
+
+            int size = loadGlb.GetObjectSizes()[this.trigger];
+            sizeSlider.value = size;
+            ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
         }
         else
         {
@@ -186,6 +193,10 @@ public class ObjectDropdownManager : MonoBehaviour
             interactableToggle.gameObject.SetActive(false);
             animationDropdown.SetActive(false);
             objectVisibility.gameObject.SetActive(false);
+
+            int size = loadGlb.GetObjectSizes()[objects[option]];
+            sizeSlider.value = size;
+            ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
         }
 
         removeTriggerButton.interactable = true;

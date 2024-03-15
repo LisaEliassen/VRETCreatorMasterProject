@@ -135,7 +135,7 @@ public class ShowAllModels : MonoBehaviour
             Quaternion rotation = Quaternion.identity;
             Vector3 scale = Vector3.one;
 
-            await loadGlbScript.SpawnObject(modelName, modelStoragePath, position, rotation, scale);
+            await loadGlbScript.SpawnObject(modelName, modelStoragePath, position, rotation, 2);
             EditSceneUI.SetActive(true);
             ModelUI.SetActive(false);
             Debug.Log("Button for model " + modelName + " was clicked!");

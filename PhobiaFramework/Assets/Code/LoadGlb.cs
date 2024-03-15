@@ -17,7 +17,7 @@ public class LoadGlb : MonoBehaviour
 {
     GameObject trigger;
     GameObject newObject;
-    List<GameObject> newObjects;
+    List<GameObject> sceneryObjects;
     List<GameObject> triggerCopies;
     DatabaseService dbService;
     AnimationController animController;
@@ -53,10 +53,14 @@ public class LoadGlb : MonoBehaviour
 
     ObjectDropdownManager objDropdownManager;
 
+    Dictionary<GameObject, int> objectSizes;
+
     // Start is called before the first frame update
     void Start()
     {
-      
+
+        objectSizes = new Dictionary<GameObject, int>();
+
         RemovePanel.SetActive(true);
         RemovePanel.SetActive(false);
 
@@ -90,7 +94,7 @@ public class LoadGlb : MonoBehaviour
         defaultPosition = posObject.transform.position;
 
         triggerCopies = new List<GameObject>();
-        newObjects = new List<GameObject>();
+        sceneryObjects = new List<GameObject>();
 
         chooseFromDeviceButton.onClick.AddListener(ImportModel);
         removeTriggerButton.onClick.AddListener(() =>
@@ -166,9 +170,13 @@ public class LoadGlb : MonoBehaviour
 
     public List<GameObject> GetSceneryObjectList()
     {
-        return this.newObjects;
+        return this.sceneryObjects;
     }
 
+    public Dictionary<GameObject, int> GetObjectSizes()
+    {
+        return this.objectSizes;
+    }
 
     public void ImportModel()
     {
@@ -258,17 +266,24 @@ public class LoadGlb : MonoBehaviour
         }
         else
         {
-            sceneSaver.RemoveObject(currentObject);
-            objDropdownManager.RemoveObject(currentObject);
-            DestroyImmediate(currentObject);
+            RemoveSceneryObject(currentObject);
+            sceneryObjects.Remove(currentObject);
         }
+    }
 
+    public void RemoveSceneryObject(GameObject obj)
+    {
+        sceneSaver.RemoveSceneryObject(obj);
+        objDropdownManager.RemoveObject(obj);
+        DestroyImmediate(obj);
     }
 
     public void RemoveTrigger()
     {
         sceneSaver.SetPathToTrigger("");
-        //remove positon
+        sceneSaver.SetTriggerPosition("");
+        sceneSaver.SetTriggerRotation("");
+
         objDropdownManager.RemoveTrigger();
 
         DestroyImmediate(trigger);
@@ -307,8 +322,8 @@ public class LoadGlb : MonoBehaviour
             triggerCopies.Add(copy);
             Vector3 position = new Vector3(GetNumCopies(), 0.0f, 0.0f);
             Quaternion rotation = Quaternion.identity;
-            Vector3 scale = Vector3.one;
-            bool success = await LoadGlbFile(copy, pathOfTrigger, position, rotation, scale);
+            int size = objectSizes[this.trigger];
+            bool success = await LoadGlbFile(copy, pathOfTrigger, position, rotation);
             if (success)
             {
                 copy.transform.localScale = trigger.transform.localScale;
@@ -331,6 +346,11 @@ public class LoadGlb : MonoBehaviour
             }
         }
     }
+
+    public void UpdateObjectSize(GameObject obj, int size)
+    {
+        this.objectSizes[obj] = size;
+    }
     
     public void RemoveCopy()
     {
@@ -342,8 +362,25 @@ public class LoadGlb : MonoBehaviour
         }
     }
 
-    public async Task<bool> SpawnObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
+    public void ResetScene()
     {
+        if (trigger != null)
+        {
+            RemoveTrigger();
+        }
+        foreach (GameObject sceneryObj in sceneryObjects)
+        {
+            RemoveSceneryObject(sceneryObj);
+            sceneryObjects = new List<GameObject>();
+        }
+
+
+    }
+
+    public async Task<bool> SpawnObject(string modelName, string path, Vector3 position, Quaternion rotation, int size)
+    {
+        Debug.Log(size.ToString());
+
         if (trigger != null)
         {
             RemoveTrigger();
@@ -352,12 +389,10 @@ public class LoadGlb : MonoBehaviour
         trigger.tag = "Export";
 
         pathOfTrigger = path;
-        bool success = await LoadGlbFile(trigger, path, position, rotation, scale);
+        bool success = await LoadGlbFile(trigger, path, position, rotation);
         if (success)
         {
             sceneSaver.SetPathToTrigger(pathOfTrigger);
-            objDropdownManager.addDropdownOption(trigger, "Trigger");
-            objDropdownManager.SetTrigger(trigger);
 
             Debug.Log("Successfully loaded model!");
             animController.FindAnimations(trigger);
@@ -373,8 +408,11 @@ public class LoadGlb : MonoBehaviour
             moveSliderY.interactable = true;
             addCopyButton.interactable = true;
 
-            sizeSlider.value = 2;
-            ((TextMeshProUGUI)sizeInput.placeholder).text = "2";
+            UpdateObjectSize(trigger, size);
+
+            objDropdownManager.addDropdownOption(trigger, "Trigger");
+
+            objDropdownManager.SetTrigger(trigger);
 
             return true;
         }
@@ -386,12 +424,12 @@ public class LoadGlb : MonoBehaviour
         }
     }
 
-    public async Task<bool> SpawnSceneryObject(string modelName, string path, Vector3 position, Quaternion rotation, Vector3 scale)
+    public async Task<bool> SpawnSceneryObject(string modelName, string path, Vector3 position, Quaternion rotation, int size)
     {
         string name = modelName;
-        if (sceneSaver.objects.ContainsKey(path))
+        if (sceneSaver.sceneryPaths.ContainsKey(path))
         {
-            int count = sceneSaver.objects[path].Count;
+            int count = sceneSaver.sceneryPaths[path].Count;
             name = modelName + count;
             newObject = new GameObject(modelName + count);
         }
@@ -402,18 +440,18 @@ public class LoadGlb : MonoBehaviour
 
         newObject.tag = "Scenery";
 
-        if (newObject != null)
-        {
-            newObjects.Add(newObject);
-        }
-        
-        bool success = await LoadGlbFile(newObject, path, position, rotation, scale);
+              
+        bool success = await LoadGlbFile(newObject, path, position, rotation);
         if (success)
         {
+            sceneryObjects.Add(newObject);
             Debug.Log("Successfully loaded model!");
-            SceneryObject obj = new SceneryObject(modelName, path, newObject.transform.position.ToString() + "," + newObject.transform.rotation.ToString() + "," + newObject.transform.localScale.ToString(), "2");
+            SceneryObject obj = new SceneryObject(name, path, newObject.transform.position.ToString(), newObject.transform.rotation.ToString(), size.ToString());
             sceneSaver.AddSceneryObject(newObject, obj);
+            
+            UpdateObjectSize(newObject, size);
             objDropdownManager.addDropdownOption(newObject, name);
+
             return true;
         }
         else
@@ -425,7 +463,7 @@ public class LoadGlb : MonoBehaviour
     }
 
     //public async void LoadGlbFile(GameObject loadedModel, string path)
-    public async Task<bool> LoadGlbFile(GameObject loadedModel, string path, Vector3 position, Quaternion rotation, Vector3 scale)
+    public async Task<bool> LoadGlbFile(GameObject loadedModel, string path, Vector3 position, Quaternion rotation)
     {
         var gltFastImport = new GLTFast.GltfImport();
         string downloadUrl = await dbService.GetDownloadURL(path);
@@ -451,8 +489,7 @@ public class LoadGlb : MonoBehaviour
             if (success)
             {
                 loadedModel.transform.position = position;
-                //loadedModel.transform.rotation = rotation;
-                //loadedModel.transform.scale = scale;
+                loadedModel.transform.rotation = rotation;
                 loadedModel.SetActive(true);
 
                 // Add a Box Collider to the GameObject

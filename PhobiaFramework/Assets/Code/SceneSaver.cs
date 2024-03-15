@@ -32,7 +32,9 @@ public class SceneSaver : MonoBehaviour
     private string pathToAudio;
     private List<SceneryObject> sceneryObjects = new List<SceneryObject>();
 
-    public Dictionary<string, List<GameObject>> objects;
+    public Dictionary<GameObject, SceneryObject> objects;
+    public List<GameObject> scenery;
+    public Dictionary<string, List<GameObject>> sceneryPaths;
 
     void Awake()
     {
@@ -68,8 +70,10 @@ public class SceneSaver : MonoBehaviour
 
         sceneNameInput.onValueChanged.AddListener((x) => checkInput(sceneNameInput.text));
 
-        objects = new Dictionary<string, List<GameObject>>();
-        trigger = new Trigger("", "", "");
+        sceneryPaths = new Dictionary<string, List<GameObject>>();
+        objects = new Dictionary<GameObject, SceneryObject>();
+        trigger = new Trigger("", "", "", "");
+        scenery = new List<GameObject>();
     }
 
     public void checkInput(string input)
@@ -93,8 +97,11 @@ public class SceneSaver : MonoBehaviour
 
             if (triggerObject != null)
             {
-                SetTriggerTransform(triggerObject.transform.position.ToString() + "," + triggerObject.transform.rotation.ToString() + "," + triggerObject.transform.localScale.ToString());
+                SetTriggerPosition(triggerObject.transform.position.ToString());
+                SetTriggerRotation(triggerObject.transform.rotation.ToString());
             }
+
+            UpdateSceneryObjects();
 
             await dbService.addIcon(Path.Combine(Application.persistentDataPath, "screenshot.png"), sceneName + "_icon", "Scene", Path.GetExtension("screenshot.png"));
             bool success = await dbService.addSceneData(sceneNameInput.text, this.trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
@@ -177,11 +184,19 @@ public class SceneSaver : MonoBehaviour
         this.trigger.SetPath(pathToTrigger);
     }
 
-    public void SetTriggerTransform(string triggerTransform)
+    public void SetTriggerPosition(string triggerPosition)
     {
-        if (trigger != null)
+        if (this.trigger != null && triggerPosition != null)
         {
-            this.trigger.SetPosition(triggerTransform);
+            this.trigger.SetPosition(triggerPosition);
+        }
+    }
+
+    public void SetTriggerRotation(string triggerRotation)
+    {
+        if (this.trigger != null && triggerRotation != null)
+        {
+            this.trigger.SetRotation(triggerRotation);
         }
     }
 
@@ -200,34 +215,112 @@ public class SceneSaver : MonoBehaviour
         this.pathToAudio = pathToAudio;
     }
 
-    public void AddSceneryObject(GameObject obj, SceneryObject sceneryObject)
+    public void SetSceneryObjectPosition(GameObject obj, string sceneryObjectPosition)
     {
-        this.sceneryObjects.Add(sceneryObject);
-        if (!this.objects.ContainsKey(sceneryObject.path))
+        foreach (SceneryObject sceneryObj in this.sceneryObjects)
         {
-            this.objects[sceneryObject.path] = new List<GameObject>();
+            if (sceneryObj.name == obj.name)
+            {
+                SceneryObject newObj = new SceneryObject(sceneryObj.GetName(), sceneryObj.GetPath(), sceneryObjectPosition, sceneryObj.GetRotation(), sceneryObj.GetSize());
+                this.sceneryObjects.Remove(sceneryObj);
+                this.sceneryObjects.Add(newObj);
+
+                break;
+            }
         }
-        this.objects[sceneryObject.path].Add(obj);
     }
 
-    public void RemoveObject(GameObject obj)
+    public void SetSceneryObjectRotation(GameObject obj, string sceneryObjectRotation)
     {
-        foreach (KeyValuePair<string, List<GameObject>> pair in this.objects)
+        foreach (SceneryObject sceneryObj in this.sceneryObjects)
+        {
+            if (sceneryObj.name == obj.name)
+            {
+                SceneryObject newObj = new SceneryObject(sceneryObj.GetName(), sceneryObj.GetPath(), sceneryObj.GetPosition(), sceneryObjectRotation, sceneryObj.GetSize());
+                this.sceneryObjects.Remove(sceneryObj);
+                this.sceneryObjects.Add(newObj);
+
+                break;
+            }
+        }
+    }
+
+    public void SetSceneryObjectSize(GameObject obj, string sceneryObjectSize)
+    {
+        foreach (SceneryObject sceneryObj in this.sceneryObjects)
+        {
+            if (sceneryObj.name == obj.name)
+            {
+                SceneryObject newObj = new SceneryObject(sceneryObj.GetName(), sceneryObj.GetPath(), sceneryObj.GetPosition(), sceneryObj.GetRotation(), sceneryObjectSize);
+                this.sceneryObjects.Remove(sceneryObj);
+                this.sceneryObjects.Add(newObj);
+
+                break;
+            }
+        }
+    }
+
+    public void UpdateSceneryObjects()
+    {
+        foreach(GameObject obj in this.scenery)
+        {
+            SceneryObject sceneryObjToUpdate = objects[obj];
+            SceneryObject sceneryObj = new SceneryObject(sceneryObjToUpdate.name, sceneryObjToUpdate.path, obj.transform.position.ToString(), obj.transform.rotation.ToString(), loadGlb.GetObjectSizes()[obj].ToString());
+            sceneryObjects.Add(sceneryObj);
+        }
+    }
+
+
+    public void AddSceneryObject(GameObject obj, SceneryObject sceneryObject)
+    {
+        this.scenery.Add(obj);
+        this.objects[obj] = sceneryObject;
+
+        if (!this.sceneryPaths.ContainsKey(sceneryObject.path))
+        {
+            this.sceneryPaths[sceneryObject.path] = new List<GameObject>();
+        }
+        this.sceneryPaths[sceneryObject.path].Add(obj);
+
+
+    }
+
+    public void RemoveSceneryObject(GameObject obj)
+    {
+        /*foreach(SceneryObject sceneryObj in this.sceneryObjects)
+        {
+            if (sceneryObj.name == obj.name)
+            {
+                this.sceneryObjects.Remove(sceneryObj);
+                break;
+            }
+        }*/
+
+        foreach (KeyValuePair<string, List<GameObject>> pair in this.sceneryPaths)
         {
             if (pair.Value.Contains(obj) && pair.Value.Count == 1)
             {
-                objects.Remove(pair.Key);
+                sceneryPaths.Remove(pair.Key);
                 break;
             }
             else if (pair.Value.Contains(obj) && pair.Value.Count < 1)
             {
-                objects[pair.Key].Remove(obj);
+                sceneryPaths[pair.Key].Remove(obj);
                 break;
             }
         }
+
+        foreach (KeyValuePair<GameObject, SceneryObject> pair in this.objects)
+        {
+            this.objects.Remove(pair.Key);
+            break;
+        }
+
+        this.scenery.Remove(obj);
     }
 
-    public async void SimpleExport()
+
+    /*public async void SimpleExport()
     {
         if (databaseServiceObject != null)
         {
@@ -342,6 +435,6 @@ public class SceneSaver : MonoBehaviour
                 Debug.Log("File could not be exported to Firebase!");
             }
         }
-    }
+    }*/
 
 }

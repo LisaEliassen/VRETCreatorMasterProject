@@ -367,8 +367,8 @@ public class FirebaseService : Database
                 if (child != null && child.Child("sceneName") != null && child.Child("pathToTrigger") != null && child.Child("triggerLocation") != null && child.Child("triggerSize") != null && child.Child("pathTo360Media") != null
                     && child.Child("pathToAudio") != null && child.Child("pathsToScenery") != null && child.Child("sceneryLocations") != null && child.Child("scenerySizes") != null)
                 {
-                    Debug.Log("Key: " + child.Key);
-                    Debug.Log("Value: " + child.GetRawJsonValue());
+                    //Debug.Log("Key: " + child.Key);
+                    //Debug.Log("Value: " + child.GetRawJsonValue());
 
                     string uniqueID = child.Key;
                     string sceneName = child.Child("sceneName").Value.ToString();
@@ -376,8 +376,9 @@ public class FirebaseService : Database
 
                     string triggerPath = child.Child("trigger").Child("path").Value.ToString();
                     string triggerSize = child.Child("trigger").Child("size").Value.ToString();
-                    string triggerTransform = child.Child("trigger").Child("transform").Value.ToString();
-                    Trigger trigger = new Trigger(triggerPath, triggerTransform, triggerSize);
+                    string triggerPosition = child.Child("trigger").Child("position").Value.ToString();
+                    string triggerRotation = child.Child("trigger").Child("rotation").Value.ToString();
+                    Trigger trigger = new Trigger(triggerPath, triggerPosition, triggerRotation, triggerSize);
 
                     string pathTo360Media = child.Child("pathTo360Media").Value.ToString();
                     string pathToAudio = child.Child("pathToAudio").Value.ToString();
@@ -390,10 +391,11 @@ public class FirebaseService : Database
                         {
                             string sceneryName = sceneryChild.Child("name").Value.ToString();
                             string sceneryPath = sceneryChild.Child("path").Value.ToString();
-                            string sceneryTransform = sceneryChild.Child("transform").Value.ToString();
+                            string sceneryPosition = sceneryChild.Child("position").Value.ToString();
+                            string sceneryRotation = sceneryChild.Child("rotation").Value.ToString();
                             string scenerySize = sceneryChild.Child("size").Value.ToString();
 
-                            SceneryObject sceneryObject = new SceneryObject(sceneryName, sceneryPath, sceneryTransform, scenerySize);
+                            SceneryObject sceneryObject = new SceneryObject(sceneryName, sceneryPath, sceneryPosition, sceneryRotation, scenerySize);
                             sceneryObjects.Add(sceneryObject);
                         }
                     }
