@@ -100,43 +100,39 @@ public class CameraController : MonoBehaviour
             {
                 GameObject trigger = loadGlb.GetTrigger();
                 List<GameObject> copies = loadGlb.GetCopies();
-
                 List<GameObject> sceneryObjects = loadGlb.GetSceneryObjectList();
 
+                isRotatingObject = false; // Reset flag
 
-                if (trigger != null)
+                // Check if trigger is rotating
+                if (trigger != null && trigger.GetComponent<DragObject>().isRotatingObject)
                 {
-                    isRotatingObject = trigger.GetComponent<DragObject>().isRotatingObject;
+                    isRotatingObject = true;
+                }
 
-                    if (!isRotatingObject)
+                // Check if any copies are rotating
+                foreach (GameObject copy in copies)
+                {
+                    if (copy.GetComponent<DragObject>().isRotatingObject)
                     {
-                        foreach (GameObject copy in copies)
-                        {
-                            if (copy.GetComponent<DragObject>().isRotatingObject)
-                            {
-                                isRotatingObject = true;
-                                break;
-                            }
-                        }
+                        isRotatingObject = true;
+                        break;
                     }
                 }
-                if (sceneryObjects != null)
+
+                // Check if any scenery objects are rotating
+                foreach (GameObject scenery in sceneryObjects)
                 {
-                    foreach (GameObject scenery in sceneryObjects)
+                    if (scenery.GetComponent<DragObject>().isRotatingObject)
                     {
-                        if (scenery.GetComponent<DragObject>().isRotatingObject)
-                        {
-                            isRotatingObject = true;
-                            break;
-                        }
+                        isRotatingObject = true;
+                        break;
                     }
-                    
                 }
 
                 if (!isRotatingObject)
                 {
                     rotateCamera();
-
                 }
 
             }
