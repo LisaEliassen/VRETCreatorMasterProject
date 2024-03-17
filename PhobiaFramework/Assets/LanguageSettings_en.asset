@@ -121,7 +121,8 @@ MonoBehaviour:
   - m_Id: 9579477655552
     m_Localized: Adjust the trigger model's size using the slider or input a number
       from 0 to 100. Move it by clicking and dragging. Similarly, resize the platform
-      and sphere using sliders or inputting a number.
+      and sphere using sliders or inputting a number. You can also rotate models
+      by right clicking + moving the mouse.
     m_Metadata:
       m_Items: []
   - m_Id: 11169689296896
@@ -290,6 +291,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 19200614623784960
     m_Localized: "\u2193 Exposure Room \u2193"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22199590520266752
+    m_Localized: These buttons let you save the current scene and load a saved scene.
     m_Metadata:
       m_Items: []
   references:

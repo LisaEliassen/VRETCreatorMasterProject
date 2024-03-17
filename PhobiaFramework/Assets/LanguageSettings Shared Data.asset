@@ -267,6 +267,10 @@ MonoBehaviour:
     m_Key: ExposureRoomSign
     m_Metadata:
       m_Items: []
+  - m_Id: 22199590520266752
+    m_Key: SaveLoadSceneHelpPanel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

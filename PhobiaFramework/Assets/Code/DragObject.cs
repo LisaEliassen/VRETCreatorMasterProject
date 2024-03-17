@@ -7,10 +7,15 @@ public class DragObject : MonoBehaviour
     private Vector3 mOffset;
     private float mZCoord;
     public Camera mainCamera;
-    public bool isRotatingObject = false;
+    public bool isRotatingObject;
 
     Ray ray;
     RaycastHit hit;
+
+    public void Start()
+    {
+        isRotatingObject = false;
+    }
 
     public void SetCamera(Camera camera)
     {
@@ -58,15 +63,19 @@ public class DragObject : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                //print(hit.collider.name);
+                print(hit.collider.name);
                 if (hit.collider.name == transform.name)
                 {
-                    isRotatingObject = true;
+                    this.isRotatingObject = true;
+                }
+                else
+                {
+                    this.isRotatingObject = false;
                 }
             }
         }
 
-        if (isRotatingObject)
+        if (this.isRotatingObject)
         {
             RotateObject(); // Handle object rotation
         }
@@ -97,7 +106,7 @@ public class DragObject : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(1)) 
         {
-            isRotatingObject = false;
+            this.isRotatingObject = false;
         }
         else
         {

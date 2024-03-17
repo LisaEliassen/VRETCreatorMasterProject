@@ -190,7 +190,7 @@ public class ObjectDropdownManager : MonoBehaviour
         {
             this.currentObject = objects[option];
             copies.SetActive(false);
-            interactableToggle.gameObject.SetActive(false);
+            interactableToggle.interactable = false;
             animationDropdown.SetActive(false);
             objectVisibility.gameObject.SetActive(false);
 

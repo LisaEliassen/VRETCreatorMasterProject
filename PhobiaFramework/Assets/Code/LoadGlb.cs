@@ -430,7 +430,7 @@ public class LoadGlb : MonoBehaviour
         if (sceneSaver.sceneryPaths.ContainsKey(path))
         {
             int count = sceneSaver.sceneryPaths[path].Count;
-            name = modelName + count;
+            name = modelName + "_" + count;
             newObject = new GameObject(modelName + count);
         }
         else

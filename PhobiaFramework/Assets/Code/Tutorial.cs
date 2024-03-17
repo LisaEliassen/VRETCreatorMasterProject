@@ -23,6 +23,7 @@ public class Tutorial : MonoBehaviour
     public GameObject RemoveSoundHelpPanel;
     public GameObject CameraControlsPanel;
     public GameObject CameraResetPanel;
+    public GameObject SaveLoadScenePanel;
 
     public GameObject RemovePanel;
 
@@ -43,6 +44,7 @@ public class Tutorial : MonoBehaviour
     public Button NextButton10;
     public Button NextButton11;
     public Button NextButton12;
+    public Button NextButton13;
 
     public Button PreviousButton1;
     public Button PreviousButton2;
@@ -55,6 +57,7 @@ public class Tutorial : MonoBehaviour
     public Button PreviousButton9;
     public Button PreviousButton10;
     public Button PreviousButton11;
+    public Button PreviousButton12;
 
     // Start is called before the first frame update
     void Start()
@@ -200,8 +203,14 @@ public class Tutorial : MonoBehaviour
         {
             //CameraControlsPanel.SetActive(false);
             RemoveSoundHelpPanel.SetActive(false);
-            showTutorialButton.gameObject.SetActive(true);
+            SaveLoadScenePanel.SetActive(true);
+        });
+
+        NextButton13.onClick.AddListener(() =>
+        {
+            SaveLoadScenePanel.SetActive(false);
             HelpUI.SetActive(false);
+            showTutorialButton.gameObject.SetActive(true);
         });
 
 
@@ -266,6 +275,11 @@ public class Tutorial : MonoBehaviour
             RemoveSoundHelpPanel.SetActive(false);
             AddSceneryHelpPanel.SetActive(true);
             //CameraControlsPanel.SetActive(false);
+        });
+        PreviousButton12.onClick.AddListener(() =>
+        {
+            SaveLoadScenePanel.SetActive(true);
+            AddSceneryHelpPanel.SetActive(false);
         });
     }
 

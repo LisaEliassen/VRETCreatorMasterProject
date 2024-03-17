@@ -16,6 +16,7 @@ public class ShowAllScenes : MonoBehaviour
     SceneSaver sceneSaver;
     public Button yesButton;
     public Button noButton;
+    public Button refreshButton;
     public GameObject databaseServiceObject;
     public GameObject gridItemPrefab;
     public Transform gridParent;
@@ -53,6 +54,11 @@ public class ShowAllScenes : MonoBehaviour
         noButton.onClick.AddListener(() =>
         {
             StartCoroutine(FetchScenes());
+        });
+
+        refreshButton.onClick.AddListener(() =>
+        {
+            reload();
         });
     }
 
@@ -118,13 +124,15 @@ public class ShowAllScenes : MonoBehaviour
 
     public void reload()
     {
+
+        Debug.Log("Reloading scenes");
         foreach (Transform child in gridParent.transform)
         {
             // Destroy the child grid item
             Destroy(child.gameObject);
         }
         files = new List<SceneMetaData>();
-        FetchScenes();
+        StartCoroutine(FetchScenes());
     }
 
     public IEnumerator CreateGridItem(string sceneName, string pathToSceneIcon, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery, int index)

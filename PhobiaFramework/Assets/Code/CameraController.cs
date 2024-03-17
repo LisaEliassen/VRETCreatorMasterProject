@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
     public GameObject EditUI;
-    public GameObject camera;
+    public GameObject SaveSceneUI;
+    //public GameObject cam;
     public Button resetCam;
 
     public float moveSpeed = 1.0f;
@@ -52,13 +53,12 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-
         resetCam.onClick.AddListener(resetCameraToDefaultPos);
 
         // Read scroll wheel input for moving the camera up and down
         float scrollInput = Mouse.current.scroll.y.ReadValue();
 
-        if (EditUI.activeSelf)
+        if (EditUI.activeSelf && !SaveSceneUI.activeSelf)
         {
             if (invertCameraMovement != null && invertCameraMovement.isOn)
             {
