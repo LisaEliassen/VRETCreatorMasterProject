@@ -201,7 +201,13 @@ public class ShowAllScenes : MonoBehaviour
                 position = ParseVector3(positionComponents[0], positionComponents[1], positionComponents[2]);
                 rotation = ParseQuaternion(rotationComponents[0], rotationComponents[1], rotationComponents[2], rotationComponents[3]);
 
-                await loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, int.Parse(trigger.size));
+                int size = 2;
+                if (int.TryParse(trigger.size, out _))
+                {
+                    size = int.Parse(trigger.size);
+                }
+
+                await loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, size);
             }
 
             if (!System.String.IsNullOrEmpty(pathTo360Media))

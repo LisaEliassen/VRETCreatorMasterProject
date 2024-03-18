@@ -60,7 +60,7 @@ public class DragObject : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
 
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
                 print(hit.collider.name);
