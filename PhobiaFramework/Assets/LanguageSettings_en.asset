@@ -297,6 +297,10 @@ MonoBehaviour:
     m_Localized: These buttons let you save the current scene and load a saved scene.
     m_Metadata:
       m_Items: []
+  - m_Id: 22442123741822976
+    m_Localized: 'Object to edit:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

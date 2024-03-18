@@ -294,6 +294,10 @@ MonoBehaviour:
       inn en lagret scene."
     m_Metadata:
       m_Items: []
+  - m_Id: 22442123741822976
+    m_Localized: 'Valgt objekt:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
