@@ -1,0 +1,227 @@
+fileFormatVersion: 2
+guid: cc4d2e2468a3aa74bbe6435fb58b75d6
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Arm_Dog
+    100002: claws_b.L
+    100004: claws_b.R
+    100006: claws_f.L
+    100008: claws_f.R
+    100010: Ear.L
+    100012: Ear.R
+    100014: eye.L
+    100016: eye.R
+    100018: foot_b.L
+    100020: foot_b.R
+    100022: foot_f.L
+    100024: foot_f.R
+    100026: //RootNode
+    100028: G_Retriever_LOD0
+    100030: G_Retriever_LOD1
+    100032: G_Retriever_LOD2
+    100034: G_Retriever_LOD3
+    100036: head
+    100038: Helper_foot_b.L
+    100040: Helper_foot_b.R
+    100042: Helper_shin_f.L
+    100044: Helper_shin_f.R
+    100046: hip_b.L
+    100048: hip_b.R
+    100050: hip_f.L
+    100052: hip_f.R
+    100054: leg_b.L
+    100056: leg_b.R
+    100058: leg_f.L
+    100060: leg_f.R
+    100062: mouth
+    100064: neck
+    100066: nose
+    100068: Root_bone
+    100070: shin_b.L
+    100072: shin_b.R
+    100074: shin_f.L
+    100076: shin_f.R
+    100078: Spine_01
+    100080: Spine_02
+    100082: Spine_03
+    100084: Spine_04
+    100086: Spine_05
+    100088: Spine_base
+    100090: tail_01
+    100092: tail_02
+    100094: tail_03
+    100096: tail_04
+    100098: tail_05
+    100100: thigh_b.L
+    100102: thigh_b.R
+    100104: thigh_f.L
+    100106: thigh_f.R
+    100108: tongue_1
+    100110: tongue_2
+    100112: tongue_3
+    100114: tongue_4
+    400000: Arm_Dog
+    400002: claws_b.L
+    400004: claws_b.R
+    400006: claws_f.L
+    400008: claws_f.R
+    400010: Ear.L
+    400012: Ear.R
+    400014: eye.L
+    400016: eye.R
+    400018: foot_b.L
+    400020: foot_b.R
+    400022: foot_f.L
+    400024: foot_f.R
+    400026: //RootNode
+    400028: G_Retriever_LOD0
+    400030: G_Retriever_LOD1
+    400032: G_Retriever_LOD2
+    400034: G_Retriever_LOD3
+    400036: head
+    400038: Helper_foot_b.L
+    400040: Helper_foot_b.R
+    400042: Helper_shin_f.L
+    400044: Helper_shin_f.R
+    400046: hip_b.L
+    400048: hip_b.R
+    400050: hip_f.L
+    400052: hip_f.R
+    400054: leg_b.L
+    400056: leg_b.R
+    400058: leg_f.L
+    400060: leg_f.R
+    400062: mouth
+    400064: neck
+    400066: nose
+    400068: Root_bone
+    400070: shin_b.L
+    400072: shin_b.R
+    400074: shin_f.L
+    400076: shin_f.R
+    400078: Spine_01
+    400080: Spine_02
+    400082: Spine_03
+    400084: Spine_04
+    400086: Spine_05
+    400088: Spine_base
+    400090: tail_01
+    400092: tail_02
+    400094: tail_03
+    400096: tail_04
+    400098: tail_05
+    400100: thigh_b.L
+    400102: thigh_b.R
+    400104: thigh_f.L
+    400106: thigh_f.R
+    400108: tongue_1
+    400110: tongue_2
+    400112: tongue_3
+    400114: tongue_4
+    2100000: G_Retriever
+    4300000: G_Retriever_LOD3
+    4300002: G_Retriever_LOD2
+    4300004: G_Retriever_LOD1
+    4300006: G_Retriever_LOD0
+    9500000: //RootNode
+    13700000: G_Retriever_LOD0
+    13700002: G_Retriever_LOD1
+    13700004: G_Retriever_LOD2
+    13700006: G_Retriever_LOD3
+    20500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: G_Retriever
+    second: {fileID: 2100000, guid: 68258f0daa87bfa4b9740de339cf9c47, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages:
+    - 0.25
+    - 0.125
+    - 0.0625
+    - 0.01
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 0
+    keepQuads: 0
+    weldVertices: 0
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: Root_bone
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
