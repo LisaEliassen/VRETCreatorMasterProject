@@ -6,6 +6,7 @@ using System.Collections;
 using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Globalization;
 
 public class ShowAllScenes : MonoBehaviour
 {
@@ -241,7 +242,13 @@ public class ShowAllScenes : MonoBehaviour
                 position = ParseVector3(positionComponents[0], positionComponents[1], positionComponents[2]);
                 rotation = ParseQuaternion(rotationComponents[0], rotationComponents[1], rotationComponents[2], rotationComponents[3]);
 
-                await loadGlbScript.SpawnSceneryObject(sceneryObj.name, sceneryObj.path, position, rotation, int.Parse(sceneryObj.size));
+                int size = 2;
+                if (int.TryParse(sceneryObj.size, out _))
+                {
+                    size = int.Parse(sceneryObj.size);
+                }
+
+                await loadGlbScript.SpawnSceneryObject(sceneryObj.name, sceneryObj.path, position, rotation, size);
             }
 
             EditSceneUI.SetActive(true);
@@ -258,19 +265,19 @@ public class ShowAllScenes : MonoBehaviour
 
     private static Vector3 ParseVector3(string xStr, string yStr, string zStr)
     {
-        float x = float.Parse(xStr.Trim('('));
-        float y = float.Parse(yStr.Trim());
-        float z = float.Parse(zStr.Trim(')'));
+        float x = float.Parse(xStr.Trim('('), CultureInfo.InvariantCulture);
+        float y = float.Parse(yStr.Trim(), CultureInfo.InvariantCulture);
+        float z = float.Parse(zStr.Trim(')'), CultureInfo.InvariantCulture);
 
         return new Vector3(x, y, z);
     }
 
     private static Quaternion ParseQuaternion(string xStr, string yStr, string zStr, string wStr)
     {
-        float x = float.Parse(xStr.Trim('('));
-        float y = float.Parse(yStr.Trim());
-        float z = float.Parse(zStr.Trim());
-        float w = float.Parse(wStr.Trim(')'));
+        float x = float.Parse(xStr.Trim('('), CultureInfo.InvariantCulture);
+        float y = float.Parse(yStr.Trim(), CultureInfo.InvariantCulture);
+        float z = float.Parse(zStr.Trim(), CultureInfo.InvariantCulture);
+        float w = float.Parse(wStr.Trim(')'), CultureInfo.InvariantCulture);
 
         return new Quaternion(x, y, z, w);
     }
