@@ -298,6 +298,22 @@ MonoBehaviour:
     m_Localized: 'Valgt objekt:'
     m_Metadata:
       m_Items: []
+  - m_Id: 23863320148615168
+    m_Localized: Scener
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23863569084751872
+    m_Localized: Hva vil du kalle scenen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23863685686403072
+    m_Localized: Avbryt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23863797464604672
+    m_Localized: Godta
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -301,6 +301,22 @@ MonoBehaviour:
     m_Localized: 'Object to edit:'
     m_Metadata:
       m_Items: []
+  - m_Id: 23863320148615168
+    m_Localized: Scenes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23863569084751872
+    m_Localized: What would you like to name the scene?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23863685686403072
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23863797464604672
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
