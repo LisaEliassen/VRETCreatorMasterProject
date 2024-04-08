@@ -121,7 +121,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9579477655552
     m_Localized: "Juster triggermodellens st\xF8rrelse ved \xE5 bruke St\xF8rrelse-glidebryteren
-      eller skriv inn et tall fra 0 til 100. Flytt den ved \xE5 klikke og dra. P\xE5
+      eller skriv inn et tall fra 0 til 50. Flytt den ved \xE5 klikke og dra. P\xE5
       samme m\xE5te kan du endre st\xF8rrelsen p\xE5 plattformen og sf\xE6ren ved
       \xE5 bruke glidebrytere eller skrive inn et tall. Du kan ogs\xE5 rotere modeller
       ved \xE5 h\xF8yreklikke + bevege musen."

@@ -120,7 +120,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9579477655552
     m_Localized: Adjust the trigger model's size using the slider or input a number
-      from 0 to 100. Move it by clicking and dragging. Similarly, resize the platform
+      from 0 to 50. Move it by clicking and dragging. Similarly, resize the platform
       and sphere using sliders or inputting a number. You can also rotate models
       by right clicking + moving the mouse.
     m_Metadata:
