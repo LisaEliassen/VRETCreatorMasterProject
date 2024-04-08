@@ -25,7 +25,12 @@ public class VisibilityToggles : MonoBehaviour
     public Toggle platformVisibility;
     public Toggle wallsVisibility;
     public GameObject platform;
-    public GameObject walls;
+    public GameObject wall;
+    public GameObject wall1;
+    public GameObject wall2;
+    public GameObject ceiling;
+    public GameObject doorwall1;
+    public GameObject doorwall2;
     public GameObject extraWall1;
     public GameObject extraWall2;
     public GameObject extraWall3;
@@ -125,19 +130,31 @@ public class VisibilityToggles : MonoBehaviour
     {
         if (visible)
         {
-            walls.SetActive(true);
-            extraWall1.SetActive(true);
-            extraWall2.SetActive(true);
+            wall.GetComponent<MeshRenderer>().enabled = true;
+            wall1.GetComponent<MeshRenderer>().enabled = true;
+            wall2.GetComponent<MeshRenderer>().enabled = true;
+            ceiling.GetComponent<MeshRenderer>().enabled = true;
+            doorwall1.GetComponent<MeshRenderer>().enabled = true;
+            doorwall2.GetComponent<MeshRenderer>().enabled = true;
+
+            extraWall1.GetComponent<MeshRenderer>().enabled = true;
+            extraWall2.GetComponent<MeshRenderer>().enabled = true;
             exposureRoomSign.SetActive(true);
-            extraWall3.SetActive(true);
+            extraWall3.GetComponent<MeshRenderer>().enabled = true;
         }
         else
         {
-            walls.SetActive(false);
-            extraWall1.SetActive(false);
-            extraWall2.SetActive(false);
+            wall.GetComponent<MeshRenderer>().enabled = false;
+            wall1.GetComponent<MeshRenderer>().enabled = false;
+            wall2.GetComponent<MeshRenderer>().enabled = false;
+            ceiling.GetComponent<MeshRenderer>().enabled = false;
+            doorwall1.GetComponent<MeshRenderer>().enabled = false;
+            doorwall2.GetComponent<MeshRenderer>().enabled = false;
+
+            extraWall1.GetComponent<MeshRenderer>().enabled = false;
+            extraWall2.GetComponent<MeshRenderer>().enabled = false;
             exposureRoomSign.SetActive(false);
-            extraWall3.SetActive(false);
+            extraWall3.GetComponent<MeshRenderer>().enabled = false;
         }
     }
 }

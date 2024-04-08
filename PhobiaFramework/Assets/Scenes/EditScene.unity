@@ -27447,7 +27447,12 @@ MonoBehaviour:
   platformVisibility: {fileID: 1368287614}
   wallsVisibility: {fileID: 1278875457}
   platform: {fileID: 962936806}
-  walls: {fileID: 1154576467}
+  wall: {fileID: 254080623}
+  wall1: {fileID: 1058515575}
+  wall2: {fileID: 1688692183}
+  ceiling: {fileID: 650299428}
+  doorwall1: {fileID: 553501247}
+  doorwall2: {fileID: 812426417}
   extraWall1: {fileID: 628997428}
   extraWall2: {fileID: 2137357287}
   extraWall3: {fileID: 919132147616582768}
