@@ -50,6 +50,9 @@ public class LoadGlb : MonoBehaviour
     public GameObject ModelUI;
     public GameObject RemovePanel;
     public TextMeshProUGUI numCopiesText;
+    public UnityEngine.Material lineMaterial;
+
+    public GameObject ChosenObjectBox;
 
     ObjectDropdownManager objDropdownManager;
 
@@ -492,6 +495,7 @@ public class LoadGlb : MonoBehaviour
                 loadedModel.transform.rotation = rotation;
                 loadedModel.SetActive(true);
 
+
                 // Add a Box Collider to the GameObject
                 BoxCollider boxCollider = loadedModel.AddComponent<BoxCollider>();
 
@@ -499,14 +503,58 @@ public class LoadGlb : MonoBehaviour
                 Bounds modelBounds = CalculateModelBounds(loadedModel);
 
                 // Set the default size of the collider based on the model's bounds
-                boxCollider.size = new Vector3(modelBounds.size.x, 0.001f, modelBounds.size.z);
+                //boxCollider.size = new Vector3(modelBounds.size.x, 0.001f, modelBounds.size.z); //flat collider
+                boxCollider.size = modelBounds.size;
 
+                Vector3 boundsCenterOffset = modelBounds.center - loadedModel.transform.position;
 
                 // Set the default position of the collider to the center of the model
-                boxCollider.center = new Vector3(modelBounds.center.x - loadedModel.transform.position.x, 0, modelBounds.center.z - loadedModel.transform.position.z);
+                //boxCollider.center = new Vector3(modelBounds.center.x - loadedModel.transform.position.x, 0, modelBounds.center.z - loadedModel.transform.position.z);
+                boxCollider.center = boundsCenterOffset;
 
                 // You can also set various properties of the Box Collider
                 boxCollider.isTrigger = false; // Set to true if you want it to be a trigger
+
+                /*LineRenderer lineRenderer;
+
+                lineRenderer = GetComponent<LineRenderer>();
+                if (lineRenderer == null)
+                    lineRenderer = loadedModel.AddComponent<LineRenderer>();
+
+                // Set line properties
+                lineRenderer.positionCount = 5; // Five points to form a closed box
+                lineRenderer.useWorldSpace = true;
+                lineRenderer.startWidth = lineRenderer.endWidth = 0.05f; // Adjust line width as needed
+                lineRenderer.loop = true; // Close the loop to form a box
+
+
+                if (lineMaterial != null)
+                {
+                    lineRenderer.material = lineMaterial;
+                }
+
+                // Calculate box vertices
+                Vector3[] vertices = new Vector3[]
+                {
+                    boxCollider.center + new Vector3(-boxCollider.size.x, -boxCollider.size.y, -boxCollider.size.z) * 0.5f,
+                    boxCollider.center + new Vector3(boxCollider.size.x, -boxCollider.size.y, -boxCollider.size.z) * 0.5f,
+                    boxCollider.center + new Vector3(boxCollider.size.x, -boxCollider.size.y, boxCollider.size.z) * 0.5f,
+                    boxCollider.center + new Vector3(-boxCollider.size.x, -boxCollider.size.y, boxCollider.size.z) * 0.5f,
+                    boxCollider.center + new Vector3(-boxCollider.size.x, -boxCollider.size.y, -boxCollider.size.z) * 0.5f // Repeat first vertex to close the loop
+                };
+
+                // Update line renderer positions
+                lineRenderer.SetPositions(vertices);*/
+
+                GameObject redCube = Instantiate(ChosenObjectBox, loadedModel.transform.position, Quaternion.identity);
+                redCube.transform.localScale = new Vector3(
+                    boxCollider.size.x / transform.localScale.x,
+                    boxCollider.size.y / transform.localScale.y,
+                    boxCollider.size.z / transform.localScale.z);                
+                redCube.transform.position = boxCollider.center;
+                redCube.transform.parent = loadedModel.transform;
+
+                //redCube.SetActive(false);
 
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)
@@ -514,7 +562,6 @@ public class LoadGlb : MonoBehaviour
                     rb = loadedModel.AddComponent<Rigidbody>();
                 }
                 rb.isKinematic = true;  // Set to false if you want physics interactions
-
 
                 loadedModel.AddComponent<DragObject>();
                 DragObject dragObject = loadedModel.GetComponent<DragObject>();
