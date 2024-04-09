@@ -301,6 +301,66 @@ MonoBehaviour:
     m_Localized: 'Object to edit:'
     m_Metadata:
       m_Items: []
+  - m_Id: 30440339334410240
+    m_Localized: HOW TO MOVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30440716410728448
+    m_Localized: "Push left joystick \n1. Forward\n2. Backward\n3. Sideways"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30444900530958336
+    m_Localized: HOW TO TELEPORT AND TURN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30447019380092928
+    m_Localized: 'Teleportation:
+
+      Push and hold right joystick forward, then
+      release'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30448265461673984
+    m_Localized: 'Turning:
+
+      Tap right joystick to the left or right'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30450469148995584
+    m_Localized: HOW TO POINT AND SELECT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30450544298340352
+    m_Localized: "Press and release trigger button \n(works on both left and right
+      controller)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30457274906357760
+    m_Localized: HOW TO GRAB TRIGGER AND DOORKNOB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30457306309111808
+    m_Localized: Press grab button on trigger model or doorknob to interact with
+      them
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30460542281756672
+    m_Localized: PANIC BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30460596367306752
+    m_Localized: On your left wrist you have a panic button which teleports you back
+      to the waiting room. Use trigger button on controller to press it if needed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30465002529796096
+    m_Localized: Press the button below if you want to open tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30465157907787776
+    m_Localized: OPEN TUTORIAL
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

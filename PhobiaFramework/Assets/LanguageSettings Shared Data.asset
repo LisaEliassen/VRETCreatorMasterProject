@@ -275,6 +275,62 @@ MonoBehaviour:
     m_Key: ObjectToEdit
     m_Metadata:
       m_Items: []
+  - m_Id: 30440339334410240
+    m_Key: MovementVR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30440716410728448
+    m_Key: MovementVRExaplanation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30444900530958336
+    m_Key: TeleportationVR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30447019380092928
+    m_Key: TeleportationVRExplanation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30448265461673984
+    m_Key: 'TurningVRExplanation
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30450469148995584
+    m_Key: TriggerVRUI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30450544298340352
+    m_Key: TriggerVRExplanation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30457274906357760
+    m_Key: GrabbingVRUI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30457306309111808
+    m_Key: GrabbingVRExplanation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30460542281756672
+    m_Key: PanicButtonVR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30460596367306752
+    m_Key: PanicButtonVRExplanation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30465002529796096
+    m_Key: 'OpenTutorialUI
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30465157907787776
+    m_Key: OpenTutorialButton
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

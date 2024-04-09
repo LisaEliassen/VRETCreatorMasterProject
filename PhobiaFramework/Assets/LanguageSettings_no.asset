@@ -298,6 +298,70 @@ MonoBehaviour:
     m_Localized: 'Valgt objekt:'
     m_Metadata:
       m_Items: []
+  - m_Id: 30440339334410240
+    m_Localized: HVORDAN BEVEGE SEG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30440716410728448
+    m_Localized: 'Press venstre joystick
+
+      1. Framover
+
+      2. Bakover
+
+      3.
+      Sidelengs'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30444900530958336
+    m_Localized: HVORDAN TELEPORTERE OG SNU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30447019380092928
+    m_Localized: "Teleportering:\r\nSkyv og hold h\xF8yre joystick fremover, og slipp
+      deretter\r\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30448265461673984
+    m_Localized: "Snu:\r\nTrykk h\xF8yre styrespak til venstre eller h\xF8yre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30450469148995584
+    m_Localized: HVORDAN PEKE OG VELGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30450544298340352
+    m_Localized: "Trykk og \nslipp triggerknappen \n(fungerer p\xE5 b\xE5de venstre
+      og h\xF8yre kontroller)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30457274906357760
+    m_Localized: "\rHVORDAN TA TAK I TRIGGER OG D\xD8RKNAPP"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30457306309111808
+    m_Localized: "Trykk inn gripeknappen p\xE5 triggermodellen eller d\xF8rh\xE5ndtaket
+      for \xE5 samhandle med dem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30460542281756672
+    m_Localized: PANIKKNAPP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30460596367306752
+    m_Localized: "P\xE5 venstre h\xE5ndledd har du en panikkknapp som teleporterer
+      deg tilbake til venterommet. Bruk triggerknappen p\xE5 kontrolleren for \xE5
+      trykke p\xE5 den om n\xF8dvendig"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30465002529796096
+    m_Localized: "Trykk p\xE5 knappen nedenfor om du vil \xE5pne brukerveiledning"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30465157907787776
+    m_Localized: "\xC5PNE BRUKERVEILEDNING"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
