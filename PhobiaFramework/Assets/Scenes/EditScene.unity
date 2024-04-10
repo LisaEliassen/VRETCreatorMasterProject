@@ -30351,7 +30351,6 @@ MonoBehaviour:
   extraWall3: {fileID: 919132147616582768}
   exposureRoomSign: {fileID: 1795881634}
   newMaterial: {fileID: 2100000, guid: 4216ee010cee4994fb190320a85da300, type: 2}
-  originalMaterial: {fileID: 0}
 --- !u!114 &846055965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37659,7 +37658,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

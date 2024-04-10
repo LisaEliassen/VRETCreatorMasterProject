@@ -185,9 +185,22 @@ public class ObjectDropdownManager : MonoBehaviour
             int size = loadGlb.GetObjectSizes()[this.trigger];
             sizeSlider.value = size;
             ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
+
+            this.trigger.transform.GetChild(1).gameObject.SetActive(true);
+
+            foreach (GameObject obj in objects.Values)
+            {
+                obj.transform.GetChild(1).gameObject.SetActive(false);
+            }
         }
         else
         {
+            foreach (GameObject obj in objects.Values)
+            {
+                obj.transform.GetChild(1).gameObject.SetActive(false);
+            }
+            this.trigger.transform.GetChild(1).gameObject.SetActive(false);
+
             this.currentObject = objects[option];
             copies.SetActive(false);
             interactableToggle.interactable = false;
@@ -197,6 +210,8 @@ public class ObjectDropdownManager : MonoBehaviour
             int size = loadGlb.GetObjectSizes()[objects[option]];
             sizeSlider.value = size;
             ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
+
+            objects[option].transform.GetChild(1).gameObject.SetActive(true);
         }
 
         removeTriggerButton.interactable = true;

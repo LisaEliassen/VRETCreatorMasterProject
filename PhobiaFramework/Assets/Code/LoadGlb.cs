@@ -554,7 +554,7 @@ public class LoadGlb : MonoBehaviour
                 redCube.transform.position = boxCollider.center;
                 redCube.transform.parent = loadedModel.transform;
 
-                //redCube.SetActive(false);
+                redCube.SetActive(false);
 
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)
