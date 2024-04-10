@@ -30350,6 +30350,8 @@ MonoBehaviour:
   extraWall2: {fileID: 2137357287}
   extraWall3: {fileID: 919132147616582768}
   exposureRoomSign: {fileID: 1795881634}
+  newMaterial: {fileID: 2100000, guid: 4216ee010cee4994fb190320a85da300, type: 2}
+  originalMaterial: {fileID: 0}
 --- !u!114 &846055965
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,11 +36,14 @@ public class VisibilityToggles : MonoBehaviour
     public GameObject extraWall3;
     public GameObject exposureRoomSign;
 
+    public Material newMaterial;
+    private Material originalMaterial;
+
     // Start is called before the first frame update
     void Start()
     {
         loadGlb = databaseServiceObject.GetComponent<LoadGlb>();
-
+        originalMaterial = platform.GetComponent<MeshRenderer>().material;
         platformVisibility.onValueChanged.AddListener(PlatformVisibility);
         objectVisibility.onValueChanged.AddListener(ObjectVisibility);
         wallsVisibility.onValueChanged.AddListener(WallsVisibility);
@@ -112,17 +115,44 @@ public class VisibilityToggles : MonoBehaviour
 
     public void PlatformVisibility(bool visible)
     {
-        if (visible)
+        if (visible) 
         {
-            platform.GetComponent<MeshRenderer>().enabled = true;
+            platform.GetComponent<MeshRenderer>().material = originalMaterial;
             sizeSliderPlatform.interactable = true;
             sizeInputPlatform.interactable = true;
+
+            wall.GetComponent<MeshRenderer>().enabled = true;
+            wall1.GetComponent<MeshRenderer>().enabled = true;
+            wall2.GetComponent<MeshRenderer>().enabled = true;
+            ceiling.GetComponent<MeshRenderer>().enabled = true;
+            doorwall1.GetComponent<MeshRenderer>().enabled = true;
+            doorwall2.GetComponent<MeshRenderer>().enabled = true;
+
+            extraWall1.GetComponent<MeshRenderer>().enabled = true;
+            extraWall2.GetComponent<MeshRenderer>().enabled = true;
+            exposureRoomSign.SetActive(true);
+            extraWall3.GetComponent<MeshRenderer>().enabled = true;
+            wallsVisibility.interactable = true;
         }
         else
         {
-            platform.GetComponent<MeshRenderer>().enabled = false;
+            platform.GetComponent<MeshRenderer>().material = newMaterial;
             sizeSliderPlatform.interactable = false;
             sizeInputPlatform.interactable = false;
+
+            wall.GetComponent<MeshRenderer>().enabled = false;
+            wall1.GetComponent<MeshRenderer>().enabled = false;
+            wall2.GetComponent<MeshRenderer>().enabled = false;
+            ceiling.GetComponent<MeshRenderer>().enabled = false;
+            doorwall1.GetComponent<MeshRenderer>().enabled = false;
+            doorwall2.GetComponent<MeshRenderer>().enabled = false;
+
+            extraWall1.GetComponent<MeshRenderer>().enabled = false;
+            extraWall2.GetComponent<MeshRenderer>().enabled = false;
+            exposureRoomSign.SetActive(false);
+            extraWall3.GetComponent<MeshRenderer>().enabled = false;
+            wallsVisibility.interactable = false;
+
         }
     }
 
