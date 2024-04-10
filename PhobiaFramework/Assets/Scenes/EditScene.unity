@@ -30091,6 +30091,7 @@ GameObject:
   - component: {fileID: 846055978}
   - component: {fileID: 846055979}
   - component: {fileID: 846055980}
+  - component: {fileID: 846055981}
   m_Layer: 0
   m_Name: DatabaseService
   m_TagString: Untagged
@@ -30742,6 +30743,20 @@ MonoBehaviour:
   EditSceneUI: {fileID: 927890619}
   ModelUI: {fileID: 710439802}
   copies: {fileID: 1443170818}
+--- !u!114 &846055981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846055952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e08640a6efa7eb4c808b7af4331df02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 2144952988}
+  databaseServiceObject: {fileID: 846055952}
 --- !u!1 &850786195
 GameObject:
   m_ObjectHideFlags: 0

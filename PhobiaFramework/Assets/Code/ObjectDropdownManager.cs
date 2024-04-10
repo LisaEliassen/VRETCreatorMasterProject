@@ -71,6 +71,15 @@ public class ObjectDropdownManager : MonoBehaviour
         interactableToggle.interactable = false;
     }
 
+    public Dictionary<string, GameObject> GetObjects()
+    {
+        return objects;
+    }
+
+    public GameObject GetTrigger()
+    {
+        return this.trigger;
+    }
 
     public GameObject GetCurrentObject()
     {
