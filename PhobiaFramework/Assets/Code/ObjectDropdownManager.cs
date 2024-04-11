@@ -201,6 +201,13 @@ public class ObjectDropdownManager : MonoBehaviour
             {
                 obj.transform.GetChild(1).gameObject.SetActive(false);
             }
+
+            int index = dropdown.options.FindIndex((i) => { return i.text.Equals(option); });
+            if (index != -1)
+            {
+                dropdown.value = index;
+                dropdown.RefreshShownValue();
+            }
         }
         else
         {
@@ -221,6 +228,13 @@ public class ObjectDropdownManager : MonoBehaviour
             ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
 
             objects[option].transform.GetChild(1).gameObject.SetActive(true);
+
+            int index = dropdown.options.FindIndex((i) => { return i.text.Equals(option); });
+            if (index != -1)
+            {
+                dropdown.value = index;
+                dropdown.RefreshShownValue();
+            }
         }
 
         removeTriggerButton.interactable = true;
