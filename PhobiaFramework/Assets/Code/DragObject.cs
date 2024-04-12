@@ -86,14 +86,26 @@ public class DragObject : MonoBehaviour
         // Get the current position of the object
         Vector3 currentPos = GetMouseWorldPos() + mOffset;
         currentPos.y = transform.position.y;
-        /*
-        // Restrict movement along the y-axis
-        if (currentPos.y <= transform.position.y) {
-            currentPos.y = transform.position.y;
-        }*/
 
-        // Update the position of the object
-        transform.position = currentPos;
+        // Get the object's collider
+        Collider objectCollider = GetComponent<Collider>();
+
+        Collider[] colliders = Physics.OverlapBox(currentPos, objectCollider.bounds.extents, transform.rotation);
+        bool canMove = true;
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Wall"))
+            {
+                canMove = false;
+                break;
+            }
+        }
+
+        // If not outside boundaries, update the position of the object
+        if (canMove)
+        {
+            transform.position = currentPos;
+        }
 
         if (transform.rotation.x > 0 || transform.rotation.z > 0)
         {

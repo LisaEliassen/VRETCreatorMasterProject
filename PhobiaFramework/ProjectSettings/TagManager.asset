@@ -7,6 +7,7 @@ TagManager:
   - Trigger
   - Export
   - Scenery
+  - Wall
   layers:
   - Default
   - TransparentFX
