@@ -124,13 +124,14 @@ public class LoadGlb : MonoBehaviour
             {
 
                 trigger.AddComponent<XRGrabInteractable>();
-                //trigger.GetComponent<Rigidbody>().isKinematic = false;
+                trigger.AddComponent<OnGrabOnRelease>();
                 if (triggerCopies != null && triggerCopies.Count > 0)
                 {
                     foreach (GameObject copy in triggerCopies)
                     {
                         copy.AddComponent<XRGrabInteractable>();
-                        //copy.GetComponent<Rigidbody>().isKinematic = false;
+                        copy.AddComponent<OnGrabOnRelease>();
+
                     }
                 }
             }
