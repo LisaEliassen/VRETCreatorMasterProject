@@ -124,22 +124,26 @@ public class LoadGlb : MonoBehaviour
             {
 
                 trigger.AddComponent<XRGrabInteractable>();
+                //trigger.GetComponent<Rigidbody>().isKinematic = false;
                 if (triggerCopies != null && triggerCopies.Count > 0)
                 {
                     foreach (GameObject copy in triggerCopies)
                     {
                         copy.AddComponent<XRGrabInteractable>();
+                        //copy.GetComponent<Rigidbody>().isKinematic = false;
                     }
                 }
             }
             else
             {
                 Destroy(trigger.GetComponent<XRGrabInteractable>());
+                //trigger.GetComponent<Rigidbody>().isKinematic = true;
                 if (triggerCopies != null && triggerCopies.Count > 0)
                 {
                     foreach (GameObject copy in triggerCopies)
                     {
                         Destroy(copy.GetComponent<XRGrabInteractable>());
+                        //copy.GetComponent<Rigidbody>().isKinematic = true;
                     }
                 }
             }
@@ -491,6 +495,8 @@ public class LoadGlb : MonoBehaviour
 
             if (success)
             {
+                interactableToggle.isOn = false; //set Interactable Toggle to false when loading model
+
                 loadedModel.transform.position = position;
                 loadedModel.transform.rotation = rotation;
                 loadedModel.SetActive(true);
