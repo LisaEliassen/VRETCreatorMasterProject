@@ -331,6 +331,10 @@ MonoBehaviour:
     m_Key: OpenTutorialButton
     m_Metadata:
       m_Items: []
+  - m_Id: 32651103239581696
+    m_Key: StopExposureButton
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

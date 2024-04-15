@@ -361,6 +361,10 @@ MonoBehaviour:
     m_Localized: OPEN TUTORIAL
     m_Metadata:
       m_Items: []
+  - m_Id: 32651103239581696
+    m_Localized: STOP EXPOSURE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
