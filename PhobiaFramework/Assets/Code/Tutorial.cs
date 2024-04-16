@@ -44,7 +44,7 @@ public class Tutorial : MonoBehaviour
     public Button NextButton10;
     public Button NextButton11;
     public Button NextButton12;
-    public Button NextButton13;
+    //public Button NextButton13;
 
     public Button PreviousButton1;
     public Button PreviousButton2;
@@ -57,7 +57,7 @@ public class Tutorial : MonoBehaviour
     public Button PreviousButton9;
     public Button PreviousButton10;
     public Button PreviousButton11;
-    public Button PreviousButton12;
+    //public Button PreviousButton12;
 
     // Start is called before the first frame update
     void Start()
@@ -184,11 +184,12 @@ public class Tutorial : MonoBehaviour
         {
             Media360HelpPanel.SetActive(false);
             AddSoundHelpPanel.SetActive(true);
-            //RemoveSoundHelpPanel.SetActive(true);
+            RemoveSoundHelpPanel.SetActive(true);
         });
         NextButton10.onClick.AddListener(() =>
         {
             AddSoundHelpPanel.SetActive(false);
+            RemoveSoundHelpPanel.SetActive(false);
             AddSceneryHelpPanel.SetActive(true);
             //CameraControlsPanel.SetActive(true);
         });
@@ -196,17 +197,10 @@ public class Tutorial : MonoBehaviour
         {
             //CameraControlsPanel.SetActive(false);
             AddSceneryHelpPanel.SetActive(false);
-            RemoveSoundHelpPanel.SetActive(true);
-            
-        });
-        NextButton12.onClick.AddListener(() =>
-        {
-            //CameraControlsPanel.SetActive(false);
-            RemoveSoundHelpPanel.SetActive(false);
             SaveLoadScenePanel.SetActive(true);
         });
 
-        NextButton13.onClick.AddListener(() =>
+        NextButton12.onClick.AddListener(() =>
         {
             SaveLoadScenePanel.SetActive(false);
             HelpUI.SetActive(false);
@@ -262,25 +256,22 @@ public class Tutorial : MonoBehaviour
         {
             Media360HelpPanel.SetActive(true);
             AddSoundHelpPanel.SetActive(false);
-            //RemoveSoundHelpPanel.SetActive(false);
+            RemoveSoundHelpPanel.SetActive(false);
         });
         PreviousButton10.onClick.AddListener(() =>
         {
             AddSceneryHelpPanel.SetActive(false);
             AddSoundHelpPanel.SetActive(true);
+            RemoveSoundHelpPanel.SetActive(true);
             //CameraControlsPanel.SetActive(false);
         });
         PreviousButton11.onClick.AddListener(() =>
         {
-            RemoveSoundHelpPanel.SetActive(false);
+            SaveLoadScenePanel.SetActive(false);
             AddSceneryHelpPanel.SetActive(true);
             //CameraControlsPanel.SetActive(false);
         });
-        PreviousButton12.onClick.AddListener(() =>
-        {
-            SaveLoadScenePanel.SetActive(true);
-            AddSceneryHelpPanel.SetActive(false);
-        });
+
     }
 
     public void StartTutorial()
