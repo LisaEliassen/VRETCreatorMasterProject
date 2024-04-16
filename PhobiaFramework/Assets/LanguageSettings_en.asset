@@ -365,6 +365,21 @@ MonoBehaviour:
     m_Localized: STOP EXPOSURE
     m_Metadata:
       m_Items: []
+  - m_Id: 33002330343256064
+    m_Localized: Patient view window shows what the patient sees inside VR. You can
+      click on it to enlarge the view or drag it to a different position
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33002454909890560
+    m_Localized: Patient shows up in a waiting room behind exposure room which is
+      supposed to be a safe space
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33005333779492864
+    m_Localized: Stops current exposure and teleports pasient back into the waiting
+      room
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

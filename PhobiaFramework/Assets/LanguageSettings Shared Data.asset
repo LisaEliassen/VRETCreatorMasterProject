@@ -335,6 +335,24 @@ MonoBehaviour:
     m_Key: StopExposureButton
     m_Metadata:
       m_Items: []
+  - m_Id: 33002330343256064
+    m_Key: 'PatientViewTutorial
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33002454909890560
+    m_Key: 'WaitingRoomTutorial
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33005333779492864
+    m_Key: 'StopExposureTutorial
+
+'
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

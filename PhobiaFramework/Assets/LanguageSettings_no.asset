@@ -366,6 +366,22 @@ MonoBehaviour:
     m_Localized: STOP EKSPONERING
     m_Metadata:
       m_Items: []
+  - m_Id: 33002330343256064
+    m_Localized: "\rPasientvisningsvinduet viser hva pasienten ser inne i VR. Du
+      kan klikke p\xE5 den for \xE5 forst\xF8rre visningen eller dra den til en annen
+      posisjon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33002454909890560
+    m_Localized: "Pasient dukker opp i et venterom bak eksponeringsrommet som skal
+      v\xE6re et trygt rom"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33005333779492864
+    m_Localized: Stopper gjeldende eksponering og teleporterer pasienten tilbake
+      til venterommet
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
