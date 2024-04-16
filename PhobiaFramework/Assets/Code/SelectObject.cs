@@ -37,11 +37,14 @@ public class SelectObject : MonoBehaviour
                 if (objDropdownManager.GetObjects().Values.Contains(hit.collider.gameObject))
                 {
                     objDropdownManager.setCurrentObject(hit.collider.name);
-                    Debug.Log("Yuup");
                 }
                 else if (hit.collider.name == "Trigger")
                 {
                     objDropdownManager.setCurrentObject(hit.collider.name);
+                }
+                else
+                {
+                    objDropdownManager.removeRedBoxes();
                 }
             }
         }

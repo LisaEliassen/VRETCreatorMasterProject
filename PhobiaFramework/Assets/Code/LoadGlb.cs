@@ -502,7 +502,6 @@ public class LoadGlb : MonoBehaviour
                 loadedModel.transform.rotation = rotation;
                 loadedModel.SetActive(true);
 
-
                 // Add a Box Collider to the GameObject
                 BoxCollider boxCollider = loadedModel.AddComponent<BoxCollider>();
 
@@ -557,10 +556,12 @@ public class LoadGlb : MonoBehaviour
                 redCube.transform.localScale = new Vector3(
                     boxCollider.size.x / transform.localScale.x,
                     boxCollider.size.y / transform.localScale.y,
-                    boxCollider.size.z / transform.localScale.z);                
-                redCube.transform.position = boxCollider.center;
-                redCube.transform.parent = loadedModel.transform;
+                    boxCollider.size.z / transform.localScale.z);
 
+                redCube.transform.parent = loadedModel.transform;
+                redCube.transform.position = boxCollider.center;
+                redCube.transform.localPosition = new Vector3(0, redCube.transform.position.y, 0);
+                //Debug.Log(redCube.transform.position.x.ToString());
                 redCube.SetActive(false);
 
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();

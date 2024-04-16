@@ -215,7 +215,10 @@ public class ObjectDropdownManager : MonoBehaviour
             {
                 obj.transform.GetChild(1).gameObject.SetActive(false);
             }
-            this.trigger.transform.GetChild(1).gameObject.SetActive(false);
+            if (this.trigger != null)
+            {
+                this.trigger.transform.GetChild(1).gameObject.SetActive(false);
+            }
 
             this.currentObject = objects[option];
             copies.SetActive(false);
@@ -240,6 +243,18 @@ public class ObjectDropdownManager : MonoBehaviour
         removeTriggerButton.interactable = true;
         sizeSlider.interactable = true;
         sizeInput.interactable = true;
+    }
+
+    public void removeRedBoxes()
+    {
+        if (this.trigger != null)
+        {
+            this.trigger.transform.GetChild(1).gameObject.SetActive(false);
+        }
+        foreach (GameObject obj in objects.Values)
+        {
+            obj.transform.GetChild(1).gameObject.SetActive(false);
+        }
     }
 
     public void SetTrigger(GameObject trigger)
