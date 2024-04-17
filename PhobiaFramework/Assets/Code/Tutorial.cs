@@ -24,6 +24,8 @@ public class Tutorial : MonoBehaviour
     public GameObject CameraControlsPanel;
     public GameObject CameraResetPanel;
     public GameObject SaveLoadScenePanel;
+    public GameObject WaitingRoomPasientViewHelpPanel;
+    public GameObject StopExposureHelpPanel;
 
     public GameObject RemovePanel;
 
@@ -44,7 +46,8 @@ public class Tutorial : MonoBehaviour
     public Button NextButton10;
     public Button NextButton11;
     public Button NextButton12;
-    //public Button NextButton13;
+    public Button NextButton13;
+    public Button NextButton14;
 
     public Button PreviousButton1;
     public Button PreviousButton2;
@@ -57,7 +60,8 @@ public class Tutorial : MonoBehaviour
     public Button PreviousButton9;
     public Button PreviousButton10;
     public Button PreviousButton11;
-    //public Button PreviousButton12;
+    public Button PreviousButton12;
+    public Button PreviousButton13;
 
     // Start is called before the first frame update
     void Start()
@@ -75,7 +79,14 @@ public class Tutorial : MonoBehaviour
             RemoveTriggerHelpPanel.SetActive(false);
             Media360HelpPanel.SetActive(false);
             CameraControlsPanel.SetActive(false);
-            
+            StopExposureHelpPanel.SetActive(false);
+            WaitingRoomPasientViewHelpPanel.SetActive(false);
+            CameraResetPanel.SetActive(false);
+            SaveLoadScenePanel.SetActive(false);
+            RemoveSoundHelpPanel.SetActive(false);
+            AddSceneryHelpPanel.SetActive(false);
+            AddSoundHelpPanel.SetActive(false);
+
 
             HelpUI.SetActive(false);
         });
@@ -138,140 +149,159 @@ public class Tutorial : MonoBehaviour
         NextButton1.onClick.AddListener(() =>
         {
             InfoPanel.SetActive(false);
-            ModelHelpPanel.SetActive(true);
+            CameraControlsPanel.SetActive(true);
+            CameraResetPanel.SetActive(true);
         });
         NextButton2.onClick.AddListener(() =>
+        {
+            CameraControlsPanel.SetActive(false);
+            CameraResetPanel.SetActive(false);
+            WaitingRoomPasientViewHelpPanel.SetActive(true);
+        });
+        NextButton3.onClick.AddListener(() =>
+        {
+            WaitingRoomPasientViewHelpPanel.SetActive(false);
+            StopExposureHelpPanel.SetActive(true);
+        });
+        NextButton4.onClick.AddListener(() =>
+        {
+            StopExposureHelpPanel.SetActive(false);
+            ModelHelpPanel.SetActive(true);
+        });
+        NextButton5.onClick.AddListener(() =>
         {
             ModelHelpPanel.SetActive(false);
             SizeAndPositionHelpPanel.SetActive(true);
         });
-        NextButton3.onClick.AddListener(() =>
+        NextButton6.onClick.AddListener(() =>
         {
             SizeAndPositionHelpPanel.SetActive(false);
             CopiesHelpPanel.SetActive(true);
         });
-        NextButton4.onClick.AddListener(() =>
+        NextButton7.onClick.AddListener(() =>
         {
             CopiesHelpPanel.SetActive(false);
             AnimationHelpPanel.SetActive(true);
         });
-        NextButton5.onClick.AddListener(() =>
+        NextButton8.onClick.AddListener(() =>
         {
             AnimationHelpPanel.SetActive(false);
             VisibilityToggleHelpPanel.SetActive(true);
         });
-        NextButton6.onClick.AddListener(() =>
-        {
-            VisibilityToggleHelpPanel.SetActive(false);
-            RemoveTriggerHelpPanel.SetActive(true);
-        });
-        NextButton7.onClick.AddListener(() =>
-        {
-            RemoveTriggerHelpPanel.SetActive(false);
-            CameraControlsPanel.SetActive(true);
-            CameraResetPanel.SetActive(true);
-            //Media360HelpPanel.SetActive(true);
-        });
-        NextButton8.onClick.AddListener(() =>
-        {
-            CameraControlsPanel.SetActive(false);
-            CameraResetPanel.SetActive(false);
-            Media360HelpPanel.SetActive(true);
-
-           // AddSoundHelpPanel.SetActive(true);
-        });
         NextButton9.onClick.AddListener(() =>
+        {
+            RemoveTriggerHelpPanel.SetActive(true);
+            VisibilityToggleHelpPanel.SetActive(false);
+        });
+        NextButton10.onClick.AddListener(() =>
+        {
+            Media360HelpPanel.SetActive(true);
+            RemoveTriggerHelpPanel.SetActive(false);
+        });
+        NextButton11.onClick.AddListener(() =>
         {
             Media360HelpPanel.SetActive(false);
             AddSoundHelpPanel.SetActive(true);
             RemoveSoundHelpPanel.SetActive(true);
         });
-        NextButton10.onClick.AddListener(() =>
+
+        NextButton12.onClick.AddListener(() =>
         {
             AddSoundHelpPanel.SetActive(false);
             RemoveSoundHelpPanel.SetActive(false);
             AddSceneryHelpPanel.SetActive(true);
-            //CameraControlsPanel.SetActive(true);
         });
-        NextButton11.onClick.AddListener(() =>
+
+        NextButton13.onClick.AddListener(() =>
         {
-            //CameraControlsPanel.SetActive(false);
             AddSceneryHelpPanel.SetActive(false);
             SaveLoadScenePanel.SetActive(true);
         });
 
-        NextButton12.onClick.AddListener(() =>
+        NextButton14.onClick.AddListener(() =>
         {
             SaveLoadScenePanel.SetActive(false);
             HelpUI.SetActive(false);
             showTutorialButton.gameObject.SetActive(true);
         });
 
-
         PreviousButton1.onClick.AddListener(() =>
         {
-            ModelHelpPanel.SetActive(false);
+            CameraControlsPanel.SetActive(false);
+            CameraResetPanel.SetActive(false);
             InfoPanel.SetActive(true);
         });
         PreviousButton2.onClick.AddListener(() =>
         {
-            ModelHelpPanel.SetActive(true);
-            SizeAndPositionHelpPanel.SetActive(false);
+            CameraControlsPanel.SetActive(true);
+            CameraResetPanel.SetActive(true);
+            WaitingRoomPasientViewHelpPanel.SetActive(false);
         });
         PreviousButton3.onClick.AddListener(() =>
         {
-            SizeAndPositionHelpPanel.SetActive(true);
-            CopiesHelpPanel.SetActive(false);
+            WaitingRoomPasientViewHelpPanel.SetActive(true);
+            StopExposureHelpPanel.SetActive(false);
+
         });
         PreviousButton4.onClick.AddListener(() =>
         {
-            CopiesHelpPanel.SetActive(true);
-            AnimationHelpPanel.SetActive(false);
+            StopExposureHelpPanel.SetActive(true);
+            ModelHelpPanel.SetActive(false);
+
         });
         PreviousButton5.onClick.AddListener(() =>
         {
-            AnimationHelpPanel.SetActive(true);
-            VisibilityToggleHelpPanel.SetActive(false);
+            ModelHelpPanel.SetActive(true);
+            SizeAndPositionHelpPanel.SetActive(false);
+
         });
         PreviousButton6.onClick.AddListener(() =>
         {
-            VisibilityToggleHelpPanel.SetActive(true);
-            RemoveTriggerHelpPanel.SetActive(false);
+            SizeAndPositionHelpPanel.SetActive(true);
+            CopiesHelpPanel.SetActive(false);
+
         });
         PreviousButton7.onClick.AddListener(() =>
         {
-            RemoveTriggerHelpPanel.SetActive(true);
-            CameraControlsPanel.SetActive(false);
-            CameraResetPanel.SetActive(false);
-            //Media360HelpPanel.SetActive(false);
+            CopiesHelpPanel.SetActive(true);
+            AnimationHelpPanel.SetActive(false);
+
         });
         PreviousButton8.onClick.AddListener(() =>
         {
-            Media360HelpPanel.SetActive(false);
-            CameraControlsPanel.SetActive(true);
-            CameraResetPanel.SetActive(true);
-            //AddSoundHelpPanel.SetActive(false);
+            AnimationHelpPanel.SetActive(true);
+            VisibilityToggleHelpPanel.SetActive(false);
+
         });
         PreviousButton9.onClick.AddListener(() =>
+        {
+            VisibilityToggleHelpPanel.SetActive(true);
+            RemoveTriggerHelpPanel.SetActive(false);
+
+        });
+        PreviousButton10.onClick.AddListener(() =>
+        {
+            RemoveTriggerHelpPanel.SetActive(true);
+            Media360HelpPanel.SetActive(false);
+
+        });
+        PreviousButton11.onClick.AddListener(() =>
         {
             Media360HelpPanel.SetActive(true);
             AddSoundHelpPanel.SetActive(false);
             RemoveSoundHelpPanel.SetActive(false);
         });
-        PreviousButton10.onClick.AddListener(() =>
+        PreviousButton12.onClick.AddListener(() =>
         {
-            AddSceneryHelpPanel.SetActive(false);
             AddSoundHelpPanel.SetActive(true);
             RemoveSoundHelpPanel.SetActive(true);
-            //CameraControlsPanel.SetActive(false);
+            AddSceneryHelpPanel.SetActive(false);
         });
-        PreviousButton11.onClick.AddListener(() =>
+        PreviousButton13.onClick.AddListener(() =>
         {
-            SaveLoadScenePanel.SetActive(false);
             AddSceneryHelpPanel.SetActive(true);
-            //CameraControlsPanel.SetActive(false);
+            SaveLoadScenePanel.SetActive(false);
         });
-
     }
 
     public void StartTutorial()
