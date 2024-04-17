@@ -12,6 +12,7 @@ using GLTFast.Schema;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.XR.Interaction.Toolkit;
+using System.Linq;
 
 public class LoadGlb : MonoBehaviour
 {
@@ -325,7 +326,8 @@ public class LoadGlb : MonoBehaviour
     {
         if (trigger != null && !string.IsNullOrEmpty(pathOfTrigger)) 
         {
-            GameObject copy = new GameObject("Trigger_copy" + GetNumCopies());
+            string name = "Trigger_copy" + GetNumCopies();
+            GameObject copy = new GameObject(name);
             //copy.tag = "Export";
             triggerCopies.Add(copy);
             Vector3 position = new Vector3(GetNumCopies(), 0.0f, 0.0f);
@@ -347,6 +349,8 @@ public class LoadGlb : MonoBehaviour
                         animController.PlayAnimation(copy, clipname);
                     }
                 }
+
+                objDropdownManager.addDropdownOption(copy, name);
             }
             else
             {
@@ -366,7 +370,9 @@ public class LoadGlb : MonoBehaviour
         {
             Debug.Log(GetNumCopies());
             DestroyImmediate(triggerCopies[GetNumCopies() - 1]);
+            objDropdownManager.DeleteCopy(triggerCopies.ElementAt(GetNumCopies() - 1));
             triggerCopies.RemoveAt(GetNumCopies() - 1);
+
         }
     }
 
@@ -564,6 +570,9 @@ public class LoadGlb : MonoBehaviour
                 //Debug.Log(redCube.transform.position.x.ToString());
                 redCube.SetActive(false);
 
+                int LayerUser = LayerMask.NameToLayer("User");
+                redCube.layer = LayerUser;
+
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)
                 {
@@ -575,6 +584,7 @@ public class LoadGlb : MonoBehaviour
                 DragObject dragObject = loadedModel.GetComponent<DragObject>();
                 dragObject.SetCamera(mainCamera);
 
+                
             }
             else
             {

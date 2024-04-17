@@ -91,6 +91,12 @@ public class ObjectDropdownManager : MonoBehaviour
         setCurrentObject(change.options[change.value].text);
     }
 
+    public List<GameObject> GetCopies() { return this.triggerCopies; }
+
+    public void DeleteCopy(GameObject copy)
+    {
+        this.triggerCopies.Remove(copy);
+    }
     public void addDropdownOption(GameObject obj, string option)
     {
         if (option == "Trigger")
@@ -105,6 +111,10 @@ public class ObjectDropdownManager : MonoBehaviour
                 dropdown.RefreshShownValue();
             }
             setCurrentObject(option);
+        }
+        else if (option.StartsWith("Trigger"))
+        {
+            this.triggerCopies.Add(obj);
         }
         else
         {
@@ -230,7 +240,7 @@ public class ObjectDropdownManager : MonoBehaviour
             sizeSlider.value = size;
             ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
 
-            objects[option].transform.GetChild(1).gameObject.SetActive(true);
+            //objects[option].transform.GetChild(1).gameObject.SetActive(true);
 
             int index = dropdown.options.FindIndex((i) => { return i.text.Equals(option); });
             if (index != -1)
@@ -250,6 +260,13 @@ public class ObjectDropdownManager : MonoBehaviour
         if (this.trigger != null)
         {
             this.trigger.transform.GetChild(1).gameObject.SetActive(false);
+            if (this.triggerCopies.Count > 0)
+            {
+               foreach(GameObject copy in this.triggerCopies)
+                {
+                    copy.transform.GetChild(1).gameObject.SetActive(false);
+                }
+            }
         }
         foreach (GameObject obj in objects.Values)
         {

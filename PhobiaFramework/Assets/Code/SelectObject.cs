@@ -37,10 +37,44 @@ public class SelectObject : MonoBehaviour
                 if (objDropdownManager.GetObjects().Values.Contains(hit.collider.gameObject))
                 {
                     objDropdownManager.setCurrentObject(hit.collider.name);
+
+
                 }
                 else if (hit.collider.name == "Trigger")
                 {
-                    objDropdownManager.setCurrentObject(hit.collider.name);
+                    objDropdownManager.setCurrentObject("Trigger");
+
+                    foreach (GameObject copy in objDropdownManager.GetCopies())
+                    {
+                        copy.transform.GetChild(1).gameObject.SetActive(false);
+                    }
+
+                    /*hit.collider.transform.GetChild(1).gameObject.SetActive(true);
+
+                    foreach (GameObject obj in objDropdownManager.GetObjects().Values)
+                    {
+                        obj.transform.GetChild(1).gameObject.SetActive(false);
+                    }*/
+                }
+                else if (hit.collider.name.StartsWith("Trigger"))
+                {
+                    //objDropdownManager.setCurrentObject("Trigger");
+
+                    hit.collider.transform.GetChild(1).gameObject.SetActive(true);
+
+                    objDropdownManager.GetTrigger().transform.GetChild(1).gameObject.SetActive(false);
+
+                    foreach (GameObject obj in objDropdownManager.GetObjects().Values)
+                    {
+                        obj.transform.GetChild(1).gameObject.SetActive(false);
+                    }
+                    foreach (GameObject copy in objDropdownManager.GetCopies())
+                    {
+                        if (copy != hit.collider.gameObject)
+                        {
+                            copy.transform.GetChild(1).gameObject.SetActive(false);
+                        }
+                    }
                 }
                 else
                 {
