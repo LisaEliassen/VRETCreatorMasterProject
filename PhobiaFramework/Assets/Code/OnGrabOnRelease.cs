@@ -46,7 +46,7 @@ public class OnGrabOnRelease : MonoBehaviour
         // Handle object released event
         Debug.Log("Object released");
         isGrabbed = false;
-        rb.isKinematic = true;
+        rb.isKinematic = false;
         // Add any additional functionality you need here
     }
 

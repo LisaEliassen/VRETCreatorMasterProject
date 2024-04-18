@@ -28,7 +28,7 @@ public interface Database
 
     void addFileData(string fileName, string fileType, string extension, string iconExtension);
 
-    Task<bool> addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery);
+    Task<bool> addSceneData(string sceneName, Trigger[] triggers, string pathTo360Media, string pathToAudio, SceneryObject[] scenery);
 
     IEnumerator getAllModelFileData(System.Action<List<FileMetaData>> callback);
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.InputSystem.HID;
 
 public class ObjectDropdownManager : MonoBehaviour
 {
@@ -205,13 +206,39 @@ public class ObjectDropdownManager : MonoBehaviour
             sizeSlider.value = size;
             ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
 
+            foreach (GameObject copy in GetCopies())
+            {
+                copy.transform.GetChild(1).gameObject.SetActive(false);
+            }
+
             this.trigger.transform.GetChild(1).gameObject.SetActive(true);
 
-            foreach (GameObject obj in objects.Values)
+            foreach (GameObject obj in GetObjects().Values)
             {
                 obj.transform.GetChild(1).gameObject.SetActive(false);
             }
 
+            int index = dropdown.options.FindIndex((i) => { return i.text.Equals(option); });
+            if (index != -1)
+            {
+                dropdown.value = index;
+                dropdown.RefreshShownValue();
+            }
+        }
+        else if (option == "Copy")
+        {
+            this.currentObject = this.trigger;
+            copies.SetActive(true);
+            addCopyButton.interactable = true;
+            interactableToggle.gameObject.SetActive(true);
+            interactableToggle.interactable = true;
+            animationDropdown.SetActive(true);
+            objectVisibility.interactable = true;
+            objectVisibility.gameObject.SetActive(true);
+
+            int size = loadGlb.GetObjectSizes()[this.trigger];
+            sizeSlider.value = size;
+            ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
             int index = dropdown.options.FindIndex((i) => { return i.text.Equals(option); });
             if (index != -1)
             {
@@ -240,7 +267,12 @@ public class ObjectDropdownManager : MonoBehaviour
             sizeSlider.value = size;
             ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
 
-            //objects[option].transform.GetChild(1).gameObject.SetActive(true);
+            objects[option].transform.GetChild(1).gameObject.SetActive(true);
+
+            foreach (GameObject copy in GetCopies())
+            {
+                copy.transform.GetChild(1).gameObject.SetActive(false);
+            }
 
             int index = dropdown.options.FindIndex((i) => { return i.text.Equals(option); });
             if (index != -1)

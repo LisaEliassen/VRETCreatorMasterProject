@@ -80,7 +80,7 @@ public class ShowAllScenes : MonoBehaviour
             int index = 1;
             foreach (var file in newFilesList)
             {
-                StartCoroutine(CreateGridItem(file.sceneName, file.pathToSceneIcon, file.trigger, file.pathTo360Media, file.pathToAudio, file.scenery, index));
+                StartCoroutine(CreateGridItem(file.sceneName, file.pathToSceneIcon, file.triggers, file.pathTo360Media, file.pathToAudio, file.scenery, index));
                 index++;
             }
             files = newFilesList;
@@ -136,7 +136,7 @@ public class ShowAllScenes : MonoBehaviour
         StartCoroutine(FetchScenes());
     }
 
-    public IEnumerator CreateGridItem(string sceneName, string pathToSceneIcon, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery, int index)
+    public IEnumerator CreateGridItem(string sceneName, string pathToSceneIcon, Trigger[] triggers, string pathTo360Media, string pathToAudio, SceneryObject[] scenery, int index)
     {
         if (files.Any(x => x.sceneName == sceneName && x.pathToSceneIcon == pathToSceneIcon))
         {
@@ -180,35 +180,42 @@ public class ShowAllScenes : MonoBehaviour
         {
             loadGlbScript.ResetScene();
 
-            if (!System.String.IsNullOrEmpty(trigger.path))
+            foreach (Trigger trigger in triggers)
             {
-                Vector3 position;
-                Quaternion rotation;
+                if (trigger != null)
+                {
+                    if (!System.String.IsNullOrEmpty(trigger.path))
+                    {
+                        Vector3 position;
+                        Quaternion rotation;
 
-                string[] positionComponents = trigger.position.Split(',');
+                        string[] positionComponents = trigger.position.Split(',');
+                        string[] rotationComponents = trigger.rotation.Split(',');
 
-                if (trigger == null)
+                        position = ParseVector3(positionComponents[0], positionComponents[1], positionComponents[2]);
+                        rotation = ParseQuaternion(rotationComponents[0], rotationComponents[1], rotationComponents[2], rotationComponents[3]);
+
+                        int size = 2;
+                        if (int.TryParse(trigger.size, out _))
+                        {
+                            size = int.Parse(trigger.size);
+                        }
+
+                        if (trigger.isCopy == "0")
+                        {
+                            await loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, size);
+                        }
+                        else
+                        {
+                            Debug.Log("That is a copy!");
+                        }
+                    }
+                }
+                else
                 {
                     Debug.Log("trigger is null");
                 }
 
-                if (trigger.rotation == null)
-                {
-                    Debug.Log("trigger.rotation is null");
-                }
-
-                string[] rotationComponents = trigger.rotation.Split(',');
-
-                position = ParseVector3(positionComponents[0], positionComponents[1], positionComponents[2]);
-                rotation = ParseQuaternion(rotationComponents[0], rotationComponents[1], rotationComponents[2], rotationComponents[3]);
-
-                int size = 2;
-                if (int.TryParse(trigger.size, out _))
-                {
-                    size = int.Parse(trigger.size);
-                }
-
-                await loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, size);
             }
 
             if (!System.String.IsNullOrEmpty(pathTo360Media))

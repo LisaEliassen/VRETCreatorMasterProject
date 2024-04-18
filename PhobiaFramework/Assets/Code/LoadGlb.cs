@@ -387,8 +387,6 @@ public class LoadGlb : MonoBehaviour
             RemoveSceneryObject(sceneryObj);
             sceneryObjects = new List<GameObject>();
         }
-
-
     }
 
     public async Task<bool> SpawnObject(string modelName, string path, Vector3 position, Quaternion rotation, int size)
@@ -568,10 +566,11 @@ public class LoadGlb : MonoBehaviour
                 redCube.transform.position = boxCollider.center;
                 redCube.transform.localPosition = new Vector3(0, redCube.transform.position.y, 0);
                 //Debug.Log(redCube.transform.position.x.ToString());
-                redCube.SetActive(false);
 
                 int LayerUser = LayerMask.NameToLayer("User");
                 redCube.layer = LayerUser;
+
+                redCube.SetActive(false);
 
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)

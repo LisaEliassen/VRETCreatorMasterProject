@@ -91,11 +91,11 @@ public class DatabaseService : MonoBehaviour
         }
     }
 
-    public async Task<bool> addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
+    public async Task<bool> addSceneData(string sceneName, Trigger[] triggers, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
     {
         if (database != null)
         {
-            return await database.addSceneData(sceneName, trigger, pathTo360Media, pathToAudio, scenery);
+            return await database.addSceneData(sceneName, triggers, pathTo360Media, pathToAudio, scenery);
         }
         return false;
     }

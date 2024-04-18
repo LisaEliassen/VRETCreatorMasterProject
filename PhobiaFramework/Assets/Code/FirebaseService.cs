@@ -311,14 +311,14 @@ public class FirebaseService : Database
         }
     }
 
-    public async Task<bool> addSceneData(string sceneName, Trigger trigger, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
+    public async Task<bool> addSceneData(string sceneName, Trigger[] triggers, string pathTo360Media, string pathToAudio, SceneryObject[] scenery)
     {
         bool success = false;
         string uniqueID = Guid.NewGuid().ToString(); // Generating a unique ID
         string iconExtension = Path.GetExtension("screenshot.png");
         string pathToSceneIcon = databaseURL + "/scenes/icons/" + sceneName + "_icon" + iconExtension;
 
-        SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, trigger, pathTo360Media, pathToAudio, scenery);
+        SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, triggers, pathTo360Media, pathToAudio, scenery);
         bool entryExists = await SceneDataExists(sceneData, "scenes");
         
         if (entryExists)
@@ -374,11 +374,23 @@ public class FirebaseService : Database
                     string sceneName = child.Child("sceneName").Value.ToString();
                     string pathToSceneIcon = child.Child("pathToSceneIcon").Value.ToString();
 
-                    string triggerPath = child.Child("trigger").Child("path").Value.ToString();
-                    string triggerSize = child.Child("trigger").Child("size").Value.ToString();
-                    string triggerPosition = child.Child("trigger").Child("position").Value.ToString();
-                    string triggerRotation = child.Child("trigger").Child("rotation").Value.ToString();
-                    Trigger trigger = new Trigger(triggerPath, triggerPosition, triggerRotation, triggerSize);
+                    List<Trigger> triggers = new List<Trigger>();
+                    var triggerArray = child.Child("triggers");
+
+                    foreach (var triggerChild in triggerArray.Children)
+                    {
+                        if (triggerChild != null)
+                        {
+                            string triggerPath = child.Child("trigger").Child("path").Value.ToString();
+                            string triggerSize = child.Child("trigger").Child("size").Value.ToString();
+                            string triggerPosition = child.Child("trigger").Child("position").Value.ToString();
+                            string triggerRotation = child.Child("trigger").Child("rotation").Value.ToString();
+                            string isCopy = child.Child("trigger").Child("isCopy").Value.ToString();
+
+                            Trigger trigger = new Trigger(triggerPath, triggerPosition, triggerRotation, triggerSize, isCopy);
+                            triggers.Add(trigger);
+                        }
+                    }
 
                     string pathTo360Media = child.Child("pathTo360Media").Value.ToString();
                     string pathToAudio = child.Child("pathToAudio").Value.ToString();
@@ -400,7 +412,7 @@ public class FirebaseService : Database
                         }
                     }
 
-                    SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, trigger, pathTo360Media, pathToAudio, sceneryObjects.ToArray());
+                    SceneMetaData sceneData = new SceneMetaData(uniqueID, sceneName, pathToSceneIcon, triggers.ToArray(), pathTo360Media, pathToAudio, sceneryObjects.ToArray());
                     files.Add(sceneData);
                 }
                 else

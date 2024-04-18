@@ -8,6 +8,7 @@ using GLTFast.Export;
 using System.Threading.Tasks;
 using GLTFast.Logging;
 using GLTFast;
+using System.Linq;
 
 public class SceneSaver : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class SceneSaver : MonoBehaviour
     public GameObject SceneNameUI;
 
     private Trigger trigger;
+    private List<Trigger> triggers;
     private string sceneName = string.Empty;
     private string pathTo360Media;
     private string pathToAudio;
@@ -72,7 +74,7 @@ public class SceneSaver : MonoBehaviour
 
         sceneryPaths = new Dictionary<string, List<GameObject>>();
         objects = new Dictionary<GameObject, SceneryObject>();
-        trigger = new Trigger("", "", "", "");
+        trigger = new Trigger("", "", "", "", "0");
         scenery = new List<GameObject>();
     }
 
@@ -94,17 +96,24 @@ public class SceneSaver : MonoBehaviour
             warningOrErrorMessage.text = "";
 
             GameObject triggerObject = loadGlb.GetTrigger();
+            List<GameObject> triggerCopies = loadGlb.GetCopies();
 
             if (triggerObject != null)
             {
                 SetTriggerPosition(triggerObject.transform.position.ToString());
                 SetTriggerRotation(triggerObject.transform.rotation.ToString());
             }
+            this.triggers.Add(this.trigger);
+            foreach (GameObject copy in triggerCopies)
+            {
+                Trigger triggerCopy = new Trigger(this.trigger.GetPath(), copy.transform.position.ToString(), copy.transform.rotation.ToString(), this.trigger.GetSize(), "1");
+                this.triggers.Add(triggerCopy);
+            }
 
             UpdateSceneryObjects();
 
             await dbService.addIcon(Path.Combine(Application.persistentDataPath, "screenshot.png"), sceneName + "_icon", "Scene", Path.GetExtension("screenshot.png"));
-            bool success = await dbService.addSceneData(sceneNameInput.text, this.trigger, this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
+            bool success = await dbService.addSceneData(sceneNameInput.text, this.triggers.ToArray(), this.pathTo360Media, this.pathToAudio, this.sceneryObjects.ToArray());
 
             if (success)
             {
