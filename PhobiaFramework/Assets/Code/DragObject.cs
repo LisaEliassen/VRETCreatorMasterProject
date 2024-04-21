@@ -8,6 +8,7 @@ public class DragObject : MonoBehaviour
     private float mZCoord;
     public Camera mainCamera;
     public bool isRotatingObject;
+    public bool canMoveObj;
 
     Ray ray;
     RaycastHit hit;
@@ -15,6 +16,7 @@ public class DragObject : MonoBehaviour
     public void Start()
     {
         isRotatingObject = false;
+        canMoveObj = false;
     }
 
     public void SetCamera(Camera camera)
@@ -59,7 +61,6 @@ public class DragObject : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
@@ -75,6 +76,23 @@ public class DragObject : MonoBehaviour
             }
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                //print(hit.collider.name);
+                if (hit.collider.name == transform.name && !hit.collider.CompareTag("Arrow"))
+                {
+                    this.canMoveObj = true;
+                }
+                else
+                {
+                    this.canMoveObj = false;
+                }
+            }
+        }
+
         if (this.isRotatingObject)
         {
             RotateObject(); // Handle object rotation
@@ -83,35 +101,37 @@ public class DragObject : MonoBehaviour
 
     void OnMouseDrag()
     {
-        // Get the current position of the object
-        Vector3 currentPos = GetMouseWorldPos() + mOffset;
-        currentPos.y = transform.position.y;
-
-        // Get the object's collider
-        Collider objectCollider = GetComponent<Collider>();
-
-        Collider[] colliders = Physics.OverlapBox(currentPos, objectCollider.bounds.extents, transform.rotation);
-        bool canMove = true;
-        foreach (Collider collider in colliders)
+        if (this.canMoveObj)
         {
-            if (collider.CompareTag("Wall"))
+            // Get the current position of the object
+            Vector3 currentPos = GetMouseWorldPos() + mOffset;
+            currentPos.y = transform.position.y;
+
+            // Get the object's collider
+            Collider objectCollider = GetComponent<Collider>();
+
+            Collider[] colliders = Physics.OverlapBox(currentPos, objectCollider.bounds.extents, transform.rotation);
+            bool canMove = true;
+            foreach (Collider collider in colliders)
             {
-                canMove = false;
-                break;
+                if (collider.CompareTag("Wall"))
+                {
+                    canMove = false;
+                    break;
+                }
+            }
+
+            // If not outside boundaries, update the position of the object
+            if (canMove)
+            {
+                transform.position = currentPos;
+            }
+
+            if (transform.rotation.x > 0 || transform.rotation.z > 0)
+            {
+                transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
             }
         }
-
-        // If not outside boundaries, update the position of the object
-        if (canMove)
-        {
-            transform.position = currentPos;
-        }
-
-        if (transform.rotation.x > 0 || transform.rotation.z > 0)
-        {
-            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        }
-
     }
 
     void RotateObject()

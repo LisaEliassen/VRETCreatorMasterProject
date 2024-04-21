@@ -37,8 +37,6 @@ public class SelectObject : MonoBehaviour
                 if (objDropdownManager.GetObjects().Values.Contains(hit.collider.gameObject))
                 {
                     objDropdownManager.setCurrentObject(hit.collider.name);
-
-
                 }
                 else if (hit.collider.name == "Trigger")
                 {
@@ -66,7 +64,10 @@ public class SelectObject : MonoBehaviour
                 }
                 else
                 {
-                    objDropdownManager.removeRedBoxes();
+                    if (hit.collider.name != "arrow")
+                    {
+                        objDropdownManager.removeRedBoxes();
+                    }
                 }
             }
         }

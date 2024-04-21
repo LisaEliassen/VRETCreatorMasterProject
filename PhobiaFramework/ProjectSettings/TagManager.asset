@@ -8,6 +8,7 @@ TagManager:
   - Export
   - Scenery
   - Wall
+  - Arrow
   layers:
   - Default
   - TransparentFX

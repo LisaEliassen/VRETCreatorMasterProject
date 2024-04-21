@@ -532,10 +532,10 @@ public class LoadGlb : MonoBehaviour
                     lineRenderer = loadedModel.AddComponent<LineRenderer>();
 
                 // Set line properties
-                lineRenderer.positionCount = 5; // Five points to form a closed box
-                lineRenderer.useWorldSpace = true;
-                lineRenderer.startWidth = lineRenderer.endWidth = 0.05f; // Adjust line width as needed
+                lineRenderer.positionCount = 30; // Eight points to form a closed box
                 lineRenderer.loop = true; // Close the loop to form a box
+                lineRenderer.useWorldSpace = false;
+                lineRenderer.startWidth = lineRenderer.endWidth = 0.05f; // Adjust line width as needed
 
 
                 if (lineMaterial != null)
@@ -543,34 +543,67 @@ public class LoadGlb : MonoBehaviour
                     lineRenderer.material = lineMaterial;
                 }
 
-                // Calculate box vertices
+                // Get the world space bounds of the collider
+                Bounds bounds = boxCollider.bounds;
+                Vector3 center = bounds.center;
+                Vector3 extents = bounds.extents;
+
+                // Calculate box vertices in world space
                 Vector3[] vertices = new Vector3[]
                 {
-                    boxCollider.center + new Vector3(-boxCollider.size.x, -boxCollider.size.y, -boxCollider.size.z) * 0.5f,
-                    boxCollider.center + new Vector3(boxCollider.size.x, -boxCollider.size.y, -boxCollider.size.z) * 0.5f,
-                    boxCollider.center + new Vector3(boxCollider.size.x, -boxCollider.size.y, boxCollider.size.z) * 0.5f,
-                    boxCollider.center + new Vector3(-boxCollider.size.x, -boxCollider.size.y, boxCollider.size.z) * 0.5f,
-                    boxCollider.center + new Vector3(-boxCollider.size.x, -boxCollider.size.y, -boxCollider.size.z) * 0.5f // Repeat first vertex to close the loop
+                    center + new Vector3(-extents.x, -extents.y, -extents.z), // bottom-left-back
+                    center + new Vector3(extents.x, -extents.y, -extents.z),  // bottom-right-back
+                    center + new Vector3(extents.x, -extents.y, extents.z),   // bottom-right-front
+                    center + new Vector3(-extents.x, -extents.y, extents.z),  // bottom-left-front
+                    center + new Vector3(-extents.x, extents.y, -extents.z),  // top-left-back
+                    center + new Vector3(extents.x, extents.y, -extents.z),   // top-right-back
+                    center + new Vector3(extents.x, extents.y, extents.z),    // top-right-front
+                    center + new Vector3(-extents.x, extents.y, extents.z),   // top-left-front
+                    center + new Vector3(-extents.x, -extents.y, -extents.z)  // bottom-left-back (repeat first vertex to close the loop)
                 };
 
-                // Update line renderer positions
-                lineRenderer.SetPositions(vertices);*/
+                // Set the positions of the LineRenderer to draw the edges of the box
+                lineRenderer.SetPositions(new Vector3[]
+                {
+                    // Bottom edges
+                    vertices[0], vertices[1],
+                    vertices[1], vertices[2],
+                    vertices[2], vertices[3],
+                    vertices[3], vertices[0],
 
-                GameObject redCube = Instantiate(ChosenObjectBox, loadedModel.transform.position, Quaternion.identity);
-                redCube.transform.localScale = new Vector3(
+                    vertices[0], vertices[4],
+
+                    // Top edges
+                    vertices[4], vertices[5],
+                    vertices[5], vertices[6],
+                    vertices[6], vertices[7],
+                    vertices[7], vertices[4],
+
+                    vertices[4], vertices[5],
+                    vertices[5], vertices[1],
+                    vertices[1], vertices[2],
+                    vertices[2], vertices[6],
+                    vertices[6], vertices[7],
+                    vertices[7], vertices[3]
+                });*/
+
+                GameObject redCubePrefab = Instantiate(ChosenObjectBox, loadedModel.transform.position, Quaternion.identity);
+                GameObject box = redCubePrefab.transform.GetChild(0).gameObject;
+
+                box.transform.localScale = new Vector3(
                     boxCollider.size.x / transform.localScale.x,
                     boxCollider.size.y / transform.localScale.y,
                     boxCollider.size.z / transform.localScale.z);
 
-                redCube.transform.parent = loadedModel.transform;
-                redCube.transform.position = boxCollider.center;
-                redCube.transform.localPosition = new Vector3(0, redCube.transform.position.y, 0);
+                redCubePrefab.transform.parent = loadedModel.transform;
+                redCubePrefab.transform.position = boxCollider.center;
+                redCubePrefab.transform.localPosition = new Vector3(0, redCubePrefab.transform.position.y, 0);
                 //Debug.Log(redCube.transform.position.x.ToString());
 
                 int LayerUser = LayerMask.NameToLayer("User");
-                redCube.layer = LayerUser;
+                redCubePrefab.layer = LayerUser;
 
-                redCube.SetActive(false);
+                redCubePrefab.SetActive(false);
 
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)

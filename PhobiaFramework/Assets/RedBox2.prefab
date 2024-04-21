@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &750960127850196456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5029353442095427812}
+  - component: {fileID: 8937660845122315621}
+  m_Layer: 0
+  m_Name: Circle
+  m_TagString: Arrow
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5029353442095427812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750960127850196456}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7923444880576808980}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8937660845122315621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750960127850196456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0642ea9d32a25ba478000464b76f3a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standardMat: {fileID: 2100000, guid: cc34c6b7945fb364cbde51d017029ee0, type: 2}
+  hoverMat: {fileID: 2100000, guid: dba66896c1c6d9642b9f3cd7129d326e, type: 2}
+  dragMat: {fileID: 2100000, guid: 3b9029e065a5c3a4287ff0d7a9634afa, type: 2}
+  arrowPrefab: {fileID: 6553847763342792562, guid: 72b7122b629a3004e998384ab78fa981, type: 3}
+  objectToSurround: {fileID: 7315410473827318092}
+  circleResolution: 30
+  circleRadius: 1
+  lineWidth: 0.05
 --- !u!1 &1960086662838495863
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +64,7 @@ GameObject:
   - component: {fileID: 5571691943421018118}
   - component: {fileID: 8968666236156585106}
   m_Layer: 0
-  m_Name: default
+  m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +164,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7315410473827318092}
+  - {fileID: 5029353442095427812}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
