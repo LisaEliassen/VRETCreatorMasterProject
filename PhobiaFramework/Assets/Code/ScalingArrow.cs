@@ -31,22 +31,30 @@ public class ScalingArrow : MonoBehaviour
         this.canScale = false;
     }
 
+    public void SetCamera(Camera camera)
+    {
+        this.mainCamera = camera;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+            if (mainCamera != null)
             {
-                if (hit.collider.name == "arrow" && hit.collider.CompareTag("Arrow"))
+                ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit))
                 {
-                    print(hit.collider.name);
-                    this.canScale = true;
-                }
-                else
-                {
-                    this.canScale = false;
+                    if (hit.collider.name == "arrow" && hit.collider.CompareTag("Arrow"))
+                    {
+                        print(hit.collider.name);
+                        this.canScale = true;
+                    }
+                    else
+                    {
+                        this.canScale = false;
+                    }
                 }
             }
         }
@@ -97,6 +105,7 @@ public class ScalingArrow : MonoBehaviour
             // Apply scaling while maintaining the object's proportions
             Vector3 newScale = transform.localScale + Vector3.one * mouseY;
             newScale = Vector3.Max(newScale, new Vector3(0.3f, 0.3f, 0.3f));
+
             if (this.objToScale != null)
             {
                 this.objToScale.transform.localScale = newScale;

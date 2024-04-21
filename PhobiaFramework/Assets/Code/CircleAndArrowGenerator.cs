@@ -18,8 +18,6 @@ public class CircleAndArrowGenerator : MonoBehaviour
     private GameObject arrow;
     private Transform mainCameraTransform; // Reference to the main camera's transform
 
-
-
     void Start()
     {
         // Create and configure LineRenderer
@@ -54,6 +52,7 @@ public class CircleAndArrowGenerator : MonoBehaviour
 
     void UpdateCircle()
     {
+        lineRenderer.startWidth = lineRenderer.endWidth = lineWidth;
         // Calculate circle vertices
         for (int i = 0; i < circleResolution; i++)
         {

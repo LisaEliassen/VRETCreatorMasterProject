@@ -587,23 +587,31 @@ public class LoadGlb : MonoBehaviour
                     vertices[7], vertices[3]
                 });*/
 
-                GameObject redCubePrefab = Instantiate(ChosenObjectBox, loadedModel.transform.position, Quaternion.identity);
-                GameObject box = redCubePrefab.transform.GetChild(0).gameObject;
+                GameObject selectionBox = Instantiate(ChosenObjectBox, loadedModel.transform.position, Quaternion.identity);
+                GameObject box = selectionBox.transform.GetChild(0).gameObject;
 
                 box.transform.localScale = new Vector3(
                     boxCollider.size.x / transform.localScale.x,
                     boxCollider.size.y / transform.localScale.y,
                     boxCollider.size.z / transform.localScale.z);
 
-                redCubePrefab.transform.parent = loadedModel.transform;
-                redCubePrefab.transform.position = boxCollider.center;
-                redCubePrefab.transform.localPosition = new Vector3(0, redCubePrefab.transform.position.y, 0);
-                //Debug.Log(redCube.transform.position.x.ToString());
+                selectionBox.transform.parent = loadedModel.transform;
+                selectionBox.transform.position = boxCollider.center;
+                selectionBox.transform.localPosition = new Vector3(0, selectionBox.transform.position.y, 0);
+
+                /*GameObject circle = selectionBox.transform.GetChild(1).gameObject;
+                GameObject arrow = circle.transform.GetChild(0).gameObject;
+                arrow = arrow.transform.GetChild(0).gameObject;
+
+                ScalingArrow scalingArrowScript = arrow.GetComponent<ScalingArrow>();
+                scalingArrowScript.SetCamera(mainCamera);*/
 
                 int LayerUser = LayerMask.NameToLayer("User");
-                redCubePrefab.layer = LayerUser;
+                selectionBox.layer = LayerUser;
 
-                redCubePrefab.SetActive(false);
+                selectionBox.SetActive(false);
+
+
 
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)

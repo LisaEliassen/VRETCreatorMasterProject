@@ -9,6 +9,10 @@ public class DragObject : MonoBehaviour
     public Camera mainCamera;
     public bool isRotatingObject;
     public bool canMoveObj;
+    private bool canScale;
+
+    CircleAndArrowGenerator circleAndArrowGenerator;
+
 
     Ray ray;
     RaycastHit hit;
@@ -17,6 +21,9 @@ public class DragObject : MonoBehaviour
     {
         isRotatingObject = false;
         canMoveObj = false;
+        canScale = false;
+
+        circleAndArrowGenerator = transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<CircleAndArrowGenerator>();
     }
 
     public void SetCamera(Camera camera)
@@ -90,6 +97,16 @@ public class DragObject : MonoBehaviour
                 {
                     this.canMoveObj = false;
                 }
+
+                if (hit.collider.name == "arrow" && hit.collider.CompareTag("Arrow"))
+                {
+                    print(hit.collider.name);
+                    this.canScale = true;
+                }
+                else
+                {
+                    this.canScale = false;
+                }
             }
         }
 
@@ -132,6 +149,32 @@ public class DragObject : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
             }
         }
+
+        if (this.canScale)
+        {
+            ScaleObject();
+        }
+    }
+
+    void ScaleObject()
+    {
+        float scaleSpeed = 0.1f;
+        float mouseY = Input.GetAxis("Mouse Y") * scaleSpeed;
+
+        Vector3 newScale = transform.localScale + Vector3.one * mouseY;
+        newScale = Vector3.Max(newScale, new Vector3(0.3f, 0.3f, 0.3f));
+
+        float scaleChange = newScale.x / transform.localScale.x;
+        float lineWidthChangeFactor = Mathf.Pow(scaleChange, 0.5f);
+
+        transform.localScale = newScale;
+
+        float minLineWidth = 0.05f;
+        float maxLineWidth = 0.3f;
+
+        float newLineWidth = Mathf.Clamp(circleAndArrowGenerator.lineWidth * lineWidthChangeFactor, minLineWidth, maxLineWidth);
+
+        circleAndArrowGenerator.lineWidth = newLineWidth;
     }
 
     void RotateObject()
