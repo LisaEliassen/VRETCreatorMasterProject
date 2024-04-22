@@ -319,6 +319,7 @@ public class ObjectDropdownManager : MonoBehaviour
     public void RemoveTrigger()
     {
         removeDropdownOption(this.trigger);
+        this.triggerCopies.Clear();
         this.trigger = null;
     }
 
