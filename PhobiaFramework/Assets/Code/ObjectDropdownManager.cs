@@ -294,7 +294,7 @@ public class ObjectDropdownManager : MonoBehaviour
             this.trigger.transform.GetChild(1).gameObject.SetActive(false);
             if (this.triggerCopies.Count > 0)
             {
-               foreach(GameObject copy in this.triggerCopies)
+                foreach(GameObject copy in this.triggerCopies)
                 {
                     copy.transform.GetChild(1).gameObject.SetActive(false);
                 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5029353442095427812}
   - component: {fileID: 8937660845122315621}
+  - component: {fileID: 3211553052964316379}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Arrow
@@ -39,7 +40,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750960127850196456}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0642ea9d32a25ba478000464b76f3a9c, type: 3}
   m_Name: 
@@ -48,10 +49,23 @@ MonoBehaviour:
   hoverMat: {fileID: 2100000, guid: dba66896c1c6d9642b9f3cd7129d326e, type: 2}
   dragMat: {fileID: 2100000, guid: 3b9029e065a5c3a4287ff0d7a9634afa, type: 2}
   arrowPrefab: {fileID: 6553847763342792562, guid: 72b7122b629a3004e998384ab78fa981, type: 3}
+  scaleButtonPrefab: {fileID: 1752096984681726434, guid: f45eb6a3e58964f46abfe72e8e2a58ec, type: 3}
   objectToSurround: {fileID: 7315410473827318092}
   circleResolution: 30
   circleRadius: 1
   lineWidth: 0.05
+  scaleButton: {fileID: 0}
+--- !u!210 &3211553052964316379
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750960127850196456}
+  m_Enabled: 1
+  m_SortingLayerID: 389134153
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1 &1960086662838495863
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,6 +77,7 @@ GameObject:
   - component: {fileID: 7315410473827318092}
   - component: {fileID: 5571691943421018118}
   - component: {fileID: 8968666236156585106}
+  - component: {fileID: 4192998937340565397}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -135,6 +150,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!210 &4192998937340565397
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960086662838495863}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &7403473099814556334
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7923444880576808980}
+  - component: {fileID: 6489100018026935667}
   m_Layer: 0
   m_Name: RedBox2
   m_TagString: Untagged
@@ -168,3 +195,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &6489100018026935667
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7403473099814556334}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0

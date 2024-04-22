@@ -46,7 +46,7 @@ public class ScalingArrow : MonoBehaviour
                 ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (hit.collider.name == "arrow" && hit.collider.CompareTag("Arrow"))
+                    if (hit.collider.CompareTag("Scaling"))
                     {
                         print(hit.collider.name);
                         this.canScale = true;
@@ -98,12 +98,12 @@ public class ScalingArrow : MonoBehaviour
         Debug.Log("dragging");
         if (this.canScale)
         {
-            // Scale the object based on mouse movement
+            // Scale the parent object based on mouse movement
             float scaleSpeed = 0.1f;
             float mouseY = Input.GetAxis("Mouse Y") * scaleSpeed;
 
             // Apply scaling while maintaining the object's proportions
-            Vector3 newScale = transform.localScale + Vector3.one * mouseY;
+            Vector3 newScale = this.objToScale.transform.localScale + Vector3.one * mouseY;
             newScale = Vector3.Max(newScale, new Vector3(0.3f, 0.3f, 0.3f));
 
             if (this.objToScale != null)

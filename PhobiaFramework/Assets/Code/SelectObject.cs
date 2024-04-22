@@ -64,7 +64,7 @@ public class SelectObject : MonoBehaviour
                 }
                 else
                 {
-                    if (hit.collider.name != "arrow")
+                    if (!hit.collider.CompareTag("Scaling"))
                     {
                         objDropdownManager.removeRedBoxes();
                     }

@@ -210,9 +210,13 @@ public class ShowAllScenes : MonoBehaviour
                         {
                             await loadGlbScript.SpawnObject("Trigger", trigger.path, position, rotation, size);
                         }
+                        else if (trigger.isCopy == "1")
+                        {
+                            await loadGlbScript.MakeCopy(position, rotation);
+                        }
                         else
                         {
-                            Debug.Log("That is a copy!");
+                            Debug.Log("Something went wrong!");
                         }
                     }
                 }

@@ -76,6 +76,7 @@ public class SceneSaver : MonoBehaviour
         objects = new Dictionary<GameObject, SceneryObject>();
         trigger = new Trigger("", "", "", "", "0");
         scenery = new List<GameObject>();
+        triggers = new List<Trigger>();
     }
 
     public void checkInput(string input)

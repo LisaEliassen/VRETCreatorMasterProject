@@ -10,9 +10,10 @@ public class DragObject : MonoBehaviour
     public bool isRotatingObject;
     public bool canMoveObj;
     private bool canScale;
+    public GameObject platform;
 
     CircleAndArrowGenerator circleAndArrowGenerator;
-
+    GameObject scaleButton;
 
     Ray ray;
     RaycastHit hit;
@@ -24,11 +25,17 @@ public class DragObject : MonoBehaviour
         canScale = false;
 
         circleAndArrowGenerator = transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<CircleAndArrowGenerator>();
+        scaleButton = circleAndArrowGenerator.scaleButton;
     }
 
     public void SetCamera(Camera camera)
     {
         mainCamera = camera;
+    }
+
+    public void SetPlatform(GameObject platform)
+    {
+        this.platform = platform;
     }
 
     void OnMouseDown()
@@ -98,9 +105,8 @@ public class DragObject : MonoBehaviour
                     this.canMoveObj = false;
                 }
 
-                if (hit.collider.name == "arrow" && hit.collider.CompareTag("Arrow"))
+                if (hit.collider.CompareTag("Scaling"))
                 {
-                    print(hit.collider.name);
                     this.canScale = true;
                 }
                 else
@@ -116,10 +122,27 @@ public class DragObject : MonoBehaviour
         }
     }
 
+    Bounds CalculatePlatformBounds()
+    {
+        Collider platformCollider = platform.GetComponent<Collider>();
+        if (platformCollider != null)
+        {
+            return platformCollider.bounds;
+        }
+        else
+        {
+            Debug.LogError("Platform collider not found.");
+            return new Bounds();
+        }
+    }
+
     void OnMouseDrag()
     {
         if (this.canMoveObj)
         {
+            // Calculate the platform bounds
+            Bounds platformBounds = CalculatePlatformBounds();
+
             // Get the current position of the object
             Vector3 currentPos = GetMouseWorldPos() + mOffset;
             currentPos.y = transform.position.y;
@@ -129,6 +152,7 @@ public class DragObject : MonoBehaviour
 
             Collider[] colliders = Physics.OverlapBox(currentPos, objectCollider.bounds.extents, transform.rotation);
             bool canMove = true;
+
             foreach (Collider collider in colliders)
             {
                 if (collider.CompareTag("Wall"))
@@ -138,7 +162,7 @@ public class DragObject : MonoBehaviour
                 }
             }
 
-            // If not outside boundaries, update the position of the object
+            // If not colliding with walls, update the position of the object
             if (canMove)
             {
                 transform.position = currentPos;
@@ -175,6 +199,12 @@ public class DragObject : MonoBehaviour
         float newLineWidth = Mathf.Clamp(circleAndArrowGenerator.lineWidth * lineWidthChangeFactor, minLineWidth, maxLineWidth);
 
         circleAndArrowGenerator.lineWidth = newLineWidth;
+
+        Vector3 childPos = scaleButton.transform.localPosition;
+        childPos *= scaleChange;
+        scaleButton.transform.localPosition = childPos;
+        scaleButton.transform.localScale /= scaleChange;
+
     }
 
     void RotateObject()

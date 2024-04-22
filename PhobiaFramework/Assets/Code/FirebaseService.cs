@@ -381,11 +381,11 @@ public class FirebaseService : Database
                     {
                         if (triggerChild != null)
                         {
-                            string triggerPath = child.Child("trigger").Child("path").Value.ToString();
-                            string triggerSize = child.Child("trigger").Child("size").Value.ToString();
-                            string triggerPosition = child.Child("trigger").Child("position").Value.ToString();
-                            string triggerRotation = child.Child("trigger").Child("rotation").Value.ToString();
-                            string isCopy = child.Child("trigger").Child("isCopy").Value.ToString();
+                            string triggerPath = triggerChild.Child("path").Value.ToString();
+                            string triggerSize = triggerChild.Child("size").Value.ToString();
+                            string triggerPosition = triggerChild.Child("position").Value.ToString();
+                            string triggerRotation = triggerChild.Child("rotation").Value.ToString();
+                            string isCopy = triggerChild.Child("isCopy").Value.ToString();
 
                             Trigger trigger = new Trigger(triggerPath, triggerPosition, triggerRotation, triggerSize, isCopy);
                             triggers.Add(trigger);

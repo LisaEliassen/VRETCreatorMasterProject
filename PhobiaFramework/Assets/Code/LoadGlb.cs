@@ -26,6 +26,7 @@ public class LoadGlb : MonoBehaviour
     public GameObject databaseServiceObject; 
 
     public UnityEngine.Camera mainCamera;
+    public GameObject platform;
     
     Vector3 defaultPosition;
     public GameObject posObject;
@@ -322,6 +323,47 @@ public class LoadGlb : MonoBehaviour
         */
     }
 
+    public async Task<bool> MakeCopy(Vector3 position, Quaternion rotation)
+    {
+        if (trigger != null && !string.IsNullOrEmpty(pathOfTrigger))
+        {
+            string name = "Trigger_copy" + GetNumCopies();
+            GameObject copy = new GameObject(name);
+            triggerCopies.Add(copy);
+            int size = objectSizes[this.trigger];
+            bool success = await LoadGlbFile(copy, pathOfTrigger, position, rotation);
+            if (success)
+            {
+                copy.transform.localScale = trigger.transform.localScale;
+                Debug.Log("Successfully loaded model!");
+
+                UnityEngine.Animation animationComponent = trigger.GetComponent<UnityEngine.Animation>();
+
+                if (animationComponent != null)
+                {
+                    string clipname = animController.GetCurrentAnimation();
+                    if (clipname != null && clipname != "None")
+                    {
+                        animController.PlayAnimation(copy, clipname);
+                    }
+                }
+                objDropdownManager.addDropdownOption(copy, name);
+
+                return true;
+            }
+            else
+            {
+                Debug.Log("Could not load model!");
+                return false;
+            }
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public async void MakeCopy()
     {
         if (trigger != null && !string.IsNullOrEmpty(pathOfTrigger)) 
@@ -532,7 +574,7 @@ public class LoadGlb : MonoBehaviour
                     lineRenderer = loadedModel.AddComponent<LineRenderer>();
 
                 // Set line properties
-                lineRenderer.positionCount = 30; // Eight points to form a closed box
+                lineRenderer.positionCount = 16; // Eight points to form a closed box
                 lineRenderer.loop = true; // Close the loop to form a box
                 lineRenderer.useWorldSpace = false;
                 lineRenderer.startWidth = lineRenderer.endWidth = 0.05f; // Adjust line width as needed
@@ -559,32 +601,16 @@ public class LoadGlb : MonoBehaviour
                     center + new Vector3(extents.x, extents.y, -extents.z),   // top-right-back
                     center + new Vector3(extents.x, extents.y, extents.z),    // top-right-front
                     center + new Vector3(-extents.x, extents.y, extents.z),   // top-left-front
-                    center + new Vector3(-extents.x, -extents.y, -extents.z)  // bottom-left-back (repeat first vertex to close the loop)
                 };
 
                 // Set the positions of the LineRenderer to draw the edges of the box
                 lineRenderer.SetPositions(new Vector3[]
                 {
                     // Bottom edges
-                    vertices[0], vertices[1],
-                    vertices[1], vertices[2],
-                    vertices[2], vertices[3],
-                    vertices[3], vertices[0],
+                    vertices[0], vertices[1], vertices[2], vertices[3], vertices[0],
+                    vertices[4], vertices[5], vertices[1], vertices[5], vertices[6],
+                    vertices[2], vertices[6], vertices[7], vertices[3], vertices[7], vertices[4]
 
-                    vertices[0], vertices[4],
-
-                    // Top edges
-                    vertices[4], vertices[5],
-                    vertices[5], vertices[6],
-                    vertices[6], vertices[7],
-                    vertices[7], vertices[4],
-
-                    vertices[4], vertices[5],
-                    vertices[5], vertices[1],
-                    vertices[1], vertices[2],
-                    vertices[2], vertices[6],
-                    vertices[6], vertices[7],
-                    vertices[7], vertices[3]
                 });*/
 
                 GameObject selectionBox = Instantiate(ChosenObjectBox, loadedModel.transform.position, Quaternion.identity);
@@ -623,6 +649,7 @@ public class LoadGlb : MonoBehaviour
                 loadedModel.AddComponent<DragObject>();
                 DragObject dragObject = loadedModel.GetComponent<DragObject>();
                 dragObject.SetCamera(mainCamera);
+                dragObject.SetPlatform(platform);
 
                 
             }
