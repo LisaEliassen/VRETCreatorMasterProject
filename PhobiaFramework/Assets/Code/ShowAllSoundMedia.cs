@@ -20,6 +20,8 @@ public class ShowAllSoundMedia : MonoBehaviour
     public Button addSoundButton;
     public GameObject EditSceneUI;
     public GameObject SoundUI;
+    public GameObject SoundUICanvas;
+    public GameObject LoadingUI;
     List<FileMetaData> files;
 
     // Start is called before the first frame update
@@ -133,6 +135,9 @@ public class ShowAllSoundMedia : MonoBehaviour
         // Add an onclick listener for the grid item to load the model from Firebase Storage
         button.onClick.AddListener(async () =>
         {
+            SoundUICanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            LoadingUI.SetActive(true);
+
             string downloadUrl = await dbService.GetDownloadURL(storagePath);
             if (downloadUrl != null)
             {
@@ -142,10 +147,16 @@ public class ShowAllSoundMedia : MonoBehaviour
 
                 EditSceneUI.SetActive(true);
                 SoundUI.SetActive(false);
+
+                SoundUICanvas.GetComponent<GraphicRaycaster>().enabled = true;
+                LoadingUI.SetActive(false);
             }
             else
             {
                 Debug.Log("Download url is null!");
+
+                SoundUICanvas.GetComponent<GraphicRaycaster>().enabled = true;
+                LoadingUI.SetActive(false);
             }
             Debug.Log("Button for file " + filename + " was clicked!");
         });

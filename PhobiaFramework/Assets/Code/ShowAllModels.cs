@@ -19,6 +19,8 @@ public class ShowAllModels : MonoBehaviour
     public Button showModelsButton;
     public GameObject EditSceneUI;
     public GameObject ModelUI;
+    public GameObject ModelUICanvas;
+    public GameObject LoadingUI;
     List<FileMetaData> files;
 
     // Start is called before the first frame update
@@ -135,10 +137,17 @@ public class ShowAllModels : MonoBehaviour
             Quaternion rotation = Quaternion.identity;
             Vector3 scale = Vector3.one;
 
+            ModelUICanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            LoadingUI.SetActive(true);
+            
             await loadGlbScript.SpawnObject(modelName, modelStoragePath, position, rotation, 2);
+            Debug.Log("Button for model " + modelName + " was clicked!");
+
             EditSceneUI.SetActive(true);
             ModelUI.SetActive(false);
-            Debug.Log("Button for model " + modelName + " was clicked!");
+
+            ModelUICanvas.GetComponent<GraphicRaycaster>().enabled = true;
+            LoadingUI.SetActive(false);
         });
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());

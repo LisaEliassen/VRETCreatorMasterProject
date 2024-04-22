@@ -20,6 +20,9 @@ public class ShowAllScenery : MonoBehaviour
     public Button showSceneryButton;
     public GameObject EditSceneUI;
     public GameObject SceneryUI;
+    public GameObject SceneryUICanvas;
+    public GameObject LoadingUI;
+
     List<FileMetaData> files;
 
     // Start is called before the first frame update
@@ -137,10 +140,16 @@ public class ShowAllScenery : MonoBehaviour
             Quaternion rotation = Quaternion.identity;
             Vector3 scale = Vector3.one;
 
+            SceneryUICanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            LoadingUI.SetActive(true);
+
             await loadGlbScript.SpawnSceneryObject(modelName, modelStoragePath, position, rotation, 2);
             EditSceneUI.SetActive(true);
             SceneryUI.SetActive(false);
             Debug.Log("Button for model " + modelName + " was clicked!");
+
+            SceneryUICanvas.GetComponent<GraphicRaycaster>().enabled = true;
+            LoadingUI.SetActive(false);
         });
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());

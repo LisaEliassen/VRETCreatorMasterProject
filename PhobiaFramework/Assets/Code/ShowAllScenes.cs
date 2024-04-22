@@ -25,6 +25,8 @@ public class ShowAllScenes : MonoBehaviour
     public Button showScenesButton;
     public GameObject EditSceneUI;
     public GameObject ScenesUI;
+    public GameObject ScenesUICanvas;
+    public GameObject LoadingUI;
     List<SceneMetaData> files;
 
     // Start is called before the first frame update
@@ -180,6 +182,9 @@ public class ShowAllScenes : MonoBehaviour
         {
             loadGlbScript.ResetScene();
 
+            ScenesUICanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            LoadingUI.SetActive(true);
+
             foreach (Trigger trigger in triggers)
             {
                 if (trigger != null)
@@ -261,6 +266,9 @@ public class ShowAllScenes : MonoBehaviour
             EditSceneUI.SetActive(true);
             ScenesUI.SetActive(false);
             Debug.Log("Button for scene " + sceneName + " was clicked!");
+
+            ScenesUICanvas.GetComponent<GraphicRaycaster>().enabled = true;
+            LoadingUI.SetActive(false);
         });
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());

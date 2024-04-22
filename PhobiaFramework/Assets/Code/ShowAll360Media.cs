@@ -20,6 +20,8 @@ public class ShowAll360Media : MonoBehaviour
     public Button addMediaButton;
     public GameObject EditSceneUI;
     public GameObject MediaUI;
+    public GameObject MediaUICanvas;
+    public GameObject LoadingUI;
     List<FileMetaData> files;
 
     // Start is called before the first frame update
@@ -158,9 +160,16 @@ public class ShowAll360Media : MonoBehaviour
                 {
                     await mediaManager.HandleVideoSelected(downloadUrl);
                 }
+
+                MediaUICanvas.GetComponent<GraphicRaycaster>().enabled = false;
+                LoadingUI.SetActive(true);
+
                 sceneSaver.SetPathTo360Media(storagePath);
+
+                MediaUICanvas.GetComponent<GraphicRaycaster>().enabled = true;
                 EditSceneUI.SetActive(true);
                 MediaUI.SetActive(false);
+                LoadingUI.SetActive(false);
             }
             else
             {
