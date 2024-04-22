@@ -31778,7 +31778,7 @@ MonoBehaviour:
   EditSceneUI: {fileID: 927890619}
   SceneryUI: {fileID: 589915113}
   SceneryUICanvas: {fileID: 510643043}
-  LoadingUI: {fileID: 0}
+  LoadingUI: {fileID: 358419185}
 --- !u!114 &846055976
 MonoBehaviour:
   m_ObjectHideFlags: 0
