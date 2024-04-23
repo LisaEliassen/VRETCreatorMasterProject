@@ -441,6 +441,8 @@ public class LoadGlb : MonoBehaviour
         }
         trigger = new GameObject("Trigger");
         trigger.tag = "Export";
+        int LayerTrigger = LayerMask.NameToLayer("Trigger");
+        trigger.layer = LayerTrigger;
 
         pathOfTrigger = path;
         bool success = await LoadGlbFile(trigger, path, position, rotation);
@@ -617,13 +619,14 @@ public class LoadGlb : MonoBehaviour
                 GameObject box = selectionBox.transform.GetChild(0).gameObject;
 
                 box.transform.localScale = new Vector3(
-                    boxCollider.size.x / transform.localScale.x,
-                    boxCollider.size.y / transform.localScale.y,
-                    boxCollider.size.z / transform.localScale.z);
+                    boxCollider.size.x,
+                    boxCollider.size.y,
+                    boxCollider.size.z);
 
                 selectionBox.transform.parent = loadedModel.transform;
-                selectionBox.transform.position = boxCollider.center;
-                selectionBox.transform.localPosition = new Vector3(0, selectionBox.transform.position.y, 0);
+                selectionBox.transform.localPosition = boxCollider.center;
+
+                //selectionBox.transform.localPosition = new Vector3(selectionBox.transform.position.x, selectionBox.transform.position.y, selectionBox.transform.position.z);
 
                 /*GameObject circle = selectionBox.transform.GetChild(1).gameObject;
                 GameObject arrow = circle.transform.GetChild(0).gameObject;
@@ -633,11 +636,13 @@ public class LoadGlb : MonoBehaviour
                 scalingArrowScript.SetCamera(mainCamera);*/
 
                 int LayerUser = LayerMask.NameToLayer("User");
+                foreach (Transform child in selectionBox.transform)
+                {
+                    child.gameObject.layer = LayerUser;
+                }
                 selectionBox.layer = LayerUser;
 
                 selectionBox.SetActive(false);
-
-
 
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)

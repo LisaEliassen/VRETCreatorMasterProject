@@ -10,17 +10,18 @@ TagManager:
   - Wall
   - Arrow
   - Scaling
+  - lb_bird
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Trigger
   - Water
   - UI
   - User
-  - 
-  - 
-  - 
+  - Patient
+  - Doors
+  - Doorknob
   - 
   - 
   - 
