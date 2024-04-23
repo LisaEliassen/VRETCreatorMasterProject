@@ -71,7 +71,7 @@ public class ObjectDropdownManager : MonoBehaviour
         scenery = new List<GameObject>();
         interactableToggle.interactable = false;
 
-        dropdown.options.Add(new TMP_Dropdown.OptionData("Nothing"));
+        dropdown.options.Add(new TMP_Dropdown.OptionData("None"));
     }
 
     public Dictionary<string, GameObject> GetObjects()
@@ -250,7 +250,7 @@ public class ObjectDropdownManager : MonoBehaviour
                 dropdown.RefreshShownValue();
             }
         }
-        else if (option == "Nothing")
+        else if (option == "None")
         {
             removeRedBoxes();
             this.currentObject = null;
