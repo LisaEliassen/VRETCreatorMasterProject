@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Linq;
 
 public class SelectObject : MonoBehaviour
@@ -29,7 +31,19 @@ public class SelectObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
+        {
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.name != "Trigger" && !hit.collider.name.StartsWith("Trigger") && !objDropdownManager.GetObjects().Values.Contains(hit.collider.gameObject))
+                {
+                    objDropdownManager.removeRedBoxes();
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
         {
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -64,6 +78,7 @@ public class SelectObject : MonoBehaviour
                 }
                 else
                 {
+                    
                     if (!hit.collider.CompareTag("Scaling"))
                     {
                         objDropdownManager.removeRedBoxes();

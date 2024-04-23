@@ -11,6 +11,7 @@ TagManager:
   - Arrow
   - Scaling
   - lb_bird
+  - Rotating
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - User
   - Patient
   - Doors
-  - Doorknob
+  - Object
   - 
   - 
   - 

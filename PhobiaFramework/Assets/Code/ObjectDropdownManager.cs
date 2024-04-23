@@ -70,6 +70,8 @@ public class ObjectDropdownManager : MonoBehaviour
         dropdown.ClearOptions();
         scenery = new List<GameObject>();
         interactableToggle.interactable = false;
+
+        dropdown.options.Add(new TMP_Dropdown.OptionData("Nothing"));
     }
 
     public Dictionary<string, GameObject> GetObjects()
@@ -203,6 +205,7 @@ public class ObjectDropdownManager : MonoBehaviour
             objectVisibility.gameObject.SetActive(true);
 
             int size = loadGlb.GetObjectSizes()[this.trigger];
+            sizeSlider.interactable = true;
             sizeSlider.value = size;
             ((TextMeshProUGUI)sizeInput.placeholder).text = size.ToString();
 
@@ -229,6 +232,7 @@ public class ObjectDropdownManager : MonoBehaviour
         {
             this.currentObject = this.trigger;
             copies.SetActive(true);
+            sizeSlider.interactable = true;
             addCopyButton.interactable = true;
             interactableToggle.gameObject.SetActive(true);
             interactableToggle.interactable = true;
@@ -246,6 +250,20 @@ public class ObjectDropdownManager : MonoBehaviour
                 dropdown.RefreshShownValue();
             }
         }
+        else if (option == "Nothing")
+        {
+            removeRedBoxes();
+            this.currentObject = null;
+
+            copies.SetActive(false);
+            sizeSlider.interactable = false;
+            addCopyButton.interactable = false;
+            interactableToggle.gameObject.SetActive(false);
+            interactableToggle.interactable = false;
+            animationDropdown.SetActive(false);
+            objectVisibility.interactable = false;
+            objectVisibility.gameObject.SetActive(false);
+        }
         else
         {
             foreach (GameObject obj in objects.Values)
@@ -258,6 +276,7 @@ public class ObjectDropdownManager : MonoBehaviour
             }
 
             this.currentObject = objects[option];
+            sizeSlider.interactable = true;
             copies.SetActive(false);
             interactableToggle.interactable = false;
             animationDropdown.SetActive(false);

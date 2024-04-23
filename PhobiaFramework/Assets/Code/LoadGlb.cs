@@ -495,8 +495,9 @@ public class LoadGlb : MonoBehaviour
         }
 
         newObject.tag = "Scenery";
+        int LayerObject = LayerMask.NameToLayer("Object");
+        newObject.layer = LayerObject;
 
-              
         bool success = await LoadGlbFile(newObject, path, position, rotation);
         if (success)
         {
