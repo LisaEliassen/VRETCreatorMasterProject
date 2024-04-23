@@ -55,12 +55,14 @@ public class CircleAndArrowGenerator : MonoBehaviour
         {
             // Calculate the radius based on the box collider's size
             float colliderSize = Mathf.Max(boxCollider.size.x, boxCollider.size.y, boxCollider.size.z);
-            this.circleRadius = colliderSize * 1.1f; // Adjust the multiplier as needed to control the size
+            this.circleRadius = colliderSize * 0.9f; // Adjust the multiplier as needed to control the size
         }
         else
         {
             Debug.LogWarning("No BoxCollider found on the parent object.");
         }
+
+        lineRenderer.enabled = false;
     }
 
     // Update is called once per frame

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class DragObject : MonoBehaviour
@@ -15,6 +16,11 @@ public class DragObject : MonoBehaviour
     CircleAndArrowGenerator circleAndArrowGenerator;
     GameObject scaleButton;
 
+    public Slider rotationSlider;
+    public Transform objectToRotate;
+    public float minRotationAngle = 0f;
+    public float maxRotationAngle = 360f;
+
     Ray ray;
     RaycastHit hit;
 
@@ -26,7 +32,21 @@ public class DragObject : MonoBehaviour
 
         circleAndArrowGenerator = transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<CircleAndArrowGenerator>();
         scaleButton = circleAndArrowGenerator.scaleButton;
+
+        rotationSlider = transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.transform.GetChild(0).GetComponent<Slider>();
+
+        rotationSlider.onValueChanged.AddListener(OnSliderValueChanged);
     }
+
+    private void OnSliderValueChanged(float value)
+    {
+        // Calculate the rotation angle based on the slider value
+        float rotationAngle = Mathf.Lerp(minRotationAngle, maxRotationAngle, value);
+
+        // Apply the rotation to the object
+        transform.rotation = Quaternion.Euler(0f, rotationAngle, 0f);
+    }
+
 
     public void SetCamera(Camera camera)
     {
@@ -144,16 +164,52 @@ public class DragObject : MonoBehaviour
             Bounds platformBounds = CalculatePlatformBounds();
 
             // Get the current position of the object
-            Vector3 currentPos = GetMouseWorldPos() + mOffset;
-            currentPos.y = transform.position.y;
+            //Vector3 currentPos = GetMouseWorldPos() + mOffset;
+            //currentPos.y = transform.position.y;
 
             // Get the object's collider
             Collider objectCollider = GetComponent<Collider>();
 
-            Collider[] colliders = Physics.OverlapBox(currentPos, objectCollider.bounds.extents, transform.rotation);
-            bool canMove = true;
+            //Collider[] colliders = Physics.OverlapBox(currentPos, objectCollider.bounds.extents, transform.rotation);
+            //bool canMove = true;
 
-            foreach (Collider collider in colliders)
+            // Clamp the position to stay within the platform bounds
+            /*currentPos.x = Mathf.Clamp(currentPos.x, platformBounds.min.x+0.5f, platformBounds.max.x-0.5f);
+            currentPos.z = Mathf.Clamp(currentPos.z, platformBounds.min.z+1.5f, platformBounds.max.z-0.5f);
+
+            // Update the position of the object
+            transform.position = currentPos;
+
+            // Ensure the object's rotation remains flat
+            if (transform.rotation.x > 0 || transform.rotation.z > 0)
+            {
+                transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            }*/
+
+            // Calculate the bounds of the object's collider in world space
+            Bounds objectBounds = objectCollider.bounds;
+
+            // Check if the object's collider intersects with the platform bounds
+            if (platformBounds.Intersects(objectBounds))
+            {
+                // Get the current position of the object
+                Vector3 currentPos = GetMouseWorldPos() + mOffset;
+                currentPos.y = transform.position.y; // Ignore y-axis
+
+                currentPos.x = Mathf.Clamp(currentPos.x, platformBounds.min.x + 0.5f, platformBounds.max.x - 0.5f);
+                currentPos.z = Mathf.Clamp(currentPos.z, platformBounds.min.z + 1.5f, platformBounds.max.z - 0.5f);
+
+                // Update the position of the object
+                transform.position = currentPos;
+
+                // Ensure the object's rotation remains flat
+                if (transform.rotation.x > 0 || transform.rotation.z > 0)
+                {
+                    transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+                }
+            }
+
+            /*foreach (Collider collider in colliders)
             {
                 if (collider.CompareTag("Wall"))
                 {
@@ -171,7 +227,7 @@ public class DragObject : MonoBehaviour
             if (transform.rotation.x > 0 || transform.rotation.z > 0)
             {
                 transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-            }
+            }*/
         }
 
         if (this.canScale)
@@ -182,8 +238,9 @@ public class DragObject : MonoBehaviour
 
     void ScaleObject()
     {
-        float scaleSpeed = 0.1f;
+        float scaleSpeed = 0.2f;
         float mouseY = Input.GetAxis("Mouse Y") * scaleSpeed;
+        float mouseX = Input.GetAxis("Mouse X") * scaleSpeed;
 
         Vector3 newScale = transform.localScale + Vector3.one * mouseY;
         newScale = Vector3.Max(newScale, new Vector3(0.3f, 0.3f, 0.3f));
@@ -193,13 +250,15 @@ public class DragObject : MonoBehaviour
 
         transform.localScale = newScale;
 
-        float minLineWidth = 0.05f;
+        /*float minLineWidth = 0.05f;
         float maxLineWidth = 0.3f;
 
         float newLineWidth = Mathf.Clamp(circleAndArrowGenerator.lineWidth * lineWidthChangeFactor, minLineWidth, maxLineWidth);
 
-        circleAndArrowGenerator.lineWidth = newLineWidth;
+        circleAndArrowGenerator.lineWidth = newLineWidth;*/
 
+        scaleButton = circleAndArrowGenerator.scaleButton;
+        
         Vector3 childPos = scaleButton.transform.localPosition;
         childPos *= scaleChange;
         scaleButton.transform.localPosition = childPos;
