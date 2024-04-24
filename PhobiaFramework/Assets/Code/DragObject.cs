@@ -147,13 +147,15 @@ public class DragObject : MonoBehaviour
             Vector3 currentPos = GetMouseWorldPos() + mOffset;
             currentPos.y = transform.position.y;
 
+            transform.position = currentPos;
+
+            /*
             // Get the object's collider
             Collider objectCollider = GetComponent<Collider>();
 
             Collider[] colliders = Physics.OverlapBox(currentPos, objectCollider.bounds.extents, transform.rotation);
             bool canMove = true;
 
-            
             foreach (Collider collider in colliders)
             {
                 if (collider.CompareTag("Wall"))
@@ -167,7 +169,7 @@ public class DragObject : MonoBehaviour
             if (canMove)
             {
                 transform.position = currentPos;
-            }
+            */
 
             if (transform.rotation.x > 0 || transform.rotation.z > 0)
             {
