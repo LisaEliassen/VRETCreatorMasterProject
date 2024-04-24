@@ -153,6 +153,7 @@ public class DragObject : MonoBehaviour
             Collider[] colliders = Physics.OverlapBox(currentPos, objectCollider.bounds.extents, transform.rotation);
             bool canMove = true;
 
+            /*
             foreach (Collider collider in colliders)
             {
                 if (collider.CompareTag("Wall"))
@@ -160,7 +161,7 @@ public class DragObject : MonoBehaviour
                     canMove = false;
                     break;
                 }
-            }
+            }*/
 
             // If not colliding with walls, update the position of the object
             if (canMove)
