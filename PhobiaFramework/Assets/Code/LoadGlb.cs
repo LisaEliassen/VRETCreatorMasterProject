@@ -448,6 +448,7 @@ public class LoadGlb : MonoBehaviour
         bool success = await LoadGlbFile(trigger, path, position, rotation);
         if (success)
         {
+            interactableToggle.isOn = false; //set Interactable Toggle to false when loading model
             sceneSaver.SetPathToTrigger(pathOfTrigger);
 
             Debug.Log("Successfully loaded model!");
@@ -545,7 +546,6 @@ public class LoadGlb : MonoBehaviour
 
             if (success)
             {
-                interactableToggle.isOn = false; //set Interactable Toggle to false when loading model
 
                 loadedModel.transform.position = position;
                 loadedModel.transform.rotation = rotation;
