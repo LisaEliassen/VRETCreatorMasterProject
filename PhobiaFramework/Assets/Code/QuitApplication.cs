@@ -4,6 +4,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+// This script provides functionality to quit the application from within the game. 
+
 public class QuitApplication : MonoBehaviour
 {
     public GameObject EditScene;

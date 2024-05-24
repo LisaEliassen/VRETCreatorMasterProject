@@ -10,6 +10,8 @@ using GLTFast.Logging;
 using GLTFast;
 using System.Linq;
 
+// The script manages the saving of scenes in the application. 
+
 public class SceneSaver : MonoBehaviour
 {
     string path;

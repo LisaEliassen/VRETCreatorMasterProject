@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// This script allows for moving an object along the X and Y axes based on slider values. 
+
 public class MoveObject : MonoBehaviour
 {
     public Slider moveSliderX;
@@ -75,12 +77,5 @@ public class MoveObject : MonoBehaviour
         {
             Debug.Log("Trigger is null!");
         }
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

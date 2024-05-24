@@ -4,9 +4,10 @@ using UnityEngine;
 using Firebase;
 using Firebase.Analytics;
 
+// The script is responsible for setting up Firebase dependencies and enabling analytics collection.
+
 public class DatabaseSetup : MonoBehaviour
 {
-    //private ... app
 
     void Awake()
     {
@@ -36,11 +37,5 @@ public class DatabaseSetup : MonoBehaviour
         {
             FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
         });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

@@ -10,6 +10,12 @@ using Firebase;
 using Firebase.Auth;
 using System.Threading.Tasks;
 
+// The script handles user authentication using Firebase Authentication.
+// It initializes the Firebase Authentication instance and sets up an onClick listener for the sign-in button.
+// When the sign-in button is clicked, it attempts to sign in the user with the provided email and password.
+// Upon successful sign-in, it sets a flag indicating the sign-in process is complete.
+// In the Update method, it checks if the sign-in process is complete and ensures that the next scene is loaded only once.
+// If the sign-in process is complete and the next scene has not been loaded yet, it starts a coroutine to load the next scene after a short delay.
 
 public class SignInManager : MonoBehaviour
 {

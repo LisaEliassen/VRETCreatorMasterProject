@@ -5,6 +5,9 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
+
+// The script represents an object in the scenery of a scene. 
+
 public class SceneryObject {
 
     public string name;

@@ -5,6 +5,9 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
+
+// The script encapsulates metadata about a scene. 
+
 public class SceneMetaData
 {
     public string ID;

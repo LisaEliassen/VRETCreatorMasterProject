@@ -11,6 +11,8 @@ using System;
 using System.Linq;
 using System.IO;
 
+// This script encapsulates attributes related to a trigger object, such as its path, position, rotation, size, and a flag indicating whether it's a copy or not.
+
 public class UploadFiles : MonoBehaviour
 {
     public Button chooseFileButton;
@@ -34,7 +36,6 @@ public class UploadFiles : MonoBehaviour
 
     DatabaseService dbService;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Find the GameObject with the DatabaseService script

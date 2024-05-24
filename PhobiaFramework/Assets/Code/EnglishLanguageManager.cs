@@ -4,6 +4,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+// The script is designed to manage language settings in the Unity application.
+
 public class EnglishLanguageManager : MonoBehaviour
 {
     public TMP_Dropdown dropdownLanguage;

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// The script provides functionality to reset the position of an XR rig GameObject to its original position when a button is clicked.
+// The original position is stored in a Vector3 variable named originalPosition, which is recorded when the scene starts.
+// The OnResetButtonClick method is called when the button is clicked, resetting the XR rig's position to its original position.
+
 public class StopExposure : MonoBehaviour
 {
     public GameObject xrRig; // Reference to your XR rig GameObject

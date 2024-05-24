@@ -7,6 +7,10 @@ using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 
+// The ShowAllSoundMedia script manages the display of all sound media files stored in the database.
+// It retrieves the list of sound media files from the database service and dynamically creates grid items for each file, displaying its name and icon.
+// Users can click on a grid item to load and play the corresponding sound file.
+
 public class ShowAllSoundMedia : MonoBehaviour
 {
     DatabaseService dbService;

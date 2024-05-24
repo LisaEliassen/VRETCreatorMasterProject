@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 
+// The script allows users to interact with objects in the scene by selecting them with the mouse. 
+
 public class SelectObject : MonoBehaviour
 {
     public Camera mainCamera;

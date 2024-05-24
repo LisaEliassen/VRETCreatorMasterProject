@@ -5,6 +5,8 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
+
+//The script represents an object with attributes for path, position, rotation, size, and isCopy, offering methods to get and set each attribute.
 public class Trigger {
 
     public string path;

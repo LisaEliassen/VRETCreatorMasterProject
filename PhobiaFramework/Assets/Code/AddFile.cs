@@ -7,15 +7,10 @@ using UnityEngine.Assertions;
 using System.Threading.Tasks;
 using System.Threading;
 
+// The script is responsible for adding files to Firebase Storage. 
+
 public class AddFile : MonoBehaviour
 {
-    // C:\Users\Student\Documents\GitHub\Master\PhobiaFramework\Assets\living birds\models\blueJay.fbx
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     public void addFile() 
     {
         // Get a reference to the storage service, using the default Firebase App
@@ -98,11 +93,5 @@ public class AddFile : MonoBehaviour
                     Debug.Log("md5 hash = " + md5Hash);
                 }
             });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

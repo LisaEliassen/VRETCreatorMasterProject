@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// This script allows for the dynamic scaling of specific game objects (sphere, exposureScene, exposureRoom, waitingRoom, doors) in the scene.
+
 public class ScaleGameObjects : MonoBehaviour
 {
     public GameObject sphere;

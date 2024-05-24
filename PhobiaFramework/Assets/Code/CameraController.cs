@@ -5,6 +5,8 @@ using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 //using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 
+// The script is responsible for controlling the movement, rotation, and zoom of the camera in a Unity scene.
+
 public class CameraController : MonoBehaviour
 {
     public GameObject EditUI;

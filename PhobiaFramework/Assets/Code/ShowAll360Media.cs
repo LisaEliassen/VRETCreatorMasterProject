@@ -7,6 +7,8 @@ using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 
+// The ShowAll360Media script manages the display and interaction with all 360-degree media files stored in the database. 
+
 public class ShowAll360Media : MonoBehaviour
 {
     DatabaseService dbService;
@@ -24,7 +26,6 @@ public class ShowAll360Media : MonoBehaviour
     public GameObject LoadingUI;
     List<FileMetaData> files;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Check if the GameObject was found

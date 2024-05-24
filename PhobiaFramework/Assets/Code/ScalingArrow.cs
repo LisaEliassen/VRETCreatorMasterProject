@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// The script allows scaling an object in response to mouse input.
+
 public class ScalingArrow : MonoBehaviour
 {
     Ray ray;

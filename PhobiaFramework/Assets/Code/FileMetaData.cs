@@ -5,6 +5,9 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
+
+// The script is a simple data structure used to store metadata about files in the Firebase database. 
+
 public class FileMetaData
 {
     private string ID;

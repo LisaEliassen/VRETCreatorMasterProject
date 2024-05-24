@@ -7,6 +7,9 @@ using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 
+// The ShowAllScenery script is responsible for displaying all scenery models stored in the database.
+// It's quite similar to the scripts for displaying scenes and sound media, but it specifically handles scenery objects.
+
 public class ShowAllScenery : MonoBehaviour
 {
     DatabaseService dbService;

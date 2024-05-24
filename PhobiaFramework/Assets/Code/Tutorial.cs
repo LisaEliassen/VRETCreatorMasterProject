@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// The Start method initializes various UI elements and sets up event listeners for buttons to control the tutorial flow.
+// The PrepareButtons method assigns event listeners to buttons for navigating through different tutorial panels, allowing users to move forward and backward in the tutorial sequence.
+// The StartTutorial method activates the tutorial UI and hides the initial ask panel to begin the tutorial.
+// The HideAskPanel method hides the ask panel by deactivating it and makes the showTutorialButton visible to allow users to start the tutorial.
+
 public class Tutorial : MonoBehaviour
 {
     public GameObject EditSceneUI;
@@ -63,7 +68,6 @@ public class Tutorial : MonoBehaviour
     public Button PreviousButton12;
     public Button PreviousButton13;
 
-    // Start is called before the first frame update
     void Start()
     {
         AskPanel.SetActive(true);

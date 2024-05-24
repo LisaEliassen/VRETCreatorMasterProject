@@ -10,6 +10,10 @@ using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Net;
 
+//The SoundManager script provides functionality to import and play sound files, as well as remove the currently playing sound.
+//It includes methods to handle importing sound files from the device, checking if the selected file is a supported sound format, and loading the audio clip asynchronously.
+//Additionally, it provides a method to remove the currently playing sound and a coroutine to show a file browser dialog for selecting sound files.
+
 public class SoundManager : MonoBehaviour
 {
     public Button chooseFromDeviceButton;
@@ -114,34 +118,5 @@ public class SoundManager : MonoBehaviour
             callback(FileBrowser.Result);
         }
     }
-
-    /*
-    private async void ImportSound()
-    {
-        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/sounds/sound.mp3");
-        if (!string.IsNullOrEmpty(downloadUrl))
-        {
-            await HandleSoundSelected(downloadUrl);
-        }
-        else
-        {
-            Debug.Log("Failed to retrieve download URL!");
-        }
-    }
-
-    public async Task<IEnumerator> HandleSoundSelected(string downloadUrl)
-    {
-        byte[] binaryData = await dbService.getFile(downloadUrl);
-
-        if (binaryData != null)
-        {
-            // Apply sound data to your sound-related script or AudioSource
-            // Example using AudioSource:
-            audioSource.clip = WavUtility.ToAudioClip(binaryData, 0, binaryData.Length, 0, 0);
-            audioSource.Play();
-        }
-
-        return null;
-    }*/
 }
 

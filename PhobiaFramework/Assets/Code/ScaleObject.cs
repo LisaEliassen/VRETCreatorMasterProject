@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using TMPro;
 using GLTFast;
 
+// The script allows scaling an object using a slider or input field.
+
 public class ScaleObject : MonoBehaviour
 {
     public Slider sizeSlider;

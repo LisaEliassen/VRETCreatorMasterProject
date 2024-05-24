@@ -10,6 +10,9 @@ using System;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
+// This script is designed to load GLTF (GL Transmission Format) models from a remote server (in this case, Firebase Storage) and instantiate them in a Unity scene.
+// It allows for the dynamic loading and instantiation of GLTF models from a remote server, enabling the creation of interactive and dynamic scenes in Unity.
+
 public class LoadGltfWeb : MonoBehaviour
 {
 
@@ -118,11 +121,5 @@ public class LoadGltfWeb : MonoBehaviour
             gameObject.SetActive(false);
         }
         return success;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

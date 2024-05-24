@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// The script is responsible for generating a circle and positioning a scale button (and previously an arrow) around a specified object. 
+
 public class CircleAndArrowGenerator : MonoBehaviour
 {
     public Material standardMat;

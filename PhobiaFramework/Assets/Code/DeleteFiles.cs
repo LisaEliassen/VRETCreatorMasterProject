@@ -7,6 +7,8 @@ using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 
+// The script manages the deletion of files displayed in a grid layout.
+
 public class DeleteFiles : MonoBehaviour
 {
     DatabaseService dbService;

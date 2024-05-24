@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.InputSystem.HID;
 
+// This script manages the dropdown menu containing objects in the scene. 
+
 public class ObjectDropdownManager : MonoBehaviour
 {
     DatabaseService dbService;
@@ -340,11 +342,5 @@ public class ObjectDropdownManager : MonoBehaviour
         removeDropdownOption(this.trigger);
         this.triggerCopies.Clear();
         this.trigger = null;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

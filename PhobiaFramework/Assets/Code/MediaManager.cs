@@ -9,6 +9,7 @@ using UnityEngine.Video;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 
+// This script handles importing and displaying media files (images and videos) in a Unity scene using a skybox.
 
 public class MediaManager : MonoBehaviour
 {

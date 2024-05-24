@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// This script manages the language settings for the application.
+
 public class NorwegianLanguageManager : MonoBehaviour
 {
     public string language;

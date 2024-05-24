@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using System;
 using System.IO;
 
+// The class controls the visibility of various UI elements based on user interactions with buttons. 
+
 public class ScreenManager : MonoBehaviour
 {
     public Button uploadFileButton;

@@ -10,6 +10,9 @@ using Firebase.Extensions;
 using UnityEngine.Networking;
 using System;
 
+// This script is similar to LoadGltfWeb, but with a few differences in how it loads and handles the GLTF model. 
+// The script enables the dynamic loading and instantiation of GLTF models from a remote server (Firebase Storage) and provides a straightforward method for integrating GLTF assets into Unity scenes.
+
 public class LoadGltfFromDatabase : MonoBehaviour
 {
     FirebaseStorage storage;
@@ -18,11 +21,6 @@ public class LoadGltfFromDatabase : MonoBehaviour
     public Vector3 position;
     public string triggerName;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
     public void spawnObject()
     {
         loadedModel = new GameObject(triggerName);
@@ -43,16 +41,6 @@ public class LoadGltfFromDatabase : MonoBehaviour
             storage.GetReferenceFromUrl("gs://vr-framework-95ccc.appspot.com/models/blueJay.gltf");
 
         gltfReference.GetDownloadUrlAsync().ContinueWithOnMainThread(DownloadGltf);
-
-        /*
-        // Fetch the download URL
-        gltfReference.GetDownloadUrlAsync().ContinueWithOnMainThread(task => {
-            if (!task.IsFaulted && !task.IsCanceled)
-            {
-                Debug.Log("Download URL: " + task.Result);
-                // ... now download the file via WWW or UnityWebRequest.
-            }
-        });*/
 
     }
 
@@ -87,11 +75,5 @@ public class LoadGltfFromDatabase : MonoBehaviour
         {
             Debug.LogError("Failed to fetch download URL: " + task.Exception);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -8,6 +8,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Globalization;
 
+// The script manages the display of all scenes stored in the database.
+// Similar to the ShowAllSoundMedia script, it retrieves the list of scenes from the database service and dynamically creates grid items for each scene, displaying its name and icon.
+// Users can click on a grid item to load the corresponding scene, including triggers, media, audio, and scenery objects.
+
 public class ShowAllScenes : MonoBehaviour
 {
     DatabaseService dbService;

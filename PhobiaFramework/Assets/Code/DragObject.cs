@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// The script controlls the dragging, scaling, and rotation behavior of an object in the Unity scene.
+
 public class DragObject : MonoBehaviour
 {
     private Vector3 mOffset;

@@ -5,6 +5,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+// The script manages the size of TextMeshProUGUI objects based on a TMP_Dropdown selection, allowing for switching between English and Norwegian options, with "Default", "Medium", and "Large" sizes mapped to 24f, 32f, and 40f respectively, and providing methods to register text objects and change text size accordingly.
+
 public class TextSizeManager : MonoBehaviour
 {
     public TMP_Dropdown dropdown;

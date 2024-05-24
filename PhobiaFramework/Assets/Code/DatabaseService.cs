@@ -12,6 +12,8 @@ using System;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
+// The script acts as a mediator between different database implementations (such as Firebase and Azure) and the rest of the application. 
+
 public class DatabaseService : MonoBehaviour
 {
     Database database;

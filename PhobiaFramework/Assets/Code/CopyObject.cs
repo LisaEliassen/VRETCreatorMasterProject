@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// The script manages the functionality to add or remove copies of a loaded GLB object. 
+
 public class CopyObject : MonoBehaviour
 {
     LoadGlb loadGlb;

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Specialized;
 
+// This script is designed to teleport the player to a specified position when a button (stopButton) is clicked. 
+
 public class PanicButtonTeleport : MonoBehaviour
 {
     public Button stopButton;

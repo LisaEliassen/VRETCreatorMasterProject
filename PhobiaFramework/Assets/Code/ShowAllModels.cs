@@ -7,6 +7,9 @@ using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 
+// The ShowAllModels script handles the display and interaction with all models stored in the database.
+// It's similar in structure to the scripts for displaying scenes, sound media, and scenery.
+
 public class ShowAllModels : MonoBehaviour
 {
     DatabaseService dbService;
@@ -23,7 +26,6 @@ public class ShowAllModels : MonoBehaviour
     public GameObject LoadingUI;
     List<FileMetaData> files;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Check if the GameObject was found

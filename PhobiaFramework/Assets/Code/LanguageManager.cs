@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 
+// The script handles switching between English and Norwegian languages in a Unity application using UI elements like buttons and a dropdown menu. 
+
 public class LanguageManager : MonoBehaviour
 {
     TextSizeManager textSizeManager;

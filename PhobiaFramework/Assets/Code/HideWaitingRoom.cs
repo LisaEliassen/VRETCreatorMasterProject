@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+// The script is designed to control the visibility of a waiting room and additional walls based on the position of an XR rig and the state of two doors.
+// The script checks the XR rig's position and the doors' rotation in each frame to determine whether to hide or show the waiting room and walls.
+
 public class HideWaitingRoom : MonoBehaviour
 {
     public GameObject waitingRoom;

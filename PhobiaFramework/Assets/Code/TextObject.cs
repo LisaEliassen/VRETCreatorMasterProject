@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// The script links a TextMeshProUGUI component to a TextSizeManager for dynamic text size management, registering the text object with the manager upon Awake to ensure proper sizing updates.
+
 public class TextObject : MonoBehaviour
 {
     public GameObject databaseServiceObject;

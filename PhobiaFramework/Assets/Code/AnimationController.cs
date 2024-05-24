@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using TMPro;
 //using System.Diagnostics;
 
+// The script manages animations for a GameObject in a Unity scene. 
+
 public class AnimationController : MonoBehaviour
 {
     ResourceRequest request;

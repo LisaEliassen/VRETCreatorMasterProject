@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+// The script implements the IPointerDownHandler, IDragHandler, and IPointerUpHandler interfaces, allowing it to handle mouse input for dragging a UI element, representing a mini-camera view. 
+
 public class DragMiniCamera : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     private RectTransform rectTransform;

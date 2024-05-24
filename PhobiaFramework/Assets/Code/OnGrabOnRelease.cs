@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+// This script is designed to handle events when an object is grabbed and released using XR grab interaction in Unity. 
+
 public class OnGrabOnRelease : MonoBehaviour
 {
     private Rigidbody rb;
@@ -24,12 +26,6 @@ public class OnGrabOnRelease : MonoBehaviour
             Debug.LogWarning("XRGrabInteractable component not found on object.");
         }
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnGrab(XRBaseInteractor interactor)

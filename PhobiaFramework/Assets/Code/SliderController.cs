@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// The SliderController script manages the text display of a slider's value.
+// The SliderChange method updates the text displayed on a TextMeshProUGUI component whenever the slider value changes.
+// This script is designed to be attached to a GameObject with a slider component and a TextMeshProUGUI component to display the slider's current value.
+
 public class SliderController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI sliderText = null;

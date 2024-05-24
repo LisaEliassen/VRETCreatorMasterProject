@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 using System.Linq;
 
+// The script demonstrates a FirebaseService class for managing files and data on Firebase Storage and Firebase Realtime Database in a Unity application.
+
+
 public class FirebaseService : Database
 {
     FirebaseStorage storage;

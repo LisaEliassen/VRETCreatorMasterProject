@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 
+// The script provides a method to parse a string representing position, rotation, and scale components of a transform into Vector3 and Quaternion values.
+
 public class TransformParser : MonoBehaviour
 {
     public static bool TryParseTransformString(string transformString, out Vector3 position, out Quaternion rotation, out Vector3 scale)

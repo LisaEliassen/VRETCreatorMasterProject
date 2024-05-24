@@ -14,6 +14,10 @@ using TMPro;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Linq;
 
+// This script handles the loading and manipulation of GLB (Binary GLTF) models in a Unity scene.
+// Provides a comprehensive set of functionalities for importing, manipulating, and interacting with GLB models within a Unity environment.
+// It integrates UI controls, file handling, scene management, and physics interactions to create an interactive experience.
+
 public class LoadGlb : MonoBehaviour
 {
     GameObject trigger;
@@ -316,11 +320,6 @@ public class LoadGlb : MonoBehaviour
         removeCopyButton.interactable = false;
         sizeInput.interactable = false;
 
-        /*sizeSlider.interactable = false;
-        moveSliderX.interactable = false;
-        moveSliderY.interactable = false;
-        dropdown.ClearOptions();
-        */
     }
 
     public async Task<bool> MakeCopy(Vector3 position, Quaternion rotation)
@@ -718,10 +717,5 @@ public class LoadGlb : MonoBehaviour
     public void SetSelectedObject(GameObject obj)
     {
         trigger = obj;
-    }
-
-    void Update()
-    {
-
     }
 }

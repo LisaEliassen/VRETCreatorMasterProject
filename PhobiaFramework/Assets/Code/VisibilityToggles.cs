@@ -4,6 +4,10 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+// The Start method initializes various components and listeners, including setting up visibility toggles for different parts of the scene based on user input.
+// The ObjectVisibility method controls the visibility of trigger objects and their copies, while the PlatformVisibility method handles the visibility of the platform and associated elements.
+// The WallsVisibility method manages the visibility of wall components in the scene.
+
 public class VisibilityToggles : MonoBehaviour
 {
     LoadGlb loadGlb;
@@ -39,7 +43,6 @@ public class VisibilityToggles : MonoBehaviour
     public Material newMaterial;
     private Material originalMaterial;
 
-    // Start is called before the first frame update
     void Start()
     {
         loadGlb = databaseServiceObject.GetComponent<LoadGlb>();

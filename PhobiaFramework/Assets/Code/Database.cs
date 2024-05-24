@@ -12,6 +12,8 @@ using System;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
+// The Database interface defines a contract for interacting with different types of databases within the application. 
+
 public interface Database
 {
     void initialize();
