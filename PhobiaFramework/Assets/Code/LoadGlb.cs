@@ -1,3 +1,19 @@
+#region License
+// Copyright (C) 2024 Lisa Maria Eliassen & Olesya Pasichnyk
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the Commons Clause License version 1.0 with GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// Commons Clause License and GNU General Public License for more details.
+// 
+// You should have received a copy of the Commons Clause License and GNU General Public License
+// along with this program. If not, see <https://commonsclause.com/> and <https://www.gnu.org/licenses/>.
+#endregion
+
 using System;
 using System.Threading.Tasks;
 using System.Collections;
@@ -13,6 +29,10 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Linq;
+
+// This script handles the loading and manipulation of GLB (Binary GLTF) models in a Unity scene.
+// Provides a comprehensive set of functionalities for importing, manipulating, and interacting with GLB models within a Unity environment.
+// It integrates UI controls, file handling, scene management, and physics interactions to create an interactive experience.
 
 public class LoadGlb : MonoBehaviour
 {
@@ -316,11 +336,6 @@ public class LoadGlb : MonoBehaviour
         removeCopyButton.interactable = false;
         sizeInput.interactable = false;
 
-        /*sizeSlider.interactable = false;
-        moveSliderX.interactable = false;
-        moveSliderY.interactable = false;
-        dropdown.ClearOptions();
-        */
     }
 
     public async Task<bool> MakeCopy(Vector3 position, Quaternion rotation)
@@ -441,11 +456,14 @@ public class LoadGlb : MonoBehaviour
         }
         trigger = new GameObject("Trigger");
         trigger.tag = "Export";
+        int LayerTrigger = LayerMask.NameToLayer("Trigger");
+        trigger.layer = LayerTrigger;
 
         pathOfTrigger = path;
         bool success = await LoadGlbFile(trigger, path, position, rotation);
         if (success)
         {
+            interactableToggle.isOn = false; //set Interactable Toggle to false when loading model
             sceneSaver.SetPathToTrigger(pathOfTrigger);
 
             Debug.Log("Successfully loaded model!");
@@ -493,8 +511,9 @@ public class LoadGlb : MonoBehaviour
         }
 
         newObject.tag = "Scenery";
+        int LayerObject = LayerMask.NameToLayer("Object");
+        newObject.layer = LayerObject;
 
-              
         bool success = await LoadGlbFile(newObject, path, position, rotation);
         if (success)
         {
@@ -542,7 +561,6 @@ public class LoadGlb : MonoBehaviour
 
             if (success)
             {
-                interactableToggle.isOn = false; //set Interactable Toggle to false when loading model
 
                 loadedModel.transform.position = position;
                 loadedModel.transform.rotation = rotation;
@@ -617,13 +635,14 @@ public class LoadGlb : MonoBehaviour
                 GameObject box = selectionBox.transform.GetChild(0).gameObject;
 
                 box.transform.localScale = new Vector3(
-                    boxCollider.size.x / transform.localScale.x,
-                    boxCollider.size.y / transform.localScale.y,
-                    boxCollider.size.z / transform.localScale.z);
+                    boxCollider.size.x,
+                    boxCollider.size.y,
+                    boxCollider.size.z);
 
                 selectionBox.transform.parent = loadedModel.transform;
-                selectionBox.transform.position = boxCollider.center;
-                selectionBox.transform.localPosition = new Vector3(0, selectionBox.transform.position.y, 0);
+                selectionBox.transform.localPosition = boxCollider.center;
+
+                //selectionBox.transform.localPosition = new Vector3(selectionBox.transform.position.x, selectionBox.transform.position.y, selectionBox.transform.position.z);
 
                 /*GameObject circle = selectionBox.transform.GetChild(1).gameObject;
                 GameObject arrow = circle.transform.GetChild(0).gameObject;
@@ -633,11 +652,13 @@ public class LoadGlb : MonoBehaviour
                 scalingArrowScript.SetCamera(mainCamera);*/
 
                 int LayerUser = LayerMask.NameToLayer("User");
+                foreach (Transform child in selectionBox.transform)
+                {
+                    child.gameObject.layer = LayerUser;
+                }
                 selectionBox.layer = LayerUser;
 
                 selectionBox.SetActive(false);
-
-
 
                 Rigidbody rb = loadedModel.GetComponent<Rigidbody>();
                 if (rb == null)
@@ -712,10 +733,5 @@ public class LoadGlb : MonoBehaviour
     public void SetSelectedObject(GameObject obj)
     {
         trigger = obj;
-    }
-
-    void Update()
-    {
-
     }
 }

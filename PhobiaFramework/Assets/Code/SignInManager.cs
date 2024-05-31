@@ -1,3 +1,19 @@
+#region License
+// Copyright (C) 2024 Lisa Maria Eliassen & Olesya Pasichnyk
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the Commons Clause License version 1.0 with GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// Commons Clause License and GNU General Public License for more details.
+// 
+// You should have received a copy of the Commons Clause License and GNU General Public License
+// along with this program. If not, see <https://commonsclause.com/> and <https://www.gnu.org/licenses/>.
+#endregion
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +26,12 @@ using Firebase;
 using Firebase.Auth;
 using System.Threading.Tasks;
 
+// The script handles user authentication using Firebase Authentication.
+// It initializes the Firebase Authentication instance and sets up an onClick listener for the sign-in button.
+// When the sign-in button is clicked, it attempts to sign in the user with the provided email and password.
+// Upon successful sign-in, it sets a flag indicating the sign-in process is complete.
+// In the Update method, it checks if the sign-in process is complete and ensures that the next scene is loaded only once.
+// If the sign-in process is complete and the next scene has not been loaded yet, it starts a coroutine to load the next scene after a short delay.
 
 public class SignInManager : MonoBehaviour
 {

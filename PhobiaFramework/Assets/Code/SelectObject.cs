@@ -1,7 +1,27 @@
+#region License
+// Copyright (C) 2024 Lisa Maria Eliassen & Olesya Pasichnyk
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the Commons Clause License version 1.0 with GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// Commons Clause License and GNU General Public License for more details.
+// 
+// You should have received a copy of the Commons Clause License and GNU General Public License
+// along with this program. If not, see <https://commonsclause.com/> and <https://www.gnu.org/licenses/>.
+#endregion
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Linq;
+
+// The script allows users to interact with objects in the scene by selecting them with the mouse. 
 
 public class SelectObject : MonoBehaviour
 {
@@ -29,7 +49,19 @@ public class SelectObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
+        {
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.name != "Trigger" && !hit.collider.name.StartsWith("Trigger") && !objDropdownManager.GetObjects().Values.Contains(hit.collider.gameObject))
+                {
+                    objDropdownManager.removeRedBoxes();
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
         {
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -64,6 +96,7 @@ public class SelectObject : MonoBehaviour
                 }
                 else
                 {
+                    
                     if (!hit.collider.CompareTag("Scaling"))
                     {
                         objDropdownManager.removeRedBoxes();

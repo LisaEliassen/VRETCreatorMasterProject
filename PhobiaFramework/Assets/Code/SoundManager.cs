@@ -1,3 +1,19 @@
+#region License
+// Copyright (C) 2024 Lisa Maria Eliassen & Olesya Pasichnyk
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the Commons Clause License version 1.0 with GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// Commons Clause License and GNU General Public License for more details.
+// 
+// You should have received a copy of the Commons Clause License and GNU General Public License
+// along with this program. If not, see <https://commonsclause.com/> and <https://www.gnu.org/licenses/>.
+#endregion
+
 using UnityEngine;
 using System;
 using SimpleFileBrowser;
@@ -9,6 +25,10 @@ using UnityEngine.Video;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Net;
+
+//The SoundManager script provides functionality to import and play sound files, as well as remove the currently playing sound.
+//It includes methods to handle importing sound files from the device, checking if the selected file is a supported sound format, and loading the audio clip asynchronously.
+//Additionally, it provides a method to remove the currently playing sound and a coroutine to show a file browser dialog for selecting sound files.
 
 public class SoundManager : MonoBehaviour
 {
@@ -114,34 +134,5 @@ public class SoundManager : MonoBehaviour
             callback(FileBrowser.Result);
         }
     }
-
-    /*
-    private async void ImportSound()
-    {
-        string downloadUrl = await dbService.GetDownloadURL("gs://vr-framework-95ccc.appspot.com/sounds/sound.mp3");
-        if (!string.IsNullOrEmpty(downloadUrl))
-        {
-            await HandleSoundSelected(downloadUrl);
-        }
-        else
-        {
-            Debug.Log("Failed to retrieve download URL!");
-        }
-    }
-
-    public async Task<IEnumerator> HandleSoundSelected(string downloadUrl)
-    {
-        byte[] binaryData = await dbService.getFile(downloadUrl);
-
-        if (binaryData != null)
-        {
-            // Apply sound data to your sound-related script or AudioSource
-            // Example using AudioSource:
-            audioSource.clip = WavUtility.ToAudioClip(binaryData, 0, binaryData.Length, 0, 0);
-            audioSource.Play();
-        }
-
-        return null;
-    }*/
 }
 
